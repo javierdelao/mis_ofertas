@@ -1,21 +1,21 @@
 package com.mis_ofertas.app.response;
 
-import com.mis_ofertas.app.model.User;
+import com.mis_ofertas.app.model.SystemUser;
 
 public class LoginResponse {
 
-    private User user;
+    private SystemUser user;
 
     private String status;
 
     public LoginResponse() {
     }
 
-    public User getUser() {
+    public SystemUser getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(SystemUser user) {
         this.user = user;
     }
 

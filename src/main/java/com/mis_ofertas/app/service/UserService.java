@@ -6,15 +6,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
-public class RestService {
+public class UserService {
 
-    public LoginResponse login(SystemUser user){
+
+    public SystemUser insert(SystemUser user) {
         RestTemplate restTemplate = new RestTemplate();
-        LoginResponse loginResponse = restTemplate.getForObject(
-                "http://localhost:8181/user/login/"+user.getRut()+"/"+user.getPassword(),
-                LoginResponse.class);
-        return loginResponse;
+        SystemUser systemUser = restTemplate.postForObject(
+                "http://localhost:8181/user/create/",
+                user,
+                SystemUser.class
+        );
+        return systemUser;
     }
-
 
 }

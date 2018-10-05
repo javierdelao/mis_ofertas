@@ -16,8 +16,10 @@
     <import resource="mis_ofertas-spring.xml"/>
 
     <context:component-scan
-            base-package="com.mis_ofertas.app.model, com.mis_ofertas.app.controller, com.mis_ofertas.app.repository, com.mis_ofertas.app.service"/>
+            base-package="com.mis_ofertas.app.controller, com.mis_ofertas.app.service"/>
 
+
+    <mvc:resources mapping="/**" location="/WEB-INF/assets/" cache-period="31556926"/>
 
     <bean id="localeResolver"
           class="org.springframework.web.servlet.i18n.CookieLocaleResolver">

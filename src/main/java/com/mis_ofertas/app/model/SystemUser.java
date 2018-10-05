@@ -3,7 +3,7 @@ package com.mis_ofertas.app.model;
 import javax.persistence.*;
 import java.io.Serializable;
 
-public class User {
+public class SystemUser{
 
         private Long id;
 
@@ -19,7 +19,9 @@ public class User {
 
         private Rol rol;
 
-        public User() {
+        private Store store;
+
+        public SystemUser() {
         }
 
         public Long getId() {
@@ -77,6 +79,17 @@ public class User {
         public void setPassword(String password) {
                 this.password = password;
         }
+
+        public Store getStore() {
+                return store;
+        }
+
+        public void setStore(Store store) {
+                this.store = store;
+        }
+
+
+
 
 }
 

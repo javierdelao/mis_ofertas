@@ -1,13 +1,19 @@
 package com.mis_ofertas.app.model;
 
-public class Rol {
+import javax.persistence.*;
+import java.io.Serializable;
 
+public class Status  {
 
     private Long id;
 
     private String name;
 
     private String description;
+
+
+    public Status() {
+    }
 
     public Long getId() {
         return id;

@@ -1,17 +1,23 @@
 package com.mis_ofertas.app.model;
 
-public class Rol {
-
+public class Area {
 
     private Long id;
+
 
     private String name;
 
     private String description;
 
+
+    public Area() {
+    }
+
+
     public Long getId() {
         return id;
     }
+
 
     public void setId(Long id) {
         this.id = id;
@@ -33,7 +39,5 @@ public class Rol {
         this.description = description;
     }
 
-    public void fetchCollections() {
 
-    }
 }

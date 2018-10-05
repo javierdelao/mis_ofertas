@@ -6,9 +6,10 @@
 
 package com.mis_ofertas.app.controller;
 
-import com.mis_ofertas.app.model.User;
+import com.mis_ofertas.app.model.SystemUser;
 import com.mis_ofertas.app.response.LoginResponse;
 import com.mis_ofertas.app.service.RestService;
+import com.mis_ofertas.app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,15 +31,21 @@ public class HomeController extends MainController{
 
     private RestService restService;
 
+    private UserService userService;
+
     @Autowired
     public void setRestService(RestService restService) {
         this.restService = restService;
     }
 
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
 
     @RequestMapping(path = "/home", method = RequestMethod.GET)
     public String home(Model model,HttpServletRequest request) {
-        User usuario=user(request);
+        SystemUser usuario=user(request);
         if(usuario==null){
             return "redirect:/login";
         }
@@ -52,8 +59,9 @@ public class HomeController extends MainController{
         return "login";
     }
 
+
     @RequestMapping(path = {"/","/login"}, method = RequestMethod.POST)
-    public String login2(Model model, HttpServletRequest request, User user) {
+    public String login2(Model model, HttpServletRequest request, SystemUser user) {
         LoginResponse loginResponse=restService.login(user);
         HttpSession session = request.getSession();
        if(loginResponse.getStatus().equals("invalid")){
@@ -67,8 +75,8 @@ public class HomeController extends MainController{
 
 
     @RequestMapping(path = "/register", method = RequestMethod.POST)
-    public String register(Model model, HttpServletRequest request, User user) {
-        System.out.println(user);
+    public String register(Model model, HttpServletRequest request, SystemUser user) {
+        user = userService.insert(user);
         return "home";
     }
 

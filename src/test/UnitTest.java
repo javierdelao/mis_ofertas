@@ -1,4 +1,3 @@
-import com.mis_ofertas.app.model.User;
 import com.mis_ofertas.app.response.LoginResponse;
 import com.mis_ofertas.app.service.RestService;
 import org.apache.commons.lang3.RandomStringUtils;

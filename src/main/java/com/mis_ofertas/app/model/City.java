@@ -1,17 +1,20 @@
 package com.mis_ofertas.app.model;
 
-public class Rol {
-
+public class City {
 
     private Long id;
 
     private String name;
 
-    private String description;
+    private Country country;
+
+    public City() {
+    }
 
     public Long getId() {
         return id;
     }
+
 
     public void setId(Long id) {
         this.id = id;
@@ -25,15 +28,12 @@ public class Rol {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public Country getCountry() {
+        return country;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setCountry(Country country) {
+        this.country = country;
     }
 
-    public void fetchCollections() {
-
-    }
 }
