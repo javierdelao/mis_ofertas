@@ -68,6 +68,7 @@ public class HomeController extends MainController{
            model.addAttribute("error",true);
            return "login";
        }else{
+
            session.setAttribute("user",loginResponse.getUser());
            return "redirect:/home";
        }
