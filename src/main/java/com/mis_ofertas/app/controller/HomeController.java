@@ -6,6 +6,7 @@
 
 package com.mis_ofertas.app.controller;
 
+import com.mis_ofertas.app.model.Product;
 import com.mis_ofertas.app.model.SystemUser;
 import com.mis_ofertas.app.response.LoginResponse;
 import com.mis_ofertas.app.service.RestService;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * Created by Juan Francisco Rodríguez
@@ -49,7 +51,11 @@ public class HomeController extends MainController{
         if(usuario==null){
             return "redirect:/login";
         }
-        return "home";
+        List<Product> productList=restService.products();
+        model.addAttribute("ok","ok");
+
+        model.addAttribute("productList",productList);
+        return "index";
     }
 
 

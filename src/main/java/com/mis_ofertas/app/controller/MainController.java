@@ -5,7 +5,7 @@ import com.mis_ofertas.app.model.SystemUser;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-public class MainController {
+public class MainController extends ModelAttributesController{
 
     protected SystemUser user(HttpServletRequest request){
         HttpSession session = request.getSession();

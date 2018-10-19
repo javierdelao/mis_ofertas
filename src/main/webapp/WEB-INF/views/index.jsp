@@ -6,6 +6,10 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +20,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet"
+          id="bootstrap-css">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 
@@ -28,7 +33,9 @@
         }
 
         /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
-        .row.content {height: 450px}
+        .row.content {
+            height: 450px
+        }
 
         /* Set gray background color and 100% height */
         .sidenav {
@@ -50,7 +57,25 @@
                 height: auto;
                 padding: 15px;
             }
-            .row.content {height:auto;}
+
+            .row.content {
+                height: auto;
+            }
+        }
+
+        .mr-3 {
+            margin-right: 3%;
+        }
+
+        .mb-3 {
+            margin-bottom: 3%;
+        }
+        .mb-1 {
+            margin-bottom: 1%;
+        }
+
+        .mt-5 {
+            margin-top: 5%;
         }
     </style>
 </head>
@@ -87,33 +112,59 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
 <script type="text/javascript">
-var url = "inicio.html";
-$("#dvShow").load(url);
-$("#inicio").click(function(){
     var url = "inicio.html";
     $("#dvShow").load(url);
-});
-$("#productos").click(function(){
-    var url = "productos/productos.html";
-    $("#dvShow").load(url);
-});
-$("#usuarios").click(function(){
-    var url = "usuarios/usuarios.html";
-    $("#dvShow").load(url);
-});
-$("#reportes").click(function(){
-    var url = "reportes/reportes.html";
-    $("#dvShow").load(url);
-});
-$("#mCuenta").click(function(){
-    var url = "mCuenta.html";
-    $("#dvShow").load(url);
-});
-$("#tiendas").click(function(){
-    var url = "tiendas/tiendas.html";
-    $("#dvShow").load(url);
-});
+    $("#inicio").click(function () {
+        var url = "inicio.html";
+        $("#dvShow").load(url);
+    });
+    $("#productos").click(function () {
+        var url = "productos/productos.html";
+        $("#dvShow").load(url);
+    });
+    $("#usuarios").click(function () {
+        var url = "usuarios/usuarios.html";
+        $("#dvShow").load(url);
+    });
+    $("#reportes").click(function () {
+        var url = "reportes/reportes.html";
+        $("#dvShow").load(url);
+    });
+    $("#mCuenta").click(function () {
+        var url = "mCuenta.html";
+        $("#dvShow").load(url);
+    });
+    $("#tiendas").click(function () {
+        var url = "tiendas/tiendas.html";
+        $("#dvShow").load(url);
+    });
 </script>
+
+<div class="row">
+
+    <div class="col-md-3 mt-5">
+        <t:subMenu></t:subMenu>
+    </div>
+
+    <div class="col-md-9 mt-5">
+        <c:forEach items="${productList}" var="product">
+            <div class="col-md-3 mr-3 mb-3" style="border:solid 1px; height: 40vh;display: block">
+                <div class="row">
+                    <img src="${urlBase}/images/${product.image.path}" style="width:100%; ">
+                </div>
+                <br>
+                    ${product.name}
+                <br>
+                    ${product.description}
+                <br>
+                <span>  <b>Precio: </b>$${product.price}</span>
+                <button class="btn-primary mb-1" style="width: 100%;padding: 0px">Para más información haz click aquí</button>
+            </div>
+        </c:forEach>
+
+    </div>
+
+</div>
 
 
 </body>
