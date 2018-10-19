@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 
 public class ModelAttributesController {
 
-    private ConfigProperties configProperties;
+    protected ConfigProperties configProperties;
 
     @Autowired
     public void setConfigProperties(ConfigProperties configProperties) {

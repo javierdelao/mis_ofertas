@@ -31,26 +31,12 @@ import java.util.List;
 public class HomeController extends MainController{
 
 
-    private RestService restService;
 
-    private UserService userService;
-
-    @Autowired
-    public void setRestService(RestService restService) {
-        this.restService = restService;
-    }
-
-    @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
 
     @RequestMapping(path = "/home", method = RequestMethod.GET)
     public String home(Model model,HttpServletRequest request) {
         SystemUser usuario=user(request);
-        if(usuario==null){
-            return "redirect:/login";
-        }
+
         List<Product> productList=restService.products();
         model.addAttribute("ok","ok");
 

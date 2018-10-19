@@ -37,6 +37,7 @@
             <map>
                 <entry key="url-base" value="${url-base}"/>
                 <entry key="jdbc.auto" value="${jdbc.auto}"/>
+                <entry key="imagesLocalPath" value="${images-local-path}"/>
             </map>
         </property>
     </bean>
