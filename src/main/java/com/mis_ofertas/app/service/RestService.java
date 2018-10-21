@@ -28,6 +28,30 @@ public class RestService {
         return Arrays.asList(productList);
     }
 
+    public Product product(Long id) {
+        RestTemplate restTemplate = new RestTemplate();
+        Product product = restTemplate.getForObject(
+                "http://localhost:8181/product/"+id,
+                Product.class);
+        return product;
+    }
+
+    public List<Store> stores() {
+        RestTemplate restTemplate = new RestTemplate();
+        Store[] productListt = restTemplate.getForObject(
+                "http://localhost:8181/store/list",
+                Store[].class);
+        return Arrays.asList(productListt);
+    }
+
+    public List<Product> products(SystemUser user,Boolean owner,Boolean active) {
+        RestTemplate restTemplate = new RestTemplate();
+        Product[] productList = restTemplate.getForObject(
+                "http://localhost:8181/product/list/"+user.getId()+"/"+owner+"/"+active,
+                Product[].class);
+        return Arrays.asList(productList);
+    }
+
     public Product products(Long id) {
         RestTemplate restTemplate = new RestTemplate();
         Product product = restTemplate.getForObject(
@@ -91,6 +115,15 @@ public class RestService {
                 product,
                 Product.class);
         return productResponse;
+    }
+
+    public Store edit(Store store) {
+        RestTemplate restTemplate = new RestTemplate();
+        Store storeResponse = restTemplate.postForObject(
+                "http://localhost:8181/store/edit",
+                store,
+                Store.class);
+        return storeResponse;
     }
 
 

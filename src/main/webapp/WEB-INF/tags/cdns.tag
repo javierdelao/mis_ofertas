@@ -11,7 +11,7 @@
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@attribute name="title" type="java.lang.String" %>
 <head>
-    <title>Inicio</title>
+    <title>${title}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">

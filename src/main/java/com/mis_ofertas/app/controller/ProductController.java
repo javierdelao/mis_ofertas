@@ -11,6 +11,7 @@ import com.mis_ofertas.app.model.Product;
 import com.mis_ofertas.app.model.SystemUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,7 +40,7 @@ public class ProductController extends MainController {
     public String home(Model model, HttpServletRequest request) {
         SystemUser usuario = user(request);
 
-        List<Product> productList = restService.products();
+        List<Product> productList = restService.products(usuario,true,true);
         model.addAttribute("productList", productList);
         return "producto/productos";
     }
@@ -51,6 +52,18 @@ public class ProductController extends MainController {
         model.addAttribute("areas", restService.areas());
         model.addAttribute("statuses", restService.statuses());
         return "producto/agregar";
+
+    }
+
+    @RequestMapping(path = "/edit/{productoId}", method = RequestMethod.GET)
+    public String edit(Model model, HttpServletRequest request, @PathVariable Long productoId) {
+        SystemUser usuario = user(request);
+        Product product=restService.product(productoId);
+        model.addAttribute("productTypes", restService.productTypes());
+        model.addAttribute("areas", restService.areas());
+        model.addAttribute("statuses", restService.statuses());
+        model.addAttribute("producto",product);
+        return "producto/editar";
 
     }
 
@@ -90,6 +103,7 @@ public class ProductController extends MainController {
 
 
         Product product = new Product();
+
         product.setImage(imagep);
         product.setName(name);
         product.setDescription(description);

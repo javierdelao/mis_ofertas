@@ -23,19 +23,7 @@ public class UnitTest {
     }
 
 
-    @Test
-    public void loginInvalid() throws Exception {
-        User usuario = new User();
-        usuario.setPassword("123");
-        usuario.setRut("123456-7");
-        usuario.setId(Long.parseLong(RandomStringUtils.randomNumeric(8)));
 
-        LoginResponse loginResponse = restService.login(usuario);
-        if (!loginResponse.getStatus().equals("invalid")) {
-            throw new Exception();
-        }
-        System.out.println("clave incorrecta");
-    }
 
 
 }

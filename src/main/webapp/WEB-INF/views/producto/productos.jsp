@@ -105,7 +105,7 @@
                         </td>
                         <td>
 
-                            <a id="editarP" title="Editar datos" class="btn btn-primary btn-sm"><span
+                            <a href="${urlBase}/product/edit/${product.id}" id="editarP" title="Editar datos" class="btn btn-primary btn-sm"><span
                                     class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                         </td>
                         <td>
