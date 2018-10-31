@@ -25,7 +25,7 @@
                 <li><a id="inicio"><span class="glyphicon glyphicon-log-in"></span> Inicio</a></li>
                 <li><a href="${baseUrl}/product/"><span class="glyphicon glyphicon-log-in"></span> Productos</a></li>
                 <li><a id="usuarios"><span class="glyphicon glyphicon-log-in"></span> Usuarios</a></li>
-                <li><a id="tiendas"><span class="glyphicon glyphicon-log-in"></span> Tiendas</a></li>
+                <li><a href="${baseUrl}/store/"><span class="glyphicon glyphicon-log-in"></span> Tiendas</a></li>
                 <li><a id="reportes"><span class="glyphicon glyphicon-log-in"></span> Reportes</a></li>
                 <li><a id="mCuenta"><span class="glyphicon glyphicon-log-in"></span> Mi Cuenta</a></li>
             </ul>

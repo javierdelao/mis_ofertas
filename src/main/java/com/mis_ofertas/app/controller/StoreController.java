@@ -27,30 +27,67 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-/**
- * Created by Juan Francisco Rodríguez
- * <p>
- * Controls general views
- **/
+
 @Controller
 @RequestMapping("/store")
 public class StoreController extends MainController {
 
 
+    @RequestMapping(path = "/", method = RequestMethod.GET)
+    public String home(Model model, HttpServletRequest request) {
+        SystemUser usuario = user(request);
+
+        List<Store> storeList = restService.stores(usuario, true, true);
+        model.addAttribute("storeList", storeList);
+        return "Tienda/tiendas";
+    }
+
+    @RequestMapping(path = "/create", method = RequestMethod.GET)
+    public String create(Model model, HttpServletRequest request) {
+        SystemUser usuario = user(request);
+        model.addAttribute("communes", restService.communes());
+        model.addAttribute("citys", restService.citys());
+        model.addAttribute("countrys", restService.countrys());
+        return "Tienda/agregarT";
+    }
+        @RequestMapping(path = "/create", method = RequestMethod.POST)
+    public String create(
+            Model model,
+            HttpServletRequest request,
+
+            @RequestParam("name") String name,
+            @RequestParam("direction") String direction,
+            @RequestParam("commune") Long communeId ,
+            @RequestParam("city") Long cityId,
+            @RequestParam("country") Long countryId)
+    {
+        SystemUser usuario = user(request);
+
+        Store store = new Store();
+
+
+        store.setName(name);
+        store.setDirection(direction);
+        store.setCommune(restService.commune(communeId));
+
+        store = restService.create(store);
+        return "redirect:/store/";
+    }
 
 
     @RequestMapping(path = "/edit", method = RequestMethod.GET)
-    public String create(Model model,@RequestParam(value = "fdsgs") String nombre) {
-        List<Store>stores=restService.stores();
+    public String create(Model model, @RequestParam(value = "fdsgs") String nombre) {
+        List<Store> stores = restService.stores();
 
-        Store store= stores.get(0);
+        Store store = stores.get(0);
 
         store.setName(nombre);
 
         restService.edit(store);
 
         return "";
-    }
 
+
+    }
 
 }

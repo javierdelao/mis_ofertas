@@ -31,6 +31,7 @@
                     <option value="1">Electronica</option>
                     <option value="2">Linea Blanca</option>
                     <option value="3">Comida</option>
+                    <option>AAAAAAAAAAAAAAAA</option>
                 </select>
             </div>
         </form>
@@ -52,6 +53,7 @@
                     <th>Usuario</th>
                     <th>Editar</th>
                     <th>Eliminar</th>
+                    <th>LALALALALA</th>
                 </tr>
                 <c:forEach items="${productList}" var="product">
                     <tr>

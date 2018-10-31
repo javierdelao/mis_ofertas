@@ -36,13 +36,6 @@ public class RestService {
         return product;
     }
 
-    public List<Store> stores() {
-        RestTemplate restTemplate = new RestTemplate();
-        Store[] productListt = restTemplate.getForObject(
-                "http://localhost:8181/store/list",
-                Store[].class);
-        return Arrays.asList(productListt);
-    }
 
     public List<Product> products(SystemUser user,Boolean owner,Boolean active) {
         RestTemplate restTemplate = new RestTemplate();
@@ -58,6 +51,29 @@ public class RestService {
                 "http://localhost:8181/product/" + id,
                 Product.class);
         return product;
+    }
+
+    public List<Store> stores() {
+        RestTemplate restTemplate = new RestTemplate();
+        Store[] storeList= restTemplate.getForObject(
+                "http://localhost:8181/store/list",
+                Store[].class);
+        return Arrays.asList(storeList);
+    }
+
+    public Store store(Long id) {
+        RestTemplate restTemplate = new RestTemplate();
+        Store store = restTemplate.getForObject(
+                "http://localhost:8181/store/"+id,
+                Store.class);
+        return store;
+    }
+    public List<Store> stores(SystemUser user,Boolean owner,Boolean active) {
+        RestTemplate restTemplate = new RestTemplate();
+        Store[] storeList = restTemplate.getForObject(
+                "http://localhost:8181/store/list/",
+                Store[].class);
+        return Arrays.asList(storeList);
     }
 
     public List<ProductType> productTypes() {
@@ -92,6 +108,47 @@ public class RestService {
         return area;
     }
 
+    public Commune commune(Long id) {
+        RestTemplate restTemplate = new RestTemplate();
+        Commune commune = restTemplate.getForObject(
+                "http://localhost:8181/commuune/" + id,
+                Commune.class);
+        return commune;
+    }
+
+    public List<Commune> communes() {
+        RestTemplate restTemplate = new RestTemplate();
+        Commune[] commune = restTemplate.getForObject(
+                "http://localhost:8181/commune/list",
+                Commune[].class);
+        return Arrays.asList(commune);
+    }
+
+    public City city(Long id) {
+        RestTemplate restTemplate = new RestTemplate();
+        City city = restTemplate.getForObject(
+                "http://localhost:8181/city/" + id,
+                City.class);
+        return city;
+    }
+
+    public List<City> citys() {
+        RestTemplate restTemplate = new RestTemplate();
+        City[] city = restTemplate.getForObject(
+                "http://localhost:8181/city/list",
+                City[].class);
+        return Arrays.asList(city);
+    }
+
+    public List<Country> countrys() {
+        RestTemplate restTemplate = new RestTemplate();
+        Country[] country = restTemplate.getForObject(
+                "http://localhost:8181/country/list",
+                Country[].class);
+        return Arrays.asList(country);
+    }
+
+
     public List<Status> statuses() {
         RestTemplate restTemplate = new RestTemplate();
         Status[] statuses = restTemplate.getForObject(
@@ -115,6 +172,16 @@ public class RestService {
                 product,
                 Product.class);
         return productResponse;
+    }
+
+
+    public Store create(Store store) {
+        RestTemplate restTemplate = new RestTemplate();
+        Store storeResponse = restTemplate.postForObject(
+                "http://localhost:8181/store/create",
+                store,
+                Store.class);
+        return storeResponse;
     }
 
     public Store edit(Store store) {

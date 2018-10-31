@@ -7,6 +7,7 @@
 package com.mis_ofertas.app.controller;
 
 import com.mis_ofertas.app.model.Product;
+import com.mis_ofertas.app.model.Store;
 import com.mis_ofertas.app.model.SystemUser;
 import com.mis_ofertas.app.response.LoginResponse;
 import com.mis_ofertas.app.service.RestService;
@@ -31,8 +32,6 @@ import java.util.List;
 public class HomeController extends MainController{
 
 
-
-
     @RequestMapping(path = "/home", method = RequestMethod.GET)
     public String home(Model model,HttpServletRequest request) {
         SystemUser usuario=user(request);
@@ -41,8 +40,12 @@ public class HomeController extends MainController{
         model.addAttribute("ok","ok");
 
         model.addAttribute("productList",productList);
+
+
         return "index";
     }
+
+
 
 
 
