@@ -111,7 +111,7 @@ public class RestService {
     public Commune commune(Long id) {
         RestTemplate restTemplate = new RestTemplate();
         Commune commune = restTemplate.getForObject(
-                "http://localhost:8181/commuune/" + id,
+                "http://localhost:8181/commune/" + id,
                 Commune.class);
         return commune;
     }
