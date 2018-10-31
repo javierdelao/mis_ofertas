@@ -12,10 +12,7 @@ import com.mis_ofertas.app.model.Store;
 import com.mis_ofertas.app.model.SystemUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -74,19 +71,41 @@ public class StoreController extends MainController {
         return "redirect:/store/";
     }
 
+    @RequestMapping(path = "/edit", method = RequestMethod.POST)
+    public String edit(
+            Model model,
+            HttpServletRequest request,
+            @RequestParam("id") Long id,
+            @RequestParam("name") String name,
+            @RequestParam("direction") String direction,
+            @RequestParam("commune") Long communeId ,
+            @RequestParam("city") Long cityId,
+            @RequestParam("country") Long countryId)
+    {
+        SystemUser usuario = user(request);
 
-    @RequestMapping(path = "/edit", method = RequestMethod.GET)
-    public String create(Model model, @RequestParam(value = "fdsgs") String nombre) {
-        List<Store> stores = restService.stores();
+        Store store = restService.store(id);
 
-        Store store = stores.get(0);
 
-        store.setName(nombre);
+        store.setName(name);
+        store.setDirection(direction);
+        store.setCommune(restService.commune(communeId));
 
-        restService.edit(store);
+        store = restService.edit(store);
+        return "redirect:/store/";
+    }
 
-        return "";
+    @RequestMapping(path = "/edit/{storeId}", method = RequestMethod.GET)
+    public String edit(Model model, HttpServletRequest request, @PathVariable Long storeId) throws ParseException {
+        SystemUser usuario = user(request);
+        Store store=restService.store(storeId);
 
+        model.addAttribute("communes", restService.communes());
+        model.addAttribute("citys", restService.citys());
+        model.addAttribute("countrys", restService.countrys());
+
+        model.addAttribute("store",store);
+        return "Tienda/editarT";
 
     }
 
