@@ -32,13 +32,10 @@ public class Product  {
 
     private Status status;
 
-    @Transient
     private String expirationDateString;
 
-    @Transient
     private String publicationDateString;
 
-    @Transient
     private Offer offer;
 
 

@@ -24,17 +24,17 @@
 
 <div class="container">
     <div class="content">
-        <h2>Oferta &raquo; Crear</h2>
+        <h2>Oferta &raquo; Ver</h2>
         <th></th>
         <th></th>
         <th></th>
         <th></th>
-        <form class="form-horizontal" action="${urlBase}/offer/create" method="POST">
-            <input type="hidden" name="productId" value="${producto.id}">
+        <form class="form-horizontal" action="${urlBase}/offer/cancel" method="POST">
+            <input type="hidden" name="offerId" value="${offer.id}">
             <div class="form-group">
                 <label class="col-sm-3 control-label">Nombre producto</label>
                 <div class="col-sm-4">
-                    <input type="text" name="name" class="form-control" placeholder="Producto" value="${producto.name}"
+                    <input type="text" name="name" class="form-control" placeholder="Producto" value="${offer.product.name}"
                            disabled>
                 </div>
             </div>
@@ -42,18 +42,18 @@
                 <label class="col-sm-3 control-label">Descripción</label>
                 <div class="col-sm-4">
                     <input type="text" name="name" class="form-control" placeholder="Producto"
-                           value="${producto.description}" disabled>
+                           value="${offer.product.description}" disabled>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label">Imagen</label>
                 <div class="col-sm-4">
-                    <img src="${urlBase}/images/${producto.image.path}" style="width:150px; height:auto;"></div>
+                    <img src="${urlBase}/images/${offer.product.image.path}" style="width:150px; height:auto;"></div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label">Descuento</label>
                 <div class="col-sm-3">
-                    <input type="number" name="discount" max="99" class="form-control" required>
+                    <input type="number" name="discount" max="99" class="form-control" value="${offer.discount}" disabled>
                 </div>
                 <div class="col-sm-1">
                     %
@@ -62,27 +62,27 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">Fecha de inicio de la oferta</label>
                 <div class="col-sm-4">
-                    <input type="date" name="publicationDate" class="form-control">
+                    <input type="date" name="publicationDate" class="form-control" value="${offer.publicationDateString}" disabled>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label">Fecha de expiracion de la oferta</label>
                 <div class="col-sm-4">
-                    <input type="date" name="expirationDate" class="form-control">
+                    <input type="date" name="expirationDate" class="form-control" value="${offer.expirationDateString}" disabled>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label">Cantidad disponible</label>
                 <div class="col-sm-4">
-                    <input type="number" name="quantityAvailable" class="form-control">
+                    <input type="number" name="quantityAvailable" class="form-control" value="${offer.quantityAvailable}" disabled>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label">Tipo de oferta</label>
                 <div class="col-sm-4">
-                    <select class="form-control" name="offerTypeId">
+                    <select class="form-control" name="offerTypeId" disabled>
                         <c:forEach items="${offerTypes}" var="offerType">
-                            <option value="${offerType.id}"> ${offerType.name}</option>
+                            <option selected="${offer.offerType.id==offerType.id?'selected':''}" value="${offerType.id}"> ${offerType.name}</option>
                         </c:forEach>
                     </select>
                 </div>
@@ -90,7 +90,7 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label"></label>
                 <div class="col-sm-3">
-                    <input type="submit" class="btn btn-success">
+                    <input type="submit" class="btn btn-warning" value="Cancelar oferta">
                 </div>
             </div>
 

@@ -83,7 +83,15 @@
                                 ${product.name}
                         </td>
                         <td>
-                            $${product.price}
+                            <c:if test="${product.offer!=null}">
+                                <span style="text-decoration: line-through">$${product.price}</span><br>
+                                <span>${product.offer.discount}% Off</span><br>
+                                <span>$${product.price-(product.price*(product.offer.discount/100))} </span>
+                            </c:if>
+                            <c:if test="${product.offer==null}">
+                                <span>$${product.price}</span>
+                            </c:if>
+
                         </td>
                         <td>
                                 ${product.publicationDate}
@@ -102,12 +110,23 @@
                         </td>
                         <c:if test="${product.offer!=null}">
                             <td>
-
+                                <div id="getting-started-${product.offer.id}"></div>
+                                <a href="${urlBase}/offer/${product.offer.id}" title="Editar datos"
+                                   class="btn btn-primary btn-sm"><span
+                                        class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+                                <script type="text/javascript">
+                                    $("#getting-started-${product.offer.id}")
+                                        .countdown("${product.offer.expirationDateString}", function (event) {
+                                            $(this).text(
+                                                event.strftime('%D days %H:%M:%S')
+                                            );
+                                        });
+                                </script>
                             </td>
                         </c:if>
                         <c:if test="${product.offer==null}">
                             <td>
-                                <a href="${urlBase}/offer/create/${product.id}" title="Editar datos"
+                                <a href="${urlBase}/offer/create/${product.id}" title="Agregar oferta"
                                    class="btn btn-primary btn-sm"><span
                                         class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
                             </td>

@@ -28,6 +28,38 @@ public class RestService {
         return Arrays.asList(productList);
     }
 
+    public List<Offer> offers() {
+        RestTemplate restTemplate = new RestTemplate();
+        Offer[] offers = restTemplate.getForObject(
+                "http://localhost:8181/offer/list",
+                Offer[].class);
+        return Arrays.asList(offers);
+    }
+
+    public List<OfferType> offerTypes() {
+        RestTemplate restTemplate = new RestTemplate();
+        OfferType[] offerTypes = restTemplate.getForObject(
+                "http://localhost:8181/offertype/list",
+                OfferType[].class);
+        return Arrays.asList(offerTypes);
+    }
+
+    public OfferType offerType(Long id) {
+        RestTemplate restTemplate = new RestTemplate();
+        OfferType offerType = restTemplate.getForObject(
+                "http://localhost:8181/offertype/"+id,
+                OfferType.class);
+        return offerType;
+    }
+
+    public Offer offer(Long id) {
+        RestTemplate restTemplate = new RestTemplate();
+        Offer offer = restTemplate.getForObject(
+                "http://localhost:8181/offer/"+id,
+                Offer.class);
+        return offer;
+    }
+
     public Product product(Long id) {
         RestTemplate restTemplate = new RestTemplate();
         Product product = restTemplate.getForObject(
@@ -174,6 +206,15 @@ public class RestService {
         return productResponse;
     }
 
+    public Offer create(Offer offer) {
+        RestTemplate restTemplate = new RestTemplate();
+        Offer offerResponse = restTemplate.postForObject(
+                "http://localhost:8181/offer/create",
+                offer,
+                Offer.class);
+        return offerResponse;
+    }
+
 
     public Store create(Store store) {
         RestTemplate restTemplate = new RestTemplate();
@@ -191,6 +232,15 @@ public class RestService {
                 product,
                 Product.class);
         return product1;
+    }
+
+    public Offer edit(Offer offer) {
+        RestTemplate restTemplate = new RestTemplate();
+        Offer offerResponse = restTemplate.postForObject(
+                "http://localhost:8181/offer/edit",
+                offer,
+                Offer.class);
+        return offerResponse;
     }
 
     public Store edit(Store store) {

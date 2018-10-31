@@ -21,6 +21,11 @@ public class Offer {
 
     private Product product;
 
+    private String publicationDateString;
+
+
+    private String expirationDateString;
+
 
     private OfferType offerType;
 
@@ -83,7 +88,21 @@ public class Offer {
         this.offerType = offerType;
     }
 
+    public String getPublicationDateString() {
+        return publicationDateString;
+    }
 
+    public void setPublicationDateString(String publicationDateString) {
+        this.publicationDateString = publicationDateString;
+    }
+
+    public String getExpirationDateString() {
+        return expirationDateString;
+    }
+
+    public void setExpirationDateString(String expirationDateString) {
+        this.expirationDateString = expirationDateString;
+    }
 }
 
 

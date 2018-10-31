@@ -41,6 +41,14 @@ public class ProductController extends MainController {
         SystemUser usuario = user(request);
 
         List<Product> productList = restService.products(usuario,true,true);
+
+        for(Product product:productList){
+            if(product.getOffer()!=null){
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                product.getOffer().setPublicationDateString(format.format(product.getOffer().getPublicationDate()));
+                product.getOffer().setExpirationDateString(format.format(product.getOffer().getExpirationDate()));
+            }
+        }
         model.addAttribute("productList", productList);
         return "producto/productos";
     }

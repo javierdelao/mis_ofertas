@@ -6,9 +6,7 @@
 
 package com.mis_ofertas.app.controller;
 
-import com.mis_ofertas.app.model.Image;
-import com.mis_ofertas.app.model.Product;
-import com.mis_ofertas.app.model.SystemUser;
+import com.mis_ofertas.app.model.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,8 +41,53 @@ public class OfferController extends MainController {
         SystemUser usuario = user(request);
         Product product = restService.product(productId);
         model.addAttribute("producto",product);
+        model.addAttribute("offerTypes",restService.offerTypes());
         return "oferta/agregar";
+    }
 
+    @RequestMapping(path = "/create", method = RequestMethod.POST)
+    public String create(
+            Model model,
+            HttpServletRequest request,
+            @RequestParam("productId") Long productId,
+            @RequestParam("discount") Integer discount,
+            @RequestParam("publicationDate") String publicationDate,
+            @RequestParam("expirationDate") String expirationDate,
+            @RequestParam("quantityAvailable") Integer quantityAvailable,
+            @RequestParam("offerTypeId") Long offerTypeId) throws ParseException {
+        SystemUser usuario = user(request);
+        Offer offer=new Offer();
+        offer.setDiscount(discount);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+        offer.setPublicationDate(new SimpleDateFormat("yyyy-MM-dd").parse(publicationDate));
+        offer.setExpirationDate(new SimpleDateFormat("yyyy-MM-dd").parse(expirationDate));
+        offer.setQuantityAvailable(quantityAvailable);
+        offer.setOfferType(restService.offerType(offerTypeId));
+        offer.setProduct(restService.product(productId));
+        offer=restService.create(offer);
+        return "redirect:/product/";
+    }
+
+    @RequestMapping(path = "/{offerId}", method = RequestMethod.GET)
+    public String offer(Model model, HttpServletRequest request,@PathVariable Long offerId) {
+        SystemUser usuario = user(request);
+        Offer offer = restService.offer(offerId);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        offer.setPublicationDateString(format.format(offer.getPublicationDate()));
+        offer.setExpirationDateString(format.format(offer.getPublicationDate()));
+        model.addAttribute("offer",offer);
+        model.addAttribute("offerTypes",restService.offerTypes());
+        return "oferta/ver";
+    }
+
+    @RequestMapping(path = "/cancel", method = RequestMethod.POST)
+    public String cancel(Model model, HttpServletRequest request,@RequestParam("offerId") Long offerId) {
+        SystemUser usuario = user(request);
+        Offer offer = restService.offer(offerId);
+        offer.setExpirationDate(new Date());
+        offer=restService.edit(offer);
+        return "redirect:/product/";
     }
 
 
