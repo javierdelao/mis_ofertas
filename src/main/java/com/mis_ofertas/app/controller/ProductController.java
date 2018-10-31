@@ -56,9 +56,13 @@ public class ProductController extends MainController {
     }
 
     @RequestMapping(path = "/edit/{productoId}", method = RequestMethod.GET)
-    public String edit(Model model, HttpServletRequest request, @PathVariable Long productoId) {
+    public String edit(Model model, HttpServletRequest request, @PathVariable Long productoId) throws ParseException {
         SystemUser usuario = user(request);
         Product product=restService.product(productoId);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+        String dateString = format.format(product.getExpirationDate());
+        product.setExpirationDateString(dateString);
         model.addAttribute("productTypes", restService.productTypes());
         model.addAttribute("areas", restService.areas());
         model.addAttribute("statuses", restService.statuses());

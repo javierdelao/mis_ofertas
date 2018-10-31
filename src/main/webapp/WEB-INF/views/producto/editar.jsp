@@ -40,14 +40,13 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">Descripción producto</label>
                 <div class="col-sm-4">
-                    <input type="text" name="description" class="form-control" placeholder="Producto">
+                    <input type="text" name="description" class="form-control" placeholder="Producto" value="${producto.description}">
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label">Fecha Expiracioón</label>
+                <label class="col-sm-3 control-label">Fecha Expiración</label>
                 <div class="col-sm-4">
-                    <input type="date" name="expirationDate" class="form-control" placeholder="Producto"
-                    >
+                    <input type="date" id="expirationDate" name="expirationDate" class="form-control" placeholder="Producto" value="${producto.expirationDateString}">
                 </div>
             </div>
             <div class="form-group">

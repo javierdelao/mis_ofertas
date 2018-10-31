@@ -32,6 +32,12 @@ public class Product  {
 
     private Status status;
 
+    @Transient
+    private String expirationDateString;
+
+    @Transient
+    private String publicationDateString;
+
 
     public Product() {
     }
@@ -132,8 +138,21 @@ public class Product  {
         this.publicationDate = publicationDate;
     }
 
+    public String getExpirationDateString() {
+        return expirationDateString;
+    }
 
+    public void setExpirationDateString(String expirationDateString) {
+        this.expirationDateString = expirationDateString;
+    }
 
+    public String getPublicationDateString() {
+        return publicationDateString;
+    }
+
+    public void setPublicationDateString(String publicationDateString) {
+        this.publicationDateString = publicationDateString;
+    }
 }
 
 

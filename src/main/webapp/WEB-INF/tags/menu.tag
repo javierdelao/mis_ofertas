@@ -38,28 +38,3 @@
 </div>
 
 <!-- AdminLTE App -->
-<script type="text/javascript">
-    var url = "inicio.html";
-    $("#dvShow").load(url);
-    $("#inicio").click(function () {
-        var url = "inicio.html";
-        $("#dvShow").load(url);
-    });
-
-    $("#usuarios").click(function () {
-        var url = "usuarios/usuarios.html";
-        $("#dvShow").load(url);
-    });
-    $("#reportes").click(function () {
-        var url = "reportes/reportes.html";
-        $("#dvShow").load(url);
-    });
-    $("#mCuenta").click(function () {
-        var url = "mCuenta.html";
-        $("#dvShow").load(url);
-    });
-    $("#tiendas").click(function () {
-        var url = "tiendas/tiendas.html";
-        $("#dvShow").load(url);
-    });
-</script>
