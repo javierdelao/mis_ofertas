@@ -184,6 +184,15 @@ public class RestService {
         return storeResponse;
     }
 
+    public Product edit(Product product) {
+        RestTemplate restTemplate = new RestTemplate();
+        Product product1 = restTemplate.postForObject(
+                "http://localhost:8181/product/edit",
+                product,
+                Product.class);
+        return product1;
+    }
+
     public Store edit(Store store) {
         RestTemplate restTemplate = new RestTemplate();
         Store storeResponse = restTemplate.postForObject(

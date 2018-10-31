@@ -29,7 +29,8 @@
         <th></th>
         <th></th>
         <th></th>
-        <form class="form-horizontal" action="${urlBase}/product/create" method="POST" enctype="multipart/form-data">
+        <form class="form-horizontal" action="${urlBase}/product/edit" method="POST" enctype="multipart/form-data">
+            <input type="hidden" name="id"  value="${producto.id}">
 
             <div class="form-group">
                 <label class="col-sm-3 control-label">Nombre producto</label>
@@ -52,24 +53,24 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">¿Perecible?</label>
                 <div class="col-sm-4">
-                    <select class="form-control" name="is_perishable">
-                        <option value="true">Si</option>
-                        <option value="false">No</option>
+                    <select class="form-control" name="is_perishable" value="value="${producto.is_perishable}"">
+                        <option selected="${producto.is_perishable==true?'selected':''}" value="true">Si</option>
+                        <option selected="${producto.is_perishable==false?'selected':''}" value="false">No</option>
                     </select>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label">Precio</label>
                 <div class="col-sm-4">
-                    <input type="number" name="price" class="form-control" placeholder="Precio">
+                    <input type="number" name="price" class="form-control" placeholder="Precio" value="${producto.price}">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label">Categoria</label>
                 <div class="col-sm-3">
-                    <select name="productType" class="form-control">
+                    <select name="productType" class="form-control" value="${producto.productType.id}">
                         <c:forEach items="${productTypes}" var="productType">
-                            <option value="${productType.id}">${productType.name}</option>
+                            <option selected="${producto.productType.id==productType.id?'selected':''}" value="${productType.id}">${productType.name}</option>
                         </c:forEach>
                     </select>
                 </div>
@@ -85,9 +86,9 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">Tipo producto</label>
                 <div class="col-sm-3">
-                    <select name="area" class="form-control">
+                    <select name="area" class="form-control" value="${producto.area.id}">
                         <c:forEach items="${areas}" var="area">
-                            <option value="${area.id}">${area.name}</option>
+                            <option selected="${producto.area.id==area.id?'selected':''}" value="${area.id}">${area.name}</option>
                         </c:forEach>
                     </select>
                 </div>
@@ -96,9 +97,9 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">Estado</label>
                 <div class="col-sm-3">
-                    <select name="status" class="form-control">
-                        <c:forEach items="${statuses}" var="status">
-                            <option value="${status.id}">${status.name}</option>
+                    <select name="status" class="form-control" value="${producto.status.id}">
+                        <c:forEach items="${statuses}" var="status" >
+                            <option selected="${producto.status.id==status.id?'selected':''}" value="${status.id}">${status.name}</option>
                         </c:forEach>
                     </select>
                 </div>

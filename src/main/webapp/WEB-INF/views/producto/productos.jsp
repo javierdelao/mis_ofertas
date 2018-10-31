@@ -27,10 +27,8 @@
             <div class="form-group">
                 <!-- TODO extrar lista real -->
                 <select name="filter" class="form-control" onchange="form.submit()">
-                    <option value="0">Filtros de datos de empleados</option>
-                    <option value="1">Electronica</option>
-                    <option value="2">Linea Blanca</option>
-                    <option value="3">Comida</option>
+                    <option value="0">Activos</option>
+                    <option value="1">Inactivos</option>
                     <option>AAAAAAAAAAAAAAAA</option>
                 </select>
             </div>
@@ -49,11 +47,11 @@
                     <th>Categoria</th>
                     <th>Imagen</th>
                     <th>Tipo Producto</th>
-                    <th>Estado</th>
                     <th>Usuario</th>
+                    <th>Oferta activa</th>
                     <th>Editar</th>
                     <th>Eliminar</th>
-                    <th>LALALALALA</th>
+
                 </tr>
                 <c:forEach items="${productList}" var="product">
                     <tr>
@@ -100,14 +98,26 @@
                                 ${product.productType.name}
                         </td>
                         <td>
-                                ${product.status.name}
-                        </td>
-                        <td>
                                 ${product.user.firstName} ${product.user.lastName}
                         </td>
+                        <c:if test="${product.offer!=null}">
+                            <td>
+
+                            </td>
+                        </c:if>
+                        <c:if test="${product.offer==null}">
+                            <td>
+                                <a href="${urlBase}/offer/create/${product.id}" title="Editar datos"
+                                   class="btn btn-primary btn-sm"><span
+                                        class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
+                            </td>
+                        </c:if>
+
+
                         <td>
 
-                            <a href="${urlBase}/product/edit/${product.id}" id="editarP" title="Editar datos" class="btn btn-primary btn-sm"><span
+                            <a href="${urlBase}/product/edit/${product.id}" id="editarP" title="Editar datos"
+                               class="btn btn-primary btn-sm"><span
                                     class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                         </td>
                         <td>
@@ -123,7 +133,7 @@
         </div>
     </div>
     <div>
-        <a href="${urlBase}/product/create" class="btn btn-sm btn-primary" >Agregar producto</a>
+        <a href="${urlBase}/product/create" class="btn btn-sm btn-primary">Agregar producto</a>
     </div>
 </div>
 <center>

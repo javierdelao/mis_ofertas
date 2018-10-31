@@ -38,6 +38,9 @@ public class Product  {
     @Transient
     private String publicationDateString;
 
+    @Transient
+    private Offer offer;
+
 
     public Product() {
     }
@@ -152,6 +155,14 @@ public class Product  {
 
     public void setPublicationDateString(String publicationDateString) {
         this.publicationDateString = publicationDateString;
+    }
+
+    public Offer getOffer() {
+        return offer;
+    }
+
+    public void setOffer(Offer offer) {
+        this.offer = offer;
     }
 }
 

@@ -101,13 +101,8 @@ public class ProductController extends MainController {
         String filePath = uploadsDir + n + orgName;
         File dest = new File(filePath);
         image.transferTo(dest);
-
-
         imagep.setPath(n + orgName);
-
-
         Product product = new Product();
-
         product.setImage(imagep);
         product.setName(name);
         product.setDescription(description);
@@ -125,6 +120,53 @@ public class ProductController extends MainController {
 
         product.setStatus(restService.status(statusId));
         product = restService.create(product);
+        return "redirect:/product/";
+    }
+
+
+    @RequestMapping(path = "/edit", method = RequestMethod.POST)
+    public String edit(
+            Model model,
+            HttpServletRequest request,
+            @RequestParam("id") Long id,
+            @RequestParam(value = "image",required = false) MultipartFile image,
+            @RequestParam("name") String name,
+            @RequestParam("description") String description,
+            @RequestParam("expirationDate") String expirationDate,
+            @RequestParam("is_perishable") Boolean is_perishable,
+            @RequestParam("price") Integer price,
+            @RequestParam("productType") Long productTypeId,
+            @RequestParam("area") Long areaId,
+            @RequestParam("status") Long statusId) throws ParseException, IOException {
+        SystemUser usuario = user(request);
+        Product product = restService.product(id);
+        if(image!=null && image.getSize()>0){
+            String uploadsDir = configProperties.getProperty("imagesLocalPath");
+            if (!new File(uploadsDir).exists()) {
+                new File(uploadsDir).mkdir();
+            }
+            Image imagep = new Image();
+            Random rand = new Random();
+            int n = rand.nextInt(50000000) + 1;
+            String orgName = image.getOriginalFilename();
+            String filePath = uploadsDir + n + orgName;
+            File dest = new File(filePath);
+            image.transferTo(dest);
+            imagep.setPath(n + orgName);
+            product.setImage(imagep);
+        }
+        product.setName(name);
+        product.setDescription(description);
+        product.setIs_perishable(is_perishable);
+        Date date = new SimpleDateFormat("yyyy-MM-dd").parse(expirationDate);
+        product.setExpirationDate(date);
+        product.setPublicationDate(new Date());
+        product.setPrice(price);
+        product.setUser(usuario);
+        product.setProductType(restService.productType(productTypeId));
+        product.setArea(restService.area(areaId));
+        product.setStatus(restService.status(statusId));
+        product = restService.edit(product);
         return "redirect:/product/";
     }
 
