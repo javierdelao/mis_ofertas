@@ -15,6 +15,20 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
+<script>
+    $(document).ready(function(){
+
+        $( "#registerRut" ).change(function() {
+             var rut= $( "#registerRut" ).val();
+            var inputRut=$( "#registerRut" );
+            inputRut.css("border","red solid 1px");
+             console.log(rut);
+             alert(rut);
+        });
+    });
+
+
+</script>
 <div class="row" style="padding-top: 15%;">
     <div class="col-md-offset-4 col-md-4" style="margin-top:15px;border:3px solid grey">
         <br>
@@ -54,7 +68,7 @@
             <div class="modal-body">
                <div class="row">
                    <div class="col-md-3">Rut</div>
-                   <div class="col-md-8"><input class="form-control" type="text" name="rut" id="registerRut"  required></div>
+                   <div class="col-md-8"><input class="form-control" type="text" name="rut" id="registerRut"   required></div>
                </div>
                 <div class="row" style="padding-top: 5px">
                     <div class="col-md-3">Nombre</div>
@@ -81,7 +95,7 @@
 
             </div>
             <div class="modal-footer">
-                <input type="submit" class="btn btn-default" value="Registrarse" >
+                <input type="button" id="registrar" class="btn btn-default" value="Registrarse" >
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
             </div>
             </form>
