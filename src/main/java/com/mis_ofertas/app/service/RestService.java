@@ -124,6 +124,14 @@ public class RestService {
         return productType;
     }
 
+    public List<ProductType> productTypes(SystemUser user,Boolean owner,Boolean active) {
+        RestTemplate restTemplate = new RestTemplate();
+        ProductType[] productTypes = restTemplate.getForObject(
+                "http://localhost:8181/producttype/list",
+                ProductType[].class);
+        return Arrays.asList(productTypes);
+    }
+
     public List<Area> areas() {
         RestTemplate restTemplate = new RestTemplate();
         Area[] areas = restTemplate.getForObject(
@@ -225,6 +233,15 @@ public class RestService {
         return storeResponse;
     }
 
+    public ProductType create(ProductType productType) {
+        RestTemplate restTemplate = new RestTemplate();
+        ProductType productTypeResponse = restTemplate.postForObject(
+                "http://localhost:8181/producttype/create",
+                productType,
+                ProductType.class);
+        return productTypeResponse;
+    }
+
     public Product edit(Product product) {
         RestTemplate restTemplate = new RestTemplate();
         Product product1 = restTemplate.postForObject(
@@ -252,5 +269,23 @@ public class RestService {
         return storeResponse;
     }
 
+    public ProductType edit(ProductType productType) {
+        RestTemplate restTemplate = new RestTemplate();
+        ProductType productTypeResponse = restTemplate.postForObject(
+                "http://localhost:8181/producttype/edit",
+                productType,
+                ProductType.class);
+        return productTypeResponse;
+    }
+
+
+    public Visit create(Visit visit) {
+        RestTemplate restTemplate = new RestTemplate();
+        Visit visitResponse = restTemplate.postForObject(
+                "http://localhost:8181/visit/create",
+                visit,
+                Visit.class);
+        return visitResponse;
+    }
 
 }

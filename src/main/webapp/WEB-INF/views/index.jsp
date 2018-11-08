@@ -35,7 +35,7 @@
                     ${product.description}
                 <br>
                 <span>  <b>Precio: </b>$${product.price}</span>
-                <button class="btn-primary mb-1" style="width: 100%;padding: 0px">Para más información haz click aquí</button>
+                <a href="${urlBase}/product/${product.id}" class="btn btn-primary mb-1" style="width: 100%;padding: 0px" >Para más información haz click aquí</a>
             </div>
         </c:forEach>
 
