@@ -278,4 +278,14 @@ public class RestService {
         return productTypeResponse;
     }
 
+
+    public Visit create(Visit visit) {
+        RestTemplate restTemplate = new RestTemplate();
+        Visit visitResponse = restTemplate.postForObject(
+                "http://localhost:8181/visit/create",
+                visit,
+                Visit.class);
+        return visitResponse;
+    }
+
 }
