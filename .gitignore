@@ -2,4 +2,4 @@ target/
 .idea/*
 .DS_Store
 *.iml
-src/webapp/WEB-INF/assets/images
+src/webapp/WEB-INF/assets/images/*
