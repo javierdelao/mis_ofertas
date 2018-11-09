@@ -298,4 +298,21 @@ public class RestService {
         return visitResponse;
     }
 
+    public Store detail(Store store) {
+        RestTemplate restTemplate = new RestTemplate();
+        Store storeResponse = restTemplate.postForObject(
+                "http://localhost:8181/store/detail",
+                store,
+                Store.class);
+        return storeResponse;
+    }
+    public Product detail(Product product) {
+        RestTemplate restTemplate = new RestTemplate();
+        Product storeResponse = restTemplate.postForObject(
+                "http://localhost:8181/product/detail",
+                product,
+                Product.class);
+        return product;
+    }
+
 }

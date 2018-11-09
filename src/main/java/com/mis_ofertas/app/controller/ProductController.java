@@ -192,5 +192,13 @@ public class ProductController extends MainController {
         return "redirect:/product/";
     }
 
+    @RequestMapping(path = "/detail/{productId}", method = RequestMethod.GET)
+    public String detail(Model model, HttpServletRequest request, @PathVariable Long productId) throws ParseException {
+        SystemUser usuario = user(request);
+        Product product = restService.product(productId);
+        model.addAttribute("product", product);
+        return "producto/detalle";
+    }
+
 
 }

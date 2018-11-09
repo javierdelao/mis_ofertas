@@ -43,6 +43,7 @@
                     <th>Comuna</th>
                     <th>Ciudad</th>
                     <th>Pais</th>
+                    <th>Detalle</th>
                     <th>Editar</th>
                     <th>Eliminar</th>
                 </tr>
@@ -72,6 +73,10 @@
 
                         <td>
                                 ${store.commune.city.country.name}
+                        </td>
+                        <td>
+                            <a href="${urlBase}/store/detail/${store.id}" id="detalleT" title="Ver detalle" class="btn btn-primary btn-sm"><span
+                                    class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                         </td>
 
                         <td>
