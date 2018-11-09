@@ -196,6 +196,11 @@ public class ProductController extends MainController {
     public String detail(Model model, HttpServletRequest request, @PathVariable Long productId) throws ParseException {
         SystemUser usuario = user(request);
         Product product = restService.product(productId);
+        Visit visit=new Visit();
+        visit.setProduct(product);
+        visit.setSystemUser(usuario);
+        visit.setVisitDate(new Date());
+        visit = restService.create(visit);
 
 
         model.addAttribute("product", product);

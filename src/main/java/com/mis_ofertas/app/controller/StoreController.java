@@ -6,6 +6,7 @@
 
 package com.mis_ofertas.app.controller;
 
+import com.mis_ofertas.app.model.Product;
 import com.mis_ofertas.app.model.Store;
 import com.mis_ofertas.app.model.SystemUser;
 import org.springframework.stereotype.Controller;
@@ -103,9 +104,9 @@ public class StoreController extends MainController {
     public String detail(Model model, HttpServletRequest request, @PathVariable Long storeId) throws ParseException {
         SystemUser usuario = user(request);
         Store store = restService.store(storeId);
-
-
+        List<Product>productList=restService.products(store);
         model.addAttribute("store", store);
+        model.addAttribute("productList", productList);
         return "Tienda/detalleT";
 
 

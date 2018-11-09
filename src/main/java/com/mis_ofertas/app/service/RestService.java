@@ -20,6 +20,14 @@ public class RestService {
         return loginResponse;
     }
 
+    public List<Product> products(Store store) {
+        RestTemplate restTemplate = new RestTemplate();
+        Product[] productList = restTemplate.getForObject(
+                "http://localhost:8181/store/products/" + store.getId(),
+                Product[].class);
+        return Arrays.asList(productList);
+    }
+
 
     public List<Product> products() {
         RestTemplate restTemplate = new RestTemplate();
@@ -32,7 +40,7 @@ public class RestService {
     public List<Product> products(Area area) {
         RestTemplate restTemplate = new RestTemplate();
         Product[] productList = restTemplate.getForObject(
-                "http://localhost:8181/product/list/"+area.getId(),
+                "http://localhost:8181/product/list/" + area.getId(),
                 Product[].class);
         return Arrays.asList(productList);
     }
@@ -40,7 +48,7 @@ public class RestService {
   /*  public CustomProductList custom(SystemUser user) {
         RestTemplate restTemplate = new RestTemplate();
         CustomProductList customProductList = restTemplate.getForObject(
-                "http://localhost:8181/product/list/custom/"+user.getId(),
+                "http://localhost:8181/product/list/custom/" + user.getId(),
                 CustomProductList.class);
         return customProductList;
     }*/
@@ -64,7 +72,7 @@ public class RestService {
     public OfferType offerType(Long id) {
         RestTemplate restTemplate = new RestTemplate();
         OfferType offerType = restTemplate.getForObject(
-                "http://localhost:8181/offertype/"+id,
+                "http://localhost:8181/offertype/" + id,
                 OfferType.class);
         return offerType;
     }
@@ -72,7 +80,7 @@ public class RestService {
     public Offer offer(Long id) {
         RestTemplate restTemplate = new RestTemplate();
         Offer offer = restTemplate.getForObject(
-                "http://localhost:8181/offer/"+id,
+                "http://localhost:8181/offer/" + id,
                 Offer.class);
         return offer;
     }
@@ -80,16 +88,16 @@ public class RestService {
     public Product product(Long id) {
         RestTemplate restTemplate = new RestTemplate();
         Product product = restTemplate.getForObject(
-                "http://localhost:8181/product/"+id,
+                "http://localhost:8181/product/" + id,
                 Product.class);
         return product;
     }
 
 
-    public List<Product> products(SystemUser user,Boolean owner,Boolean active) {
+    public List<Product> products(SystemUser user, Boolean owner, Boolean active) {
         RestTemplate restTemplate = new RestTemplate();
         Product[] productList = restTemplate.getForObject(
-                "http://localhost:8181/product/list/"+user.getId()+"/"+owner+"/"+active,
+                "http://localhost:8181/product/list/" + user.getId() + "/" + owner + "/" + active,
                 Product[].class);
         return Arrays.asList(productList);
     }
@@ -97,7 +105,7 @@ public class RestService {
 
     public List<Store> stores() {
         RestTemplate restTemplate = new RestTemplate();
-        Store[] storeList= restTemplate.getForObject(
+        Store[] storeList = restTemplate.getForObject(
                 "http://localhost:8181/store/list",
                 Store[].class);
         return Arrays.asList(storeList);
@@ -106,11 +114,12 @@ public class RestService {
     public Store store(Long id) {
         RestTemplate restTemplate = new RestTemplate();
         Store store = restTemplate.getForObject(
-                "http://localhost:8181/store/"+id,
+                "http://localhost:8181/store/" + id,
                 Store.class);
         return store;
     }
-    public List<Store> stores(SystemUser user,Boolean owner,Boolean active) {
+
+    public List<Store> stores(SystemUser user, Boolean owner, Boolean active) {
         RestTemplate restTemplate = new RestTemplate();
         Store[] storeList = restTemplate.getForObject(
                 "http://localhost:8181/store/list/",
@@ -134,7 +143,7 @@ public class RestService {
         return productType;
     }
 
-    public List<ProductType> productTypes(SystemUser user,Boolean owner,Boolean active) {
+    public List<ProductType> productTypes(SystemUser user, Boolean owner, Boolean active) {
         RestTemplate restTemplate = new RestTemplate();
         ProductType[] productTypes = restTemplate.getForObject(
                 "http://localhost:8181/producttype/list",
@@ -306,6 +315,7 @@ public class RestService {
                 Store.class);
         return storeResponse;
     }
+
     public Product detail(Product product) {
         RestTemplate restTemplate = new RestTemplate();
         Product storeResponse = restTemplate.postForObject(
@@ -314,7 +324,6 @@ public class RestService {
                 Product.class);
         return product;
     }
-
 
 
 }
