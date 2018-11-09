@@ -49,6 +49,7 @@
                     <th>Tipo Producto</th>
                     <th>Usuario</th>
                     <th>Oferta activa</th>
+                    <th>Detalle</th>
                     <th>Editar</th>
                     <th>Eliminar</th>
 
@@ -131,7 +132,11 @@
                                         class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
                             </td>
                         </c:if>
+                        <td>
 
+                            <a href="${urlBase}/product/detail/${product.id}" id="detalleT" title="Ver detalle" class="btn btn-primary btn-sm"><span
+                                    class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                        </td>
 
                         <td>
 
