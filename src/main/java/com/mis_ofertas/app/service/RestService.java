@@ -2,6 +2,7 @@ package com.mis_ofertas.app.service;
 
 import com.mis_ofertas.app.model.*;
 import com.mis_ofertas.app.response.LoginResponse;
+import com.mis_ofertas.app.util.CustomProductList;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -234,6 +235,15 @@ public class RestService {
         return product1;
     }
 
+    public ProductType edit(ProductType productType) {
+        RestTemplate restTemplate = new RestTemplate();
+        ProductType productTypeResponse = restTemplate.postForObject(
+                "http://localhost:8181/producttype/edit",
+                productType,
+                ProductType.class);
+        return productTypeResponse;
+    }
+
     public Offer edit(Offer offer) {
         RestTemplate restTemplate = new RestTemplate();
         Offer offerResponse = restTemplate.postForObject(
@@ -251,6 +261,66 @@ public class RestService {
                 Store.class);
         return storeResponse;
     }
+
+    public Store detail(Store store) {
+        RestTemplate restTemplate = new RestTemplate();
+        Store storeResponse = restTemplate.postForObject(
+                "http://localhost:8181/store/detail",
+                store,
+                Store.class);
+        return storeResponse;
+    }
+    public Product detail(Product product) {
+        RestTemplate restTemplate = new RestTemplate();
+        Product storeResponse = restTemplate.postForObject(
+                "http://localhost:8181/product/detail",
+                product,
+                Product.class);
+        return product;
+    }
+
+    public List<Product> products(Area area) {
+        RestTemplate restTemplate = new RestTemplate();
+        Product[] productList = restTemplate.getForObject(
+                "http://localhost:8181/product/list/"+area.getId(),
+                Product[].class);
+        return Arrays.asList(productList);
+    }
+
+    public CustomProductList custom(SystemUser user) {
+        RestTemplate restTemplate = new RestTemplate();
+        CustomProductList customProductList = restTemplate.getForObject(
+                "http://localhost:8181/product/list/custom/"+user.getId(),
+                CustomProductList.class);
+        return customProductList;
+    }
+
+    public Visit create(Visit visit) {
+        RestTemplate restTemplate = new RestTemplate();
+        Visit visitResponse = restTemplate.postForObject(
+                "http://localhost:8181/visit/create",
+                visit,
+                Visit.class);
+        return visitResponse;
+    }
+
+    public List<ProductType> productTypes(SystemUser user,Boolean owner,Boolean active) {
+        RestTemplate restTemplate = new RestTemplate();
+        ProductType[] productTypes = restTemplate.getForObject(
+                "http://localhost:8181/producttype/list",
+                ProductType[].class);
+        return Arrays.asList(productTypes);
+    }
+
+    public ProductType create(ProductType productType) {
+        RestTemplate restTemplate = new RestTemplate();
+        ProductType productTypeResponse = restTemplate.postForObject(
+                "http://localhost:8181/producttype/create",
+                productType,
+                ProductType.class);
+        return productTypeResponse;
+    }
+
 
 
 }
