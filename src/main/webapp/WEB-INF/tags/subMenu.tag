@@ -51,10 +51,9 @@
 
 <div class="row ml-5">
     <div class="vertical-menu ">
-        <a href="#" class="active h10 centered">Home</a>
-        <a href="#" class="h10 centered">Link 1</a>
-        <a href="#" class="h10 centered">Link 2</a>
-        <a href="#" class="h10 centered">Link 3</a>
-        <a href="#" class="h10 centered">Link 4</a>
+        <a href="${urlBase}/home/" class="${area==null?'active':''} h10 centered">Home</a>
+        <c:forEach items="${areas}" var="areaTemp">
+            <a href="${urlBase}/home/${areaTemp.id}" class="${area.id==areaTemp.id?'active':''} h10 centered">${areaTemp.name}</a>
+        </c:forEach>
     </div>
 </div>

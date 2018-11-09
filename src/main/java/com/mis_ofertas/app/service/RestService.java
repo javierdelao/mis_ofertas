@@ -2,6 +2,7 @@ package com.mis_ofertas.app.service;
 
 import com.mis_ofertas.app.model.*;
 import com.mis_ofertas.app.response.LoginResponse;
+import com.mis_ofertas.app.util.CustomProductList;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -26,6 +27,22 @@ public class RestService {
                 "http://localhost:8181/product/list",
                 Product[].class);
         return Arrays.asList(productList);
+    }
+
+    public List<Product> products(Area area) {
+        RestTemplate restTemplate = new RestTemplate();
+        Product[] productList = restTemplate.getForObject(
+                "http://localhost:8181/product/list/"+area.getId(),
+                Product[].class);
+        return Arrays.asList(productList);
+    }
+
+    public CustomProductList custom(SystemUser user) {
+        RestTemplate restTemplate = new RestTemplate();
+        CustomProductList customProductList = restTemplate.getForObject(
+                "http://localhost:8181/product/list/custom/"+user.getId(),
+                CustomProductList.class);
+        return customProductList;
     }
 
     public List<Offer> offers() {
@@ -77,13 +94,6 @@ public class RestService {
         return Arrays.asList(productList);
     }
 
-    public Product products(Long id) {
-        RestTemplate restTemplate = new RestTemplate();
-        Product product = restTemplate.getForObject(
-                "http://localhost:8181/product/" + id,
-                Product.class);
-        return product;
-    }
 
     public List<Store> stores() {
         RestTemplate restTemplate = new RestTemplate();
