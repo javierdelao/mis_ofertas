@@ -78,5 +78,30 @@
     </div>
 </div>
 
+<h2>Store &raquo; Productos publicados</h2>
+<br />
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <tr>
+            <th>Producto</th>
+            <c:forEach items="${productList}" var="product">
+        </tr>
+
+            <tr>
+                <td>
+                        ${product.}
+
+                </td>
+
+
+
+            </tr>
+        </c:forEach>
+
+    </table>
+</div>
+</div>
+
+
 </body>
 </html>

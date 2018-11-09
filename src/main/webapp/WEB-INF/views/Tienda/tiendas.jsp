@@ -74,10 +74,6 @@
                         <td>
                                 ${store.commune.city.country.name}
                         </td>
-                        <td>
-                            <a href="${urlBase}/store/detail/${store.id}" id="detalleT" title="Ver detalle" class="btn btn-primary btn-sm"><span
-                                    class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                        </td>
 
                         <td>
 

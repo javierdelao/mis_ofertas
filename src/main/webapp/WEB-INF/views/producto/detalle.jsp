@@ -132,7 +132,7 @@
 
                     <tr>
                         <td>Codigo</td>
-                        <td>${product.offer.id} </td>
+                        <td> ${product.offer.id} </td>
 
                     </tr>
 
