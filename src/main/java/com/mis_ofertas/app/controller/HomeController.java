@@ -40,10 +40,10 @@ public class HomeController extends MainController{
     @RequestMapping(path = "/home", method = RequestMethod.GET)
     public String home(Model model,HttpServletRequest request) {
         SystemUser usuario=user(request);
-        /*CustomProductList customProductList=restService.custom(usuario);*/
+        CustomProductList customProductList=restService.custom(usuario);
         List<Area>areas=restService.areas();
         model.addAttribute("ok","ok");
-        /*model.addAttribute("customProductList",customProductList);*/
+        model.addAttribute("customProductList",customProductList);
         model.addAttribute("areas",areas);
         model.addAttribute("area",null);
 

@@ -45,13 +45,13 @@ public class RestService {
         return Arrays.asList(productList);
     }
 
-  /*  public CustomProductList custom(SystemUser user) {
+    public CustomProductList custom(SystemUser user) {
         RestTemplate restTemplate = new RestTemplate();
         CustomProductList customProductList = restTemplate.getForObject(
                 "http://localhost:8181/product/list/custom/" + user.getId(),
                 CustomProductList.class);
         return customProductList;
-    }*/
+    }
 
     public List<Offer> offers() {
         RestTemplate restTemplate = new RestTemplate();
