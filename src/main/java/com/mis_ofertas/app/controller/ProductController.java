@@ -9,6 +9,7 @@ package com.mis_ofertas.app.controller;
 import com.mis_ofertas.app.model.Image;
 import com.mis_ofertas.app.model.Product;
 import com.mis_ofertas.app.model.SystemUser;
+import com.mis_ofertas.app.model.Visit;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -51,6 +52,19 @@ public class ProductController extends MainController {
         }
         model.addAttribute("productList", productList);
         return "producto/productos";
+    }
+
+
+    @RequestMapping(path = "/{productId}", method = RequestMethod.GET)
+    public String product(Model model, HttpServletRequest request,@PathVariable Long productId) {
+        SystemUser usuario = user(request);
+        Product product=restService.product(productId);
+        Visit visit=new Visit();
+        visit.setProduct(product);
+        visit.setSystemUser(usuario);
+        visit.setVisitDate(new Date());
+        visit = restService.create(visit);
+        return "producto/producto";
     }
 
     @RequestMapping(path = "/create", method = RequestMethod.GET)

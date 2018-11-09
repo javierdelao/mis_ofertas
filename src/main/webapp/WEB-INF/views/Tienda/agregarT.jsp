@@ -35,7 +35,7 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">Nombre tienda</label>
                 <div class="col-sm-4">
-                    <input type="text" name="name" class="form-control" placeholder="Nombre">
+                    <input type="text" name="name" class="form-control" placeholder="Nombre" required>
                 </div>
             </div>
             <div class="form-group">
@@ -48,7 +48,7 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">Comunas</label>
                 <div class="col-sm-3">
-                    <select name="commune" class="form-control">
+                    <select name="commune" class="form-control" required>
                         <c:forEach items="${communes}" var="commune">
                             <option value="${commune.id}">${commune.name}</option>
                         </c:forEach>
@@ -59,7 +59,7 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">Ciudad</label>
                 <div class="col-sm-3">
-                    <select name="city" class="form-control">
+                    <select name="city" class="form-control" required>
                         <c:forEach items="${citys}" var="city">
                             <option value="${city.id}">${city.name}</option>
                         </c:forEach>
@@ -70,7 +70,7 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">Pais</label>
                 <div class="col-sm-3">
-                    <select name="country" class="form-control">
+                    <select name="country" class="form-control" required>
                         <c:forEach items="${countrys}" var="country">
                             <option value="${country.id}">${country.name}</option>
                         </c:forEach>

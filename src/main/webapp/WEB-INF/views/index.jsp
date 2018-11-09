@@ -22,24 +22,38 @@
     <div class="col-md-3 mt-5">
         <t:subMenu></t:subMenu>
     </div>
-
     <div class="col-md-9 mt-5">
-        <c:forEach items="${productList}" var="product">
-            <div class="col-md-3 mr-3 mb-3" style="border:solid 1px; height: 40vh;display: block">
-                <div class="row">
-                    <img src="${urlBase}/images/${product.image.path}" style="width:100%; ">
+        <c:forEach items="${customProductList.customProductListItems}" var="customProductListItem">
+           <div class="col-md-9 mt-5">
+               <br>
+               <c:if test="${customProductListItem.area!=null}">
+                   <span> Por que sabemos de tu interest en ${customProductListItem.area.name}  </span>
+               </c:if>
+               <c:if test="${customProductListItem.area==null}">
+                   <span> Productos recientemente publicados  </span>
+               </c:if>
+
+           </div>
+            <c:forEach items="${customProductListItem.products}" var="product">
+                <div class="col-md-3 mr-3 mb-3" style="border:solid 1px; height: 40vh;display: block">
+                    <div class="row">
+                        <img src="${urlBase}/images/${product.image.path}" style="width:100%; ">
+                    </div>
+                    <br>
+                        ${product.name}
+                    <br>
+                        ${product.description}
+                    <br>
+                    <span>  <b>Precio: </b>$${product.price}</span>
+                    <a href="${urlBase}/product/${product.id}" class="btn btn-primary mb-1"
+                       style="width: 100%;padding: 0px">Para más información haz click aquí</a>
                 </div>
-                <br>
-                    ${product.name}
-                <br>
-                    ${product.description}
-                <br>
-                <span>  <b>Precio: </b>$${product.price}</span>
-                <button class="btn-primary mb-1" style="width: 100%;padding: 0px">Para más información haz click aquí</button>
-            </div>
+            </c:forEach>
         </c:forEach>
 
     </div>
+
+
 
 </div>
 
