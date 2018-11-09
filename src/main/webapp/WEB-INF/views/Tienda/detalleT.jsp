@@ -78,18 +78,37 @@
     </div>
 </div>
 
+
+<div class="container">
+    <div class="content">
 <h2>Store &raquo; Productos publicados</h2>
 <br />
 <div class="table-responsive">
     <table class="table table-striped table-hover">
         <tr>
             <th>Producto</th>
+            <th>Run Usuario</th>
+            <th>Nombre Usuario</th>
+            <th>Apellido Usuario</th>
             <c:forEach items="${productList}" var="product">
         </tr>
 
             <tr>
                 <td>
-                        ${product.}
+                        ${product.name}
+
+                </td>
+
+                <td>
+                        ${product.user.rut}
+
+                </td>
+                <td>
+                        ${product.user.firstName}
+
+                </td>
+                <td>
+                        ${product.user.lastName}
 
                 </td>
 
@@ -101,6 +120,9 @@
     </table>
 </div>
 </div>
+</div>
+</div>
+
 
 
 </body>
