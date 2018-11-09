@@ -98,12 +98,18 @@ public class StoreController extends MainController {
 
     }
 
+
     @RequestMapping(path = "/detail/{storeId}", method = RequestMethod.GET)
     public String detail(Model model, HttpServletRequest request, @PathVariable Long storeId) throws ParseException {
         SystemUser usuario = user(request);
         Store store = restService.store(storeId);
+
+
         model.addAttribute("store", store);
         return "Tienda/detalleT";
+
+
     }
+
 
 }

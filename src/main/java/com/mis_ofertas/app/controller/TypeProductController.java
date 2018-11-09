@@ -19,7 +19,7 @@ public class TypeProductController extends MainController {
     public String home(Model model, HttpServletRequest request) {
         SystemUser usuario = user(request);
 
-        List<ProductType> productTypes = restService.productTypes(usuario, true, true);
+        List<ProductType> productTypes = restService.productTypes();
         model.addAttribute("productTypes", productTypes);
         return "tipoProducto/productoT";
     }

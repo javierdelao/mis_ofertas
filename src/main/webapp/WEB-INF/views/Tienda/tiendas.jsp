@@ -81,6 +81,12 @@
 
                         <td>
 
+                            <a href="${urlBase}/store/detail/${store.id}" id="detalleT" title="Ver detalle" class="btn btn-primary btn-sm"><span
+                                    class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                        </td>
+
+                        <td>
+
                             <a href="${urlBase}/store/edit/${store.id}" id="editarT" title="Editar datos" class="btn btn-primary btn-sm"><span
                                     class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                         </td>
@@ -99,6 +105,8 @@
     <div>
         <a href="${urlBase}/store/create" class="btn btn-sm btn-primary" >Agregar tienda</a>
     </div>
+
+
 </div>
 <center>
     <p>&copy; Sistemas Web Mis Ofertas</p>
