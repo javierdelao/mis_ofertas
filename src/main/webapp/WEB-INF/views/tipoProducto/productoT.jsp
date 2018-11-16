@@ -23,10 +23,11 @@
 <div class="container" id="dvShow">
     <div class="content">
         <h2>Tipos de Productos</h2>
-        <form class="form-inline" method="get">
+        <form class="form-inline" method="post" action="/typeProd/filter">
             <div class="form-group">
-                <input type="text" placeholder="Categoria">
-                <a class="btn btn-sm btn-primary" >Buscar</a>
+                <br>
+                <input name="textSearch" value="${textSearch}" type="text" placeholder="Ingrese palabra a buscar">
+                <input type="submit" class="btn btn-sm btn-primary" value="Buscar"></input>
             </div>
         </form>
         <br />

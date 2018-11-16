@@ -30,7 +30,7 @@
         <th></th>
         <th></th>
 
-        <form class="form-horizontal" action="${urlBase}/store/create" method="POST" >
+        <form class="form-horizontal" action="${urlBase}/store/create" method="POST" enctype="multipart/form-data">
 
             <div class="form-group">
                 <label class="col-sm-3 control-label">Nombre tienda</label>
@@ -46,11 +46,11 @@
             </div>
 
             <div class="form-group">
-                <label class="col-sm-3 control-label">Comunas</label>
+                <label class="col-sm-3 control-label">Pais</label>
                 <div class="col-sm-3">
-                    <select name="commune" class="form-control" required>
-                        <c:forEach items="${communes}" var="commune">
-                            <option value="${commune.id}">${commune.name}</option>
+                    <select name="country" class="form-control" required>
+                        <c:forEach items="${countrys}" var="country">
+                            <option value="${country.id}">${country.name}</option>
                         </c:forEach>
                     </select>
                 </div>
@@ -68,15 +68,26 @@
             </div>
 
             <div class="form-group">
-                <label class="col-sm-3 control-label">Pais</label>
+                <label class="col-sm-3 control-label">Comunas</label>
                 <div class="col-sm-3">
-                    <select name="country" class="form-control" required>
-                        <c:forEach items="${countrys}" var="country">
-                            <option value="${country.id}">${country.name}</option>
+                    <select name="commune" class="form-control" required>
+                        <c:forEach items="${communes}" var="commune">
+                            <option value="${commune.id}">${commune.name}</option>
                         </c:forEach>
                     </select>
                 </div>
             </div>
+
+            <div class="form-group">
+                <label class="col-sm-3 control-label">Imagen</label>
+                <div class="col-sm-4">
+                    <input type="file" name="image" class="form-control" placeholder="Tienda" required>
+                </div>
+            </div>
+
+
+
+
 
 
             <div class="form-group">

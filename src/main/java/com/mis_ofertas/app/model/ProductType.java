@@ -1,9 +1,6 @@
 package com.mis_ofertas.app.model;
 
-import javax.persistence.*;
-import java.io.Serializable;
-
-public class ProductType  {
+public class ProductType {
 
     private Long id;
 
@@ -13,6 +10,10 @@ public class ProductType  {
 
 
     public ProductType() {
+    }
+
+    public ProductType(Long id) {
+        this.id = id;
     }
 
     public Long getId() {
