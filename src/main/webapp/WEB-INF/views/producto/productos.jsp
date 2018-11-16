@@ -81,14 +81,13 @@
         <div class="table-responsive">
             <table class="table table-striped table-hover">
                 <tr>
-                    <th>Código</th>
+                    <th>Ver</th>
                     <th>Descripción</th>
                     <th>Nombre</th>
                     <th>Precio</th>
                     <th>Fecha Publicación</th>
                     <th>Imagen</th>
                     <th>Oferta activa</th>
-                    <th>Detalle</th>
                     <th>Editar</th>
                     <th>Eliminar</th>
 
@@ -103,7 +102,9 @@
                 <c:forEach items="${productList}" var="product">
                     <tr>
                         <td>
-                                ${product.id}
+                            <a href="${urlBase}/product/detail/${product.id}" id="detalleT" title="Ver detalle"
+                               class="btn btn-primary btn-sm"><span
+                                    class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
                         </td>
                         <td>
                                 ${product.description}
@@ -153,13 +154,6 @@
                                         class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
                             </td>
                         </c:if>
-                        <td>
-
-                            <a href="${urlBase}/product/detail/${product.id}" id="detalleT" title="Ver detalle"
-                               class="btn btn-primary btn-sm"><span
-                                    class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                        </td>
-
                         <td>
 
                             <a href="${urlBase}/product/edit/${product.id}" id="editarP" title="Editar datos"
