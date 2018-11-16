@@ -134,8 +134,7 @@
                         </c:if>
                         <td>
 
-                            <a href="${urlBase}/product/detail/${product.id}" id="detalleT" title="Ver detalle" class="btn btn-primary btn-sm"><span
-                                    class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+
                         </td>
 
                         <td>
