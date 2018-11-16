@@ -123,8 +123,11 @@ public class ProductController extends MainController {
         Product product = restService.product(productoId);
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
-        String dateString = format.format(product.getExpirationDate());
-        product.setExpirationDateString(dateString);
+        if(product.getExpirationDate()!=null){
+            String dateString = format.format(product.getExpirationDate());
+            product.setExpirationDateString(dateString);
+
+        }
         model.addAttribute("productTypes", restService.productTypes());
         model.addAttribute("areas", restService.areas());
         model.addAttribute("statuses", restService.statuses());
@@ -169,8 +172,10 @@ public class ProductController extends MainController {
         product.setName(name);
         product.setDescription(description);
         product.setIs_perishable(is_perishable);
-        Date date = new SimpleDateFormat("yyyy-MM-dd").parse(expirationDate);
-        product.setExpirationDate(date);
+        if(expirationDate!=null && !expirationDate.equals("")){
+            Date date = new SimpleDateFormat("yyyy-MM-dd").parse(expirationDate);
+            product.setExpirationDate(date);
+        }
         product.setPublicationDate(new Date());
         product.setPrice(price);
 
@@ -220,8 +225,11 @@ public class ProductController extends MainController {
         product.setName(name);
         product.setDescription(description);
         product.setIs_perishable(is_perishable);
-        Date date = new SimpleDateFormat("yyyy-MM-dd").parse(expirationDate);
-        product.setExpirationDate(date);
+        if(expirationDate!=null && !expirationDate.equals("")){
+            Date date = new SimpleDateFormat("yyyy-MM-dd").parse(expirationDate);
+            product.setExpirationDate(date);
+        }
+
         product.setPublicationDate(new Date());
         product.setPrice(price);
         product.setUser(usuario);

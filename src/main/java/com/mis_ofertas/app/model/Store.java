@@ -15,6 +15,8 @@ public class Store {
 
     private Commune commune;
 
+    private Image image;
+
     public Store() {
     }
 
@@ -48,6 +50,14 @@ public class Store {
 
     public void setCommune(Commune commune) {
         this.commune = commune;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
     }
 
     public void fetchCollections() {

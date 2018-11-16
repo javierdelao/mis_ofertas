@@ -20,7 +20,24 @@
         margin-top: 80px;
     }
 </style>
+<script>
+    function readURL(input) {
 
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#blah').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $("#imgInp").change(function () {
+        readURL(this);
+    });
+</script>
 
 <div class="container">
     <div class="content">
@@ -30,7 +47,7 @@
         <th></th>
         <th></th>
         <form class="form-horizontal" action="${urlBase}/product/edit" method="POST" enctype="multipart/form-data">
-            <input type="hidden" name="id"  value="${producto.id}">
+            <input type="hidden" name="id" value="${producto.id}">
 
             <div class="form-group">
                 <label class="col-sm-3 control-label">Nombre producto</label>
@@ -41,28 +58,31 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">Descripción producto</label>
                 <div class="col-sm-4">
-                    <input type="text" name="description" class="form-control" placeholder="Producto" value="${producto.description}">
+                    <input type="text" name="description" class="form-control" placeholder="Producto"
+                           value="${producto.description}">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label">Fecha Expiración</label>
                 <div class="col-sm-4">
-                    <input type="date" id="expirationDate" name="expirationDate" class="form-control" placeholder="Producto" value="${producto.expirationDateString}">
+                    <input type="date" id="expirationDate" name="expirationDate" class="form-control"
+                           placeholder="Producto" value="${producto.expirationDateString}">
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label">¿Perecible?</label>
                 <div class="col-sm-4">
                     <select class="form-control" name="is_perishable" value="value="${producto.is_perishable}"">
-                        <option selected="${producto.is_perishable==true?'selected':''}" value="true">Si</option>
-                        <option selected="${producto.is_perishable==false?'selected':''}" value="false">No</option>
+                    <option selected="${producto.is_perishable==true?'selected':''}" value="true">Si</option>
+                    <option selected="${producto.is_perishable==false?'selected':''}" value="false">No</option>
                     </select>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label">Precio</label>
                 <div class="col-sm-4">
-                    <input type="number" name="price" class="form-control" placeholder="Precio" value="${producto.price}">
+                    <input type="number" name="price" class="form-control" placeholder="Precio"
+                           value="${producto.price}">
                 </div>
             </div>
             <div class="form-group">
@@ -70,7 +90,8 @@
                 <div class="col-sm-3">
                     <select name="productType" class="form-control" value="${producto.productType.id}">
                         <c:forEach items="${productTypes}" var="productType">
-                            <option selected="${producto.productType.id==productType.id?'selected':''}" value="${productType.id}">${productType.name}</option>
+                            <option selected="${producto.productType.id==productType.id?'selected':''}"
+                                    value="${productType.id}">${productType.name}</option>
                         </c:forEach>
                     </select>
                 </div>
@@ -78,9 +99,18 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">Imagen</label>
                 <div class="col-sm-4">
-                    <input type="file" name="image" class="form-control" placeholder="Tienda">
+                    <input id="imgInp" type="file" name="image" class="form-control" placeholder="Tienda">
                 </div>
             </div>
+            <c:if test="${producto.image!=null}">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Imagen Actual</label>
+                    <div class="col-sm-4">
+                        <img src="${urlBase}/images/${producto.image.path}" style="width:150px; height:auto;">
+
+                    </div>
+                </div>
+            </c:if>
 
 
             <div class="form-group">
@@ -88,7 +118,8 @@
                 <div class="col-sm-3">
                     <select name="area" class="form-control" value="${producto.area.id}">
                         <c:forEach items="${areas}" var="area">
-                            <option selected="${producto.area.id==area.id?'selected':''}" value="${area.id}">${area.name}</option>
+                            <option selected="${producto.area.id==area.id?'selected':''}"
+                                    value="${area.id}">${area.name}</option>
                         </c:forEach>
                     </select>
                 </div>
@@ -98,8 +129,9 @@
                 <label class="col-sm-3 control-label">Estado</label>
                 <div class="col-sm-3">
                     <select name="status" class="form-control" value="${producto.status.id}">
-                        <c:forEach items="${statuses}" var="status" >
-                            <option selected="${producto.status.id==status.id?'selected':''}" value="${status.id}">${status.name}</option>
+                        <c:forEach items="${statuses}" var="status">
+                            <option selected="${producto.status.id==status.id?'selected':''}"
+                                    value="${status.id}">${status.name}</option>
                         </c:forEach>
                     </select>
                 </div>

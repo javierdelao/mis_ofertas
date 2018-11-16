@@ -76,9 +76,9 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 control-label">Fecha Expiracioón</label>
+                <label class="col-sm-3 control-label">Fecha Expiración</label>
                 <div class="col-sm-4">
-                    <input type="date" name="expirationDate" class="form-control" placeholder="Producto" required>
+                    <input type="date" name="expirationDate" class="form-control" placeholder="Producto">
                 </div>
             </div>
             <div class="form-group">
