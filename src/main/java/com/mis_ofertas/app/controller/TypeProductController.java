@@ -20,16 +20,28 @@ public class TypeProductController extends MainController {
         SystemUser usuario = user(request);
 
         List<ProductType> productTypes = restService.productTypes();
+        model.addAttribute("textSearch", "");
         model.addAttribute("productTypes", productTypes);
         return "tipoProducto/productoT";
     }
+
+    @RequestMapping(path = "/filter", method = RequestMethod.POST)
+    public String filter(Model model,
+                         HttpServletRequest request,
+                         @RequestParam("textSearch") String textSearch) {
+        SystemUser usuario = user(request);
+
+        List<ProductType> productTypes = restService.productTypes(textSearch);
+        model.addAttribute("textSearch", textSearch);
+        model.addAttribute("productTypes", productTypes);
+        return "tipoProducto/productoT";
+    }
+
+
     @RequestMapping(path = "/create", method = RequestMethod.GET)
     public String create(Model model, HttpServletRequest request) {
         SystemUser usuario = user(request);
-        /*
-        model.addAttribute("commune", restService.communes());
-        model.addAttribute("areas", restService.areas());
-        model.addAttribute("statuses", restService.statuses());*/
+
         return "tipoProducto/agregarT";
     }
     @RequestMapping(path = "/create", method = RequestMethod.POST)

@@ -23,17 +23,29 @@
 <div class="container" id="dvShow">
     <div class="content">
         <h2>Tiendas</h2>
-        <form class="form-inline" method="get">
+        <form class="form-inline" method="post" action="/store/filter">
             <div class="form-group">
-                <select name="filter" class="form-control" onchange="form.submit()">
-                    <option value="0">Filtros de datos de empleados</option>
-                    <option value="1">Electronica</option>
-                    <option value="2">Linea Blanca</option>
-                    <option value="3">Comida</option>
+                <span>Comuna</span><br>
+                <select onchange="form.submit()" name="communeId" class="form-control" value="${commune.id}">
+                    <option ${commune.id==0?'selected="selected"':''}
+                            value="0">
+                        Todos
+                    </option>
+                    <c:forEach items="${communes}" var="commune_">
+                        <option ${commune.id==commune_.id?'selected="selected"':''}
+                                value="${commune_.id}">
+                                ${commune_.name}</option>
+                    </c:forEach>
                 </select>
             </div>
+            <div class="form-group">
+                <br>
+                <input name="textSearch" value="${textSearch}" type="text" placeholder="Ingrese palabra a buscar">
+                <input type="submit" class="btn btn-sm btn-primary" value="Buscar"></input>
+            </div>
+
         </form>
-        <br />
+        <br/>
         <div class="table-responsive">
             <table class="table table-striped table-hover">
                 <tr>
@@ -53,7 +65,6 @@
                                 ${store.id}
 
 
-
                         </td>
 
 
@@ -61,7 +72,7 @@
                                 ${store.name}
                         </td>
                         <td>
-                            ${store.direction}
+                                ${store.direction}
                         </td>
                         <td>
                                 ${store.commune.name}
@@ -77,13 +88,15 @@
 
                         <td>
 
-                            <a href="${urlBase}/store/detail/${store.id}" id="detalleT" title="Ver detalle" class="btn btn-primary btn-sm"><span
+                            <a href="${urlBase}/store/detail/${store.id}" id="detalleT" title="Ver detalle"
+                               class="btn btn-primary btn-sm"><span
                                     class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                         </td>
 
                         <td>
 
-                            <a href="${urlBase}/store/edit/${store.id}" id="editarT" title="Editar datos" class="btn btn-primary btn-sm"><span
+                            <a href="${urlBase}/store/edit/${store.id}" id="editarT" title="Editar datos"
+                               class="btn btn-primary btn-sm"><span
                                     class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                         </td>
                         <td>
@@ -99,7 +112,7 @@
         </div>
     </div>
     <div>
-        <a href="${urlBase}/store/create" class="btn btn-sm btn-primary" >Agregar tienda</a>
+        <a href="${urlBase}/store/create" class="btn btn-sm btn-primary">Agregar tienda</a>
     </div>
 
 

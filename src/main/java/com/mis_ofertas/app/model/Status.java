@@ -1,9 +1,6 @@
 package com.mis_ofertas.app.model;
 
-import javax.persistence.*;
-import java.io.Serializable;
-
-public class Status  {
+public class Status {
 
     private Long id;
 
@@ -13,6 +10,10 @@ public class Status  {
 
 
     public Status() {
+    }
+
+    public Status(Long id) {
+        this.id = id;
     }
 
     public Long getId() {

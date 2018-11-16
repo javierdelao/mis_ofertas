@@ -1,9 +1,5 @@
 package com.mis_ofertas.app.model;
 
-import javax.persistence.*;
-import java.io.Serializable;
-
-
 public class Commune {
 
 
@@ -16,6 +12,10 @@ public class Commune {
     private City city;
 
     public Commune() {
+    }
+
+    public Commune(Long id) {
+        this.id = id;
     }
 
     public Long getId() {

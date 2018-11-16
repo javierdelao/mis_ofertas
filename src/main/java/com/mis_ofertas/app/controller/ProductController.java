@@ -6,10 +6,7 @@
 
 package com.mis_ofertas.app.controller;
 
-import com.mis_ofertas.app.model.Image;
-import com.mis_ofertas.app.model.Product;
-import com.mis_ofertas.app.model.SystemUser;
-import com.mis_ofertas.app.model.Visit;
+import com.mis_ofertas.app.model.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,26 +37,69 @@ public class ProductController extends MainController {
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public String home(Model model, HttpServletRequest request) {
         SystemUser usuario = user(request);
-
-        List<Product> productList = restService.products(usuario,true,true);
-
-        for(Product product:productList){
-            if(product.getOffer()!=null){
+        List<Product> productList = restService.products(usuario, true, null, null,null,"");
+        for (Product product : productList) {
+            if (product.getOffer() != null) {
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                 product.getOffer().setPublicationDateString(format.format(product.getOffer().getPublicationDate()));
                 product.getOffer().setExpirationDateString(format.format(product.getOffer().getExpirationDate()));
             }
         }
+        model.addAttribute("textSearch", "");
+        model.addAttribute("area", new Area(Long.parseLong("0")));
+        model.addAttribute("status", new Status(Long.parseLong("0")));
+        model.addAttribute("productType", new ProductType(Long.parseLong("0")));
+        model.addAttribute("statuses", restService.statuses());
+        model.addAttribute("areas", restService.areas());
+        model.addAttribute("productTypes", restService.productTypes());
+        model.addAttribute("productList", productList);
+        return "producto/productos";
+    }
+
+    @RequestMapping(path = "filter", method = RequestMethod.POST)
+    public String home(Model model, HttpServletRequest request,
+                       @RequestParam("statusId") Long statusId,
+                       @RequestParam("areaId") Long areaId,
+                       @RequestParam("productTypeId") Long productTypeId,
+                       @RequestParam("textSearch") String textSearch) {
+        SystemUser usuario = user(request);
+        Area area = restService.area(areaId);
+        if(area==null){
+            area=new Area(Long.parseLong("0"));
+        }
+        Status status = restService.status(statusId);
+        if(status==null){
+            status=new Status(Long.parseLong("0"));
+        }
+        ProductType productType=restService.productType(productTypeId);
+        if(productType==null){
+            productType=new ProductType(Long.parseLong("0"));
+        }
+        List<Product> productList = restService.products(usuario, true, status, area,productType,textSearch);
+        for (Product product : productList) {
+            if (product.getOffer() != null) {
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                product.getOffer().setPublicationDateString(format.format(product.getOffer().getPublicationDate()));
+                product.getOffer().setExpirationDateString(format.format(product.getOffer().getExpirationDate()));
+            }
+        }
+        model.addAttribute("textSearch", textSearch);
+        model.addAttribute("area", area);
+        model.addAttribute("status", status);
+        model.addAttribute("productType", productType);
+        model.addAttribute("statuses", restService.statuses());
+        model.addAttribute("areas", restService.areas());
+        model.addAttribute("productTypes", restService.productTypes());
         model.addAttribute("productList", productList);
         return "producto/productos";
     }
 
 
     @RequestMapping(path = "/{productId}", method = RequestMethod.GET)
-    public String product(Model model, HttpServletRequest request,@PathVariable Long productId) {
+    public String product(Model model, HttpServletRequest request, @PathVariable Long productId) {
         SystemUser usuario = user(request);
-        Product product=restService.product(productId);
-        Visit visit=new Visit();
+        Product product = restService.product(productId);
+        Visit visit = new Visit();
         visit.setProduct(product);
         visit.setSystemUser(usuario);
         visit.setVisitDate(new Date());
@@ -80,7 +120,7 @@ public class ProductController extends MainController {
     @RequestMapping(path = "/edit/{productoId}", method = RequestMethod.GET)
     public String edit(Model model, HttpServletRequest request, @PathVariable Long productoId) throws ParseException {
         SystemUser usuario = user(request);
-        Product product=restService.product(productoId);
+        Product product = restService.product(productoId);
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
         String dateString = format.format(product.getExpirationDate());
@@ -88,7 +128,7 @@ public class ProductController extends MainController {
         model.addAttribute("productTypes", restService.productTypes());
         model.addAttribute("areas", restService.areas());
         model.addAttribute("statuses", restService.statuses());
-        model.addAttribute("producto",product);
+        model.addAttribute("producto", product);
         return "producto/editar";
 
     }
@@ -151,7 +191,7 @@ public class ProductController extends MainController {
             Model model,
             HttpServletRequest request,
             @RequestParam("id") Long id,
-            @RequestParam(value = "image",required = false) MultipartFile image,
+            @RequestParam(value = "image", required = false) MultipartFile image,
             @RequestParam("name") String name,
             @RequestParam("description") String description,
             @RequestParam("expirationDate") String expirationDate,
@@ -162,7 +202,7 @@ public class ProductController extends MainController {
             @RequestParam("status") Long statusId) throws ParseException, IOException {
         SystemUser usuario = user(request);
         Product product = restService.product(id);
-        if(image!=null && image.getSize()>0){
+        if (image != null && image.getSize() > 0) {
             String uploadsDir = configProperties.getProperty("imagesLocalPath");
             if (!new File(uploadsDir).exists()) {
                 new File(uploadsDir).mkdir();
@@ -196,7 +236,7 @@ public class ProductController extends MainController {
     public String detail(Model model, HttpServletRequest request, @PathVariable Long productId) throws ParseException {
         SystemUser usuario = user(request);
         Product product = restService.product(productId);
-        Visit visit=new Visit();
+        Visit visit = new Visit();
         visit.setProduct(product);
         visit.setSystemUser(usuario);
         visit.setVisitDate(new Date());

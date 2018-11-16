@@ -6,6 +6,7 @@
 
 package com.mis_ofertas.app.controller;
 
+import com.mis_ofertas.app.model.Commune;
 import com.mis_ofertas.app.model.Product;
 import com.mis_ofertas.app.model.Store;
 import com.mis_ofertas.app.model.SystemUser;
@@ -30,7 +31,28 @@ public class StoreController extends MainController {
     public String home(Model model, HttpServletRequest request) {
         SystemUser usuario = user(request);
 
-        List<Store> storeList = restService.stores(usuario, true, true);
+        List<Store> storeList = restService.stores();
+        model.addAttribute("textSearch", "");
+        model.addAttribute("commune", new Commune(Long.parseLong("0")));
+        model.addAttribute("communes", restService.communes());
+        model.addAttribute("storeList", storeList);
+        return "Tienda/tiendas";
+    }
+
+    @RequestMapping(path = "/filter", method = RequestMethod.POST)
+    public String filter(Model model,
+                         HttpServletRequest request,
+                         @RequestParam("communeId") Long communeId,
+                         @RequestParam("textSearch") String textSearch) {
+        SystemUser usuario = user(request);
+        Commune commune=restService.commune(communeId);
+        if(commune==null){
+            commune=new Commune(Long.parseLong("0"));
+        }
+        List<Store> storeList = restService.stores(commune,textSearch);
+        model.addAttribute("textSearch", textSearch);
+        model.addAttribute("commune", commune);
+        model.addAttribute("communes", restService.communes());
         model.addAttribute("storeList", storeList);
         return "Tienda/tiendas";
     }

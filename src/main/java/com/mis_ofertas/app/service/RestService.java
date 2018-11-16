@@ -102,6 +102,32 @@ public class RestService {
         return Arrays.asList(productList);
     }
 
+    public List<Product> products(SystemUser user,
+                                  Boolean owner,
+                                  Status status,
+                                  Area area,
+                                  ProductType productType,
+                                  String textSearch) {
+        RestTemplate restTemplate = new RestTemplate();
+        String statusId = status == null ? "0" : status.getId().toString();
+        String areaId = area == null ? "0" : area.getId().toString();
+        String productTypeId = productType == null ? "0" : productType.getId().toString();
+        if (textSearch == null || textSearch.equals("")) {
+            textSearch = "null";
+        }
+        String url = "http://localhost:8181/product/list/"
+                + user.getId() + "/"
+                + owner + "/"
+                + statusId + "/"
+                + areaId + "/"
+                + productTypeId + "/"
+                + textSearch;
+        Product[] productList = restTemplate.getForObject(
+                url,
+                Product[].class);
+        return Arrays.asList(productList);
+    }
+
 
     public List<Store> stores() {
         RestTemplate restTemplate = new RestTemplate();
@@ -119,10 +145,16 @@ public class RestService {
         return store;
     }
 
-    public List<Store> stores(SystemUser user, Boolean owner, Boolean active) {
+    public List<Store> stores(Commune commune, String textSearch) {
+        String communeId = commune == null ? "0" : commune.getId().toString();
+        if (textSearch == null || textSearch.equals("")) {
+            textSearch = "null";
+        }
         RestTemplate restTemplate = new RestTemplate();
         Store[] storeList = restTemplate.getForObject(
-                "http://localhost:8181/store/list/",
+                "http://localhost:8181/store/list/"
+                        + communeId + "/" +
+                        textSearch,
                 Store[].class);
         return Arrays.asList(storeList);
     }
@@ -131,6 +163,17 @@ public class RestService {
         RestTemplate restTemplate = new RestTemplate();
         ProductType[] productTypes = restTemplate.getForObject(
                 "http://localhost:8181/producttype/list",
+                ProductType[].class);
+        return Arrays.asList(productTypes);
+    }
+
+    public List<ProductType> productTypes(String textSearch) {
+        RestTemplate restTemplate = new RestTemplate();
+        if (textSearch == null || textSearch.equals("")) {
+            textSearch = "null";
+        }
+        ProductType[] productTypes = restTemplate.getForObject(
+                "http://localhost:8181/producttype/list/" + textSearch,
                 ProductType[].class);
         return Arrays.asList(productTypes);
     }

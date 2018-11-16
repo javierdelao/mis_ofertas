@@ -14,6 +14,11 @@ public class Area {
     }
 
 
+    public Area(Long id) {
+        this.id = id;
+    }
+
+
     public Long getId() {
         return id;
     }
