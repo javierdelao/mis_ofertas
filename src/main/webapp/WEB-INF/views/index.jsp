@@ -47,82 +47,9 @@
         left:50%;
         margin-left:-167px;
     }
-    #product-front, #product-back{
-        width:335px;
-        height:500px;
-        background:#fff;
-        position:absolute;
-        left:-5px;
-        top:-5px;
-        -webkit-transition: all 100ms ease-out;
-        -moz-transition: all 100ms ease-out;
-        -o-transition: all 100ms ease-out;
-        transition: all 100ms ease-out;
-    }
-    #product-back{
-        display:none;
-        transform: rotateY( 180deg );
-    }
-    #product-card.animate #product-back, #product-card.animate #product-front{
-        top:0px;
-        left:0px;
-        -webkit-transition: all 100ms ease-out;
-        -moz-transition: all 100ms ease-out;
-        -o-transition: all 100ms ease-out;
-        transition: all 100ms ease-out;
-    }
-    #product-card{
-        width:325px;
-        height:490px;
-        position:absolute;
-        top:10px;
-        left:10px;
-        overflow:hidden;
-        transform-style: preserve-3d;
-        -webkit-transition:  100ms ease-out;
-        -moz-transition:  100ms ease-out;
-        -o-transition:  100ms ease-out;
-        transition:  100ms ease-out;
-    }
-    div#product-card.flip-10{
-        -webkit-transform: rotateY( -10deg );
-        -moz-transform: rotateY( -10deg );
-        -o-transform: rotateY( -10deg );
-        transform: rotateY( -10deg );
-        transition:  50ms ease-out;
-    }
-    div#product-card.flip90{
-        -webkit-transform: rotateY( 90deg );
-        -moz-transform: rotateY( 90deg );
-        -o-transform: rotateY( 90deg );
-        transform: rotateY( 90deg );
-        transition:  100ms ease-in;
-    }
-    div#product-card.flip190{
-        -webkit-transform: rotateY( 190deg );
-        -moz-transform: rotateY( 190deg );
-        -o-transform: rotateY( 190deg );
-        transform: rotateY( 190deg );
-        transition:  100ms ease-out;
-    }
-    div#product-card.flip180{
-        -webkit-transform: rotateY( 180deg );
-        -moz-transform: rotateY( 180deg );
-        -o-transform: rotateY( 180deg );
-        transform: rotateY( 180deg );
-        transition:  150ms ease-out;
-    }
-    #product-card.animate{
-        top:5px;
-        left:5px;
-        width:335px;
-        height:500px;
-        box-shadow:0px 13px 21px -5px rgba(0, 0, 0, 0.3);
-        -webkit-transition:  100ms ease-out;
-        -moz-transition:  100ms ease-out;
-        -o-transition:  100ms ease-out;
-        transition:  100ms ease-out;
-    }
+
+
+
     .stats-container{
         background:#fff;
         position:absolute;
@@ -136,13 +63,7 @@
         -o-transition: all 200ms ease-out;
         transition: all 200ms ease-out;
     }
-    #product-card.animate .stats-container{
-        top:272px;
-        -webkit-transition: all 200ms ease-out;
-        -moz-transition: all 200ms ease-out;
-        -o-transition: all 200ms ease-out;
-        transition: all 200ms ease-out;
-    }
+
     .stats-container .product_name{
         font-size:22px;
         color:#393c45;
@@ -167,13 +88,7 @@
         background: black;
         opacity:0;
     }
-    #product-card.animate .image_overlay{
-        opacity:0.7;
-        -webkit-transition: all 200ms ease-out;
-        -moz-transition: all 200ms ease-out;
-        -o-transition: all 200ms ease-out;
-        transition: all 50ms ease-out;
-    }
+
     .product-options{
         padding:2px 0 0;
     }
@@ -214,17 +129,8 @@
         cursor:pointer;
 
     }
-    #product-card.animate #view_details{
-        opacity:1;
-        width:152px;
-        font-size:15px;
-        margin-left:-75px;
-        top:115px;
-        -webkit-transition: all 200ms ease-out;
-        -moz-transition: all 200ms ease-out;
-        -o-transition: all 200ms ease-out;
-        transition: all 200ms ease-out;
-    }
+
+
     div.shadow{
         width:335px;height:520px;
         opacity:0;
@@ -238,7 +144,71 @@
         background: -moz-linear-gradient(right,rgba(0,0,0,0.1),rgba(0,0,0,0.2));
         background: linear-gradient(to right, rgba(0,0,0,0.1), rgba(0,0,0,0.2));
     }
-    #product-back div.shadow{
+<c:forEach items="${customProductList.customProductListItems}" var="customProductListItem">
+    <c:forEach items="${customProductListItem.products}" var="product">
+    #product-front${product.id}, #product-back${product.id}{
+        width:335px;
+        height:500px;
+        background:#fff;
+        position:absolute;
+        left:-5px;
+        top:-5px;
+        -webkit-transition: all 100ms ease-out;
+        -moz-transition: all 100ms ease-out;
+        -o-transition: all 100ms ease-out;
+        transition: all 100ms ease-out;
+    }
+
+
+    #product-back${product.id}{
+        display:none;
+        transform: rotateY( 180deg );
+    }
+    #product-card.animate #product-back${product.id}, #product-card.animate #product-front${product.id}{
+        top:0px;
+        left:0px;
+        -webkit-transition: all 100ms ease-out;
+        -moz-transition: all 100ms ease-out;
+        -o-transition: all 100ms ease-out;
+        transition: all 100ms ease-out;
+    }
+
+    #product-card${product.id}{
+        width:325px;
+        height:490px;
+        position:absolute;
+        top:10px;
+        left:10px;
+        overflow:hidden;
+        transform-style: preserve-3d;
+        -webkit-transition:  100ms ease-out;
+        -moz-transition:  100ms ease-out;
+        -o-transition:  100ms ease-out;
+        transition:  100ms ease-out;
+    }
+    div#product-card${product.id}.flip-10{
+        -webkit-transform: rotateY( -10deg );
+        -moz-transform: rotateY( -10deg );
+        -o-transform: rotateY( -10deg );
+        transform: rotateY( -10deg );
+        transition:  50ms ease-out;
+    }
+    div#product-card${product.id}.flip90{
+        -webkit-transform: rotateY( 90deg );
+        -moz-transform: rotateY( 90deg );
+        -o-transform: rotateY( 90deg );
+        transform: rotateY( 90deg );
+        transition:  100ms ease-in;
+    }
+    div#product-card${product.id}.flip190{
+        -webkit-transform: rotateY( 190deg );
+        -moz-transform: rotateY( 190deg );
+        -o-transform: rotateY( 190deg );
+        transform: rotateY( 190deg );
+        transition:  100ms ease-out;
+    }
+
+    #product-back${product.id} div.shadow{
         z-index:10;
         opacity:1;
         background: -webkit-linear-gradient(left,rgba(0,0,0,0.2),rgba(0,0,0,0.1));
@@ -246,6 +216,57 @@
         background: -moz-linear-gradient(right,rgba(0,0,0,0.2),rgba(0,0,0,0.1));
         background: linear-gradient(to right, rgba(0,0,0,0.2), rgba(0,0,0,0.1));
     }
+
+    #product-card${product.id}.animate #view_details{
+        opacity:1;
+        width:152px;
+        font-size:15px;
+        margin-left:-75px;
+        top:115px;
+        -webkit-transition: all 200ms ease-out;
+        -moz-transition: all 200ms ease-out;
+        -o-transition: all 200ms ease-out;
+        transition: all 200ms ease-out;
+    }
+
+    #product-card${product.id}.animate .image_overlay{
+        opacity:0.7;
+        -webkit-transition: all 200ms ease-out;
+        -moz-transition: all 200ms ease-out;
+        -o-transition: all 200ms ease-out;
+        transition: all 50ms ease-out;
+    }
+
+    #product-card${product.id}.animate .stats-container{
+        top:272px;
+        -webkit-transition: all 200ms ease-out;
+        -moz-transition: all 200ms ease-out;
+        -o-transition: all 200ms ease-out;
+        transition: all 200ms ease-out;
+    }
+
+    div#product-card${product.id}.flip180{
+        -webkit-transform: rotateY( 180deg );
+        -moz-transform: rotateY( 180deg );
+        -o-transform: rotateY( 180deg );
+        transform: rotateY( 180deg );
+        transition:  150ms ease-out;
+    }
+    #product-card${product.id}.animate{
+        top:5px;
+        left:5px;
+        width:335px;
+        height:500px;
+        box-shadow:0px 13px 21px -5px rgba(0, 0, 0, 0.3);
+        -webkit-transition:  100ms ease-out;
+        -moz-transition:  100ms ease-out;
+        -o-transition:  100ms ease-out;
+        transition:  100ms ease-out;
+    }
+
+    </c:forEach>
+    </c:forEach>
+    
     #flip-back{
         position:absolute;
         top:20px;
@@ -442,8 +463,13 @@
 
     $(document).ready(function(){
 
+
+
+        <c:forEach items="${customProductList.customProductListItems}" var="customProductListItem">
+            <c:forEach items="${customProductListItem.products}" var="product">
+
         // Lift card and show stats on Mouseover
-        $('#product-card').hover(function(){
+        $('#product-card${product.id}').hover(function(){
             $(this).addClass('animate');
             $('div.carouselNext, div.carouselPrev').addClass('visible');
         }, function(){
@@ -453,9 +479,9 @@
 
         // Flip card to the back side
         $('#view_details').click(function(){
-            $('#product-card').addClass('flip-10');
+            $('#product-card${product.id}').addClass('flip-10');
             setTimeout(function(){
-                $('#product-card').removeClass('flip-10').addClass('flip90').find('div.shadow').show().fadeTo( 80 , 1, function(){
+                $('#product-card${product.id}').removeClass('flip-10').addClass('flip90').find('div.shadow').show().fadeTo( 80 , 1, function(){
                     $('#product-front, #product-front div.shadow').hide();
                 });
             }, 50);
@@ -464,27 +490,36 @@
         // Flip card back to the front side
         $('#flip-back').click(function(){
 
-            $('#product-card').removeClass('flip180').addClass('flip190');
+            $('#product-card${product.id}').removeClass('flip180').addClass('flip190');
             setTimeout(function(){
-                $('#product-card').removeClass('flip190').addClass('flip90');
+                $('#product-card${product.id}').removeClass('flip190').addClass('flip90');
 
-                $('#product-back div.shadow').css('opacity', 0).fadeTo( 100 , 1, function(){
-                    $('#product-back, #product-back div.shadow').hide();
-                    $('#product-front, #product-front div.shadow').show();
+                $('#product-back${product.id} div.shadow').css('opacity', 0).fadeTo( 100 , 1, function(){
+                    $('#product-back${product.id}, #product-back${product.id} div.shadow').hide();
+                    $('#product-front${product.id}, #product-front${product.id} div.shadow').show();
                 });
             }, 50);
 
             setTimeout(function(){
-                $('#product-card').removeClass('flip90').addClass('flip-10');
-                $('#product-front div.shadow').show().fadeTo( 100 , 0);
+                $('#product-card${product.id}').removeClass('flip90').addClass('flip-10');
+                $('#product-front${product.id} div.shadow').show().fadeTo( 100 , 0);
                 setTimeout(function(){
-                    $('#product-front div.shadow').hide();
-                    $('#product-card').removeClass('flip-10').css('transition', '100ms ease-out');
+                    $('#product-front${product.id} div.shadow').hide();
+                    $('#product-card${product.id}').removeClass('flip-10').css('transition', '100ms ease-out');
                     $('#cx, #cy').removeClass('s1 s2 s3');
                 }, 100);
             }, 150);
 
         });
+
+        </c:forEach>
+        </c:forEach>
+
+
+
+
+
+
 
 
         /* ----  Image Gallery Carousel   ---- */
@@ -526,6 +561,7 @@
     });
 
 </Script>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
 
 <div class="row">
 
@@ -548,11 +584,10 @@
 
                 <div class="col-md-5 mr-2 mb-2" style="border:solid 0px; height: 100vh; display: block">
                     <div class="row">
-                        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
 
                         <div id="make-3D-space">
-                            <div id="product-card">
-                                <div id="product-front">
+                            <div id="product-card${product.id}">
+                                <div id="product-front${product.id}">
                                     <div class="shadow"></div>
                                     <img src="${urlBase}/images/${product.image.path}" style="width:100%; ">
                                     <div class="image_overlay"></div>
@@ -572,7 +607,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="product-back">
+                            <div id="product-back${product.id}">
                                 <div class="shadow"></div>
                                 <div id="carousel">
                                     <ul>
