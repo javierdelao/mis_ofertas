@@ -85,6 +85,14 @@ public class RestService {
         return offer;
     }
 
+    public List<Offer> offerHistory(Product product) {
+        RestTemplate restTemplate = new RestTemplate();
+        Offer[] offerList = restTemplate.getForObject(
+                "http://localhost:8181/offer/history/" + product.getId(),
+                Offer[].class);
+        return Arrays.asList(offerList);
+    }
+
     public Product product(Long id) {
         RestTemplate restTemplate = new RestTemplate();
         Product product = restTemplate.getForObject(

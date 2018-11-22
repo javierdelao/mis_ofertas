@@ -126,7 +126,6 @@ public class ProductController extends MainController {
         if(product.getExpirationDate()!=null){
             String dateString = format.format(product.getExpirationDate());
             product.setExpirationDateString(dateString);
-
         }
         model.addAttribute("productTypes", restService.productTypes());
         model.addAttribute("areas", restService.areas());
@@ -249,9 +248,21 @@ public class ProductController extends MainController {
         visit.setSystemUser(usuario);
         visit.setVisitDate(new Date());
         visit = restService.create(visit);
+        List<Offer>offers=restService.offerHistory(product);
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-YYYY");
 
-
+        for(Offer offer:offers){
+            if(offer.getExpirationDate()!=null){
+                String dateString = format.format(offer.getExpirationDate());
+                offer.setExpirationDateString(dateString);
+            }
+            if(offer.getPublicationDate()!=null){
+                String dateString = format.format(offer.getPublicationDate());
+                offer.setPublicationDateString(dateString);
+            }
+        }
         model.addAttribute("product", product);
+        model.addAttribute("offerHistory", offers);
         return "producto/detalle";
 
 

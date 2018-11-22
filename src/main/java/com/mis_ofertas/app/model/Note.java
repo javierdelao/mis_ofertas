@@ -16,6 +16,12 @@ public class Note {
     private List<Document> documents;
 
 
+    private SystemUser systemUser;
+
+
+    private Product product;
+
+
     public Note() {
     }
 
@@ -49,6 +55,22 @@ public class Note {
 
     public void setDocuments(List<Document> documents) {
         this.documents = documents;
+    }
+
+    public SystemUser getSystemUser() {
+        return systemUser;
+    }
+
+    public void setSystemUser(SystemUser systemUser) {
+        this.systemUser = systemUser;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public void fetchCollections() {

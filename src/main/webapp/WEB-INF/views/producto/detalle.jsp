@@ -379,31 +379,16 @@
         <div class="col-md-8">
 
             <ol class="timeline">
-                <li>2000
-                    <span>
-      Infos about the year 2000.
+                <c:forEach items="${offerHistory}" var="offer">
+                    <li>${offer.publicationDateString}
+                        <span>
+                            Del ${offer.publicationDateString} <br>
+                                Hasta ${offer.expirationDateString}<br>
+      ${offer.discount}% de descuento
     </span>
-                </li>
-                <li>2001 (test)
-                    <span>
-      Infos about the year 2001.
-    </span>
-                </li>
-                <li>2002
-                    <span>
-      Infos about the year 2002.
-    </span>
-                </li>
-                <li>2003
-                    <span>
-      Infos about the year 2003.
-    </span>
-                </li>
-                <li>2004
-                    <span>
-      Infos about the year 2004.
-    </span>
-                </li>
+                    </li>
+                </c:forEach>
+
             </ol>
 
         </div>
