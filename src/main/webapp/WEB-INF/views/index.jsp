@@ -266,7 +266,7 @@
 
     </c:forEach>
     </c:forEach>
-    
+
     #flip-back{
         position:absolute;
         top:20px;
