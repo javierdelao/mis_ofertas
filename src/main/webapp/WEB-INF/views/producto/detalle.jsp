@@ -93,6 +93,7 @@
         border-top: 1px dotted #bbb;
         padding: 10px;
     }
+
     html, body {
         background-color: #F0F0F0;
         font-family: Arial, sans-serif;
@@ -167,32 +168,54 @@
         display: block;
         transform: rotate(45deg);
     }
-    .stars {
-        cursor: pointer;
-
-    &:hover {
-    .star polygon {
-        fill: #ffd055 !important;
-    }
-    }
-
-    .star {
-        float: left;
-    }
-    .polygon {
-        fill: #d8d8d8;
-    }
-
-
-
 
 
 </style>
 <script>
-    $('.star.rating').click(function(){
-        console.log( $(this).parent().data('stars') + ", " + $(this).data('rating'));
-        $(this).parent().attr('data-stars', $(this).data('rating'));
+    $(document).ready(function () {
+
+        var fillstar = function (number) {
+            for (var i = 1; i < 6; i++) {
+                $("#star-" + i).css("background-color", "white");
+            }
+            for (var i = 1; i <= number; i++) {
+                $("#star-" + i).css("background-color", "yellow");
+            }
+        }
+
+        var sendValoration = function (valoration) {
+            $("#valorationNumber").val(valoration);
+            $("#valorationForm").submit();
+        }
+
+        var loadStar = function () {
+            <c:if test="${valoration!=null}">
+            var valoration =${valoration.valoration_star};
+            if (valoration) {
+                $("#valorationNumber").val(valoration);
+                fillstar(valoration);
+            }
+            </c:if>
+        }
+
+
+        loadStar();
     });
+
+    var fillstar = function (number) {
+        for (var i = 1; i < 6; i++) {
+            $("#star-" + i).css("background-color", "white");
+        }
+        for (var i = 1; i <= number; i++) {
+            $("#star-" + i).css("background-color", "yellow");
+        }
+    }
+
+    var sendValoration = function (valoration) {
+        $("#valorationNumber").val(valoration);
+        $("#valorationForm").submit();
+    }
+
 </script>
 
 
@@ -207,23 +230,21 @@
                 <img src="${urlBase}/images/${product.image.path}" style="width:100%; height:100%;">
             </div>
             <div class="row">
-                <div class="stars" data-stars="1">
-                    <svg height="25" width="23" class="star rating" data-rating="1">
-                        <polygon points="9.9, 1.1, 3.3, 21.78, 19.8, 8.58, 0, 8.58, 16.5, 21.78" style="fill-rule:nonzero;"/>
-                    </svg>
-                    <svg height="25" width="23" class="star rating" data-rating="2">
-                        <polygon points="9.9, 1.1, 3.3, 21.78, 19.8, 8.58, 0, 8.58, 16.5, 21.78" style="fill-rule:nonzero;"/>
-                    </svg>
-                    <svg height="25" width="23" class="star rating" data-rating="3">
-                        <polygon points="9.9, 1.1, 3.3, 21.78, 19.8, 8.58, 0, 8.58, 16.5, 21.78" style="fill-rule:nonzero;"/>
-                    </svg>
-                    <svg height="25" width="23" class="star rating" data-rating="4">
-                        <polygon points="9.9, 1.1, 3.3, 21.78, 19.8, 8.58, 0, 8.58, 16.5, 21.78" style="fill-rule:nonzero;"/>
-                    </svg>
-                    <svg height="25" width="23" class="star rating" data-rating="5">
-                        <polygon points="9.9, 1.1, 3.3, 21.78, 19.8, 8.58, 0, 8.58, 16.5, 21.78" style="fill-rule:nonzero;"/>
-                    </svg>
+                <div class="stars" style="text-align: center">
+                    <form id="valorationForm" action="/product/valoration" method="post">
+                        <input type="hidden" id="valorationNumber" name="valorationNumber">
+                        <input type="hidden" value="${product.id}" name="productId">
+                    </form>
+                    <i id="star-1" class="far fa-star fa-2x" onclick="sendValoration(1)" onmouseover="fillstar(1)"></i>
+                    <i id="star-2" class="far fa-star fa-2x" onclick="sendValoration(2)" onmouseover="fillstar(2)"></i>
+                    <i id="star-3" class="far fa-star fa-2x" onclick="sendValoration(3)" onmouseover="fillstar(3)"></i>
+                    <i id="star-4" class="far fa-star fa-2x" onclick="sendValoration(4)" onmouseover="fillstar(4)"></i>
+                    <i id="star-5" class="far fa-star fa-2x" onclick="sendValoration(5)" onmouseover="fillstar(5)"></i>
+
                 </div>
+
+                </svg>
+
             </div>
         </div>
         <div class="col-md-8">
@@ -312,11 +333,10 @@
     </div>
 
 
-<div class="row">
+    <div class="row">
 
 
-
-</div>
+    </div>
 
     <div class="row">
 
@@ -324,52 +344,36 @@
 
             <div class="detailBox">
                 <div class="titleBox">
-                    <label>Comment Box</label>
+                    <label>Comentarios</label>
                 </div>
                 <div class="commentBox">
 
-                    <p class="taskDescription">Lorem Ipsum is simply dummy text of the printing and typesetting
-                        industry.</p>
+                    <p class="taskDescription">Aquí puedes ingresar los comentarios de tu experiencia con el
+                        producto</p>
                 </div>
                 <div class="actionBox">
                     <ul class="commentList">
-                        <li>
-                            <div class="commenterImage">
-                                <img src="http://placekitten.com/50/50"/>
-                            </div>
-                            <div class="commentText">
-                                <p class="">Hello this is a test comment.</p> <span
-                                    class="date sub-text">on March 5th, 2014</span>
+                        <c:forEach items="${notes}" var="note">
+                            <li>
+                                <div class="commenterImage">
+                                    <img src="${urlBase}/default/h.jpg"/>
+                                </div>
+                                <div class="commentText">
+                                    <p class="">${note.text}</p>
+                                    <span class="date sub-text">${note.systemUser.firstName} ${note.systemUser.lastName}</span><br>
+                                    <span class="date sub-text">${note.commentDate}</span>
+                                </div>
+                            </li>
+                        </c:forEach>
 
-                            </div>
-                        </li>
-                        <li>
-                            <div class="commenterImage">
-                                <img src="http://placekitten.com/45/45"/>
-                            </div>
-                            <div class="commentText">
-                                <p class="">Hello this is a test comment and this comment is particularly very long and it
-                                    goes on and on and on.</p> <span class="date sub-text">on March 5th, 2014</span>
-
-                            </div>
-                        </li>
-                        <li>
-                            <div class="commenterImage">
-                                <img src="http://placekitten.com/40/40"/>
-                            </div>
-                            <div class="commentText">
-                                <p class="">Hello this is a test comment.</p> <span
-                                    class="date sub-text">on March 5th, 2014</span>
-
-                            </div>
-                        </li>
                     </ul>
-                    <form class="form-inline" role="form">
+                    <form class="form-inline" role="form" action="/product/comment" method="post">
                         <div class="form-group">
-                            <input class="form-control" type="text" placeholder="Your comments"/>
+                            <input type="hidden" value="${product.id}" name="productId">
+                            <input class="form-control" type="text" name="text" placeholder="Tu comentario"/>
                         </div>
                         <div class="form-group">
-                            <button class="btn btn-default">Add</button>
+                            <input type="submit" class="btn btn-default" value="Comentar"></input>
                         </div>
                     </form>
                 </div>
@@ -394,7 +398,6 @@
         </div>
 
     </div>
-
 
 
 </div>
