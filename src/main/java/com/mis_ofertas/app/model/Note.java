@@ -21,12 +21,6 @@ public class Note {
     private Product product;
 
 
-    private SystemUser systemUser;
-
-
-    private Product product;
-
-
     public Note() {
     }
 
