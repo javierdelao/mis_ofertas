@@ -360,6 +360,9 @@
                                 </div>
                                 <div class="commentText">
                                     <p class="">${note.text}</p>
+                                    <p><a data-toggle="modal" data-target="#myModal">
+                                        <i class="far fa-file"></i>
+                                    </a></p>
                                     <span class="date sub-text">${note.systemUser.firstName} ${note.systemUser.lastName}</span><br>
                                     <span class="date sub-text">${note.commentDate}</span>
                                 </div>
@@ -400,6 +403,33 @@
     </div>
 
 
+</div>
+<style>
+    .modal-backdrop{
+        z-index:-100 !important;
+    }
+</style>
+
+<!-- Modal -->
+<div id="myModal" class="modal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Documento adjunto</h4>
+            </div>
+            <div class="modal-body">
+                <embed src="${urlBase}/documents/bd.pdf?zoom=50" width="575" height="500">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
 </div>
 
 </body>
