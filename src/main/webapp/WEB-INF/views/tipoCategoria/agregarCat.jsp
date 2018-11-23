@@ -1,3 +1,10 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: Felipe Rothen
+  Date: 17/10/2018
+  Time: 21:25
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
@@ -17,27 +24,26 @@
 
 <div class="container">
     <div class="content">
-        <h2>Tipos de Productos &raquo; Editar datos</h2>
+        <h2>Categorias &raquo; Agregar datos</h2>
         <th></th>
         <th></th>
         <th></th>
         <th></th>
-        <form class="form-horizontal" action="${urlBase}/typeProd/edit" method="POST" enctype="multipart/form-data">
 
-            <input type="hidden" name="id" value="${productoTipo.id}">
+        <form class="form-horizontal" action="${urlBase}/typeCat/create" method="POST" enctype="multipart/form-data">
+
             <div class="form-group">
-                <label class="col-sm-3 control-label">Nombre Tipo Producto</label>
+                <label class="col-sm-3 control-label">Nombre categoria</label>
                 <div class="col-sm-4">
-                    <input type="text" name="name" class="form-control"  placeholder="Categoria" value="${productoTipo.name}">
+                    <input type="text" name="name" class="form-control" placeholder="Nombre" required>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label">Descripcion</label>
                 <div class="col-sm-4">
-                    <input type="text" name="description" class="form-control"  placeholder="Descripcion" value="${productoTipo.description}">
+                    <input type="text" name="description" class="form-control" placeholder="Descripcion" required>
                 </div>
             </div>
-
             <div class="form-group">
                 <label class="col-sm-3 control-label"></label>
                 <div class="col-sm-3">

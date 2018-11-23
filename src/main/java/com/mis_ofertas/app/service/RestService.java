@@ -47,9 +47,11 @@ public class RestService {
 
     public CustomProductList custom(SystemUser user) {
         RestTemplate restTemplate = new RestTemplate();
+        System.out.println("http://localhost:8181/product/list/custom/" + user.getId());
         CustomProductList customProductList = restTemplate.getForObject(
                 "http://localhost:8181/product/list/custom/" + user.getId(),
                 CustomProductList.class);
+        System.out.println(customProductList.getCustomProductListItems().size());
         return customProductList;
     }
 
@@ -210,6 +212,25 @@ public class RestService {
         return area;
     }
 
+    public List<Area> areas(String textSearch) {
+        RestTemplate restTemplate = new RestTemplate();
+        if (textSearch == null || textSearch.equals("")) {
+            textSearch = "null";
+        }
+        Area[] areas = restTemplate.getForObject(
+                "http://localhost:8181/area/list/" + textSearch,
+                Area[].class);
+        return Arrays.asList(areas);
+    }
+
+    public List<Area> areas(SystemUser user, Boolean owner, Boolean active) {
+        RestTemplate restTemplate = new RestTemplate();
+        Area[] areas = restTemplate.getForObject(
+                "http://localhost:8181/area/list",
+                Area[].class);
+        return Arrays.asList(areas);
+    }
+
     public Commune commune(Long id) {
         RestTemplate restTemplate = new RestTemplate();
         Commune commune = restTemplate.getForObject(
@@ -304,6 +325,14 @@ public class RestService {
         return productTypeResponse;
     }
 
+    public Area create(Area area) {
+        RestTemplate restTemplate = new RestTemplate();
+        Area areaResponse = restTemplate.postForObject(
+                "http://localhost:8181/area/create",
+                area,
+                Area.class);
+        return areaResponse;
+    }
     public Product edit(Product product) {
         RestTemplate restTemplate = new RestTemplate();
         Product product1 = restTemplate.postForObject(
@@ -338,6 +367,15 @@ public class RestService {
                 productType,
                 ProductType.class);
         return productTypeResponse;
+    }
+
+    public Area edit(Area area) {
+        RestTemplate restTemplate = new RestTemplate();
+        Area areaResponse = restTemplate.postForObject(
+                "http://localhost:8181/area/edit",
+                area,
+                Area.class);
+        return areaResponse;
     }
 
 

@@ -570,19 +570,21 @@
     </div>
     <div class="col-md-9 mt-5">
         <c:forEach items="${customProductList.customProductListItems}" var="customProductListItem">
-            <div class="col-md-9 mt-5">
+            <div class="col-md-10 mr-2 mb-2" style="border:solid 5px; display: block">
                 <br>
                 <c:if test="${customProductListItem.area!=null}">
-                    <span> Por que sabemos de tu interest en ${customProductListItem.area.name}  </span>
+                    <span style=" text-align: -webkit-center ; font-family: 'Source Sans Pro', sans-serif;font-size: 30px"  > Por que sabemos de tu interés en:
+                    </br>
+                        <span style=" text-align: center; align-content: center ; font-family: 'Source Sans Pro', sans-serif;font-size: 50px; color: darkgreen"><strong>${customProductListItem.area.name}</strong>  </span></span>
                 </c:if>
                 <c:if test="${customProductListItem.area==null}">
-                    <span> Productos recientemente publicados  </span>
+                    <span style=" text-align: -webkit-center ; font-family: 'Source Sans Pro', sans-serif;font-size: 45px"  >  Productos recientemente publicados  </span>
                 </c:if>
 
             </div>
             <c:forEach items="${customProductListItem.products}" var="product">
 
-                <div class="col-md-5 mr-2 mb-2" style="border:solid 0px; height: 100vh; display: block">
+                <div class="col-md-5" style="border:solid 0px; height: 100vh; display: block">
                     <div class="row">
 
                         <div id="make-3D-space">
