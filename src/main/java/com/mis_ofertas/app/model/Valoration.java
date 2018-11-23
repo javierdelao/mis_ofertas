@@ -16,7 +16,6 @@ public class Valoration {
 
     private SystemUser systemUser;
 
-    private Note note;
 
     public Valoration() {
     }
@@ -53,13 +52,6 @@ public class Valoration {
         this.systemUser = systemUser;
     }
 
-    public Note getNote() {
-        return note;
-    }
-
-    public void setNote(Note note) {
-        this.note = note;
-    }
 
 
 
