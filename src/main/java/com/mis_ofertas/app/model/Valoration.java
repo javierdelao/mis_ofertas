@@ -16,6 +16,7 @@ public class Valoration {
 
     private SystemUser systemUser;
 
+
     public Valoration() {
     }
 
@@ -50,6 +51,8 @@ public class Valoration {
     public void setSystemUser(SystemUser systemUser) {
         this.systemUser = systemUser;
     }
+
+
 
 
 }

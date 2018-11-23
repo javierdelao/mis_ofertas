@@ -29,6 +29,23 @@ public class RestService {
     }
 
 
+    public List<Note> notes(Product Product) {
+        RestTemplate restTemplate = new RestTemplate();
+        Note[] noteList = restTemplate.getForObject(
+                "http://localhost:8181/note/product/" + Product.getId(),
+                Note[].class);
+        return Arrays.asList(noteList);
+    }
+
+    public Valoration valoration(Product Product, SystemUser systemUser) {
+        RestTemplate restTemplate = new RestTemplate();
+        Valoration valoration = restTemplate.getForObject(
+                "http://localhost:8181/valoration/" + Product.getId() + "/" +systemUser.getId() ,
+                Valoration.class);
+        return valoration;
+    }
+
+
     public List<Product> products() {
         RestTemplate restTemplate = new RestTemplate();
         Product[] productList = restTemplate.getForObject(
@@ -83,6 +100,14 @@ public class RestService {
                 "http://localhost:8181/offer/" + id,
                 Offer.class);
         return offer;
+    }
+
+    public List<Offer> offerHistory(Product product) {
+        RestTemplate restTemplate = new RestTemplate();
+        Offer[] offerList = restTemplate.getForObject(
+                "http://localhost:8181/offer/history/" + product.getId(),
+                Offer[].class);
+        return Arrays.asList(offerList);
     }
 
     public Product product(Long id) {
@@ -274,6 +299,25 @@ public class RestService {
                 product,
                 Product.class);
         return productResponse;
+    }
+
+
+    public Note create(Note note) {
+        RestTemplate restTemplate = new RestTemplate();
+        Note noteResponse = restTemplate.postForObject(
+                "http://localhost:8181/note/create",
+                note,
+                Note.class);
+        return noteResponse;
+    }
+
+    public Valoration create(Valoration valoration) {
+        RestTemplate restTemplate = new RestTemplate();
+        Valoration valorationResponse = restTemplate.postForObject(
+                "http://localhost:8181/valoration/create",
+                valoration,
+                Valoration.class);
+        return valorationResponse;
     }
 
     public Offer create(Offer offer) {
