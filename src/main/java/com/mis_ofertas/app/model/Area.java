@@ -44,5 +44,8 @@ public class Area {
         this.description = description;
     }
 
+    public void fetchCollections() {
+
+    }
 
 }

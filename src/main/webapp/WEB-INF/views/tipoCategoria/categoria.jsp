@@ -22,8 +22,8 @@
 </style>
 <div class="container" id="dvShow">
     <div class="content">
-        <h2>Tipos de Productos</h2>
-        <form class="form-inline" method="post" action="/typeProd/filter">
+        <h2>Categorias</h2>
+        <form class="form-inline" method="post" action="/typeCat/filter">
             <div class="form-group">
                 <br>
                 <input name="textSearch" value="${textSearch}" type="text" placeholder="Ingrese palabra a buscar">
@@ -40,20 +40,20 @@
                     <th>Editar</th>
                     <th>Eliminar</th>
                 </tr>
-                <c:forEach items="${productTypes}" var="productTypes">
+                <c:forEach items="${areas}" var="areas">
                     <tr>
                         <td>
-                                ${productTypes.id}
+                                ${areas.id}
                         </td>
                         <td>
-                                ${productTypes.name}
+                                ${areas.name}
                         </td>
                         <td>
-                                ${productTypes.description}
+                                ${areas.description}
                         </td>
                         <td>
 
-                            <a href="${urlBase}/typeProd/edit/${productTypes.id}" id="editarT" title="Editar datos" class="btn btn-primary btn-sm"><span
+                            <a href="${urlBase}/typeCat/edit/${areas.id}" id="editarCat" title="Editar datos" class="btn btn-primary btn-sm"><span
                                     class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                         </td>
                         <td>
@@ -69,7 +69,7 @@
         </div>
     </div>
     <div>
-        <a href="${urlBase}/typeProd/create" class="btn btn-sm btn-primary" >Agregar Tipo Producto</a>
+        <a href="${urlBase}/typeCat/create" class="btn btn-sm btn-primary" >Agregar categoria</a>
     </div>
 </div>
 <center>
