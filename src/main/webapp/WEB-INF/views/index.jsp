@@ -16,7 +16,9 @@
 <body>
 
 <t:menu></t:menu>
-
+<div class="row">
+    <a href="${urlBase}/testMail" class="btn btn-primary">Enviar correo test</a>
+</div>
 <style>
     /* Generals resets and unimportant stuff */
     * { margin: 0px; padding: 0px; }
@@ -568,6 +570,7 @@
     <div class="col-md-3 mt-5">
         <t:subMenu></t:subMenu>
     </div>
+
     <div class="col-md-9 mt-5">
         <c:forEach items="${customProductList.customProductListItems}" var="customProductListItem">
             <div class="col-md-9 mt-5">
