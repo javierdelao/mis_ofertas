@@ -58,10 +58,7 @@ public class MailService {
             mensaje.setContent(m);
 
             Transport t=s.getTransport("smtp");
-            System.out.println("1");
             t.connect(c.getUsuarioCorreo(),c.getPass());
-            //  t.connect("jdelaonova@gmail.com","zguhwbnrmlgrombc");
-            System.out.println("2");
             t.sendMessage(mensaje, mensaje.getAllRecipients());
 
             t.close();
