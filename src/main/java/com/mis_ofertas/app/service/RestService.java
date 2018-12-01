@@ -267,6 +267,30 @@ public class RestService {
         return status;
     }
 
+    public List<SystemUser> systemUser() {
+        RestTemplate restTemplate = new RestTemplate();
+        SystemUser[] systemUser = restTemplate.getForObject(
+                "http://localhost:8181/user/list",
+                SystemUser[].class);
+        return Arrays.asList(systemUser);
+    }
+
+    public SystemUser systemUser(Long id) {
+        RestTemplate restTemplate = new RestTemplate();
+        SystemUser systemUser = restTemplate.getForObject(
+                "http://localhost:8181/user/" + id,
+                SystemUser.class);
+        return systemUser;
+    }
+
+    public List<SystemUser> systemUser(SystemUser user, Boolean owner, Boolean active) {
+        RestTemplate restTemplate = new RestTemplate();
+        SystemUser[] systemUser = restTemplate.getForObject(
+                "http://localhost:8181/user/list",
+                SystemUser[].class);
+        return Arrays.asList(systemUser);
+    }
+
     public Product create(Product product) {
         RestTemplate restTemplate = new RestTemplate();
         Product productResponse = restTemplate.postForObject(
@@ -302,6 +326,15 @@ public class RestService {
                 productType,
                 ProductType.class);
         return productTypeResponse;
+    }
+
+    public SystemUser edit(SystemUser systemUser) {
+        RestTemplate restTemplate = new RestTemplate();
+        SystemUser systemUserResponse = restTemplate.postForObject(
+                "http://localhost:8181/user/edit",
+                systemUser,
+                SystemUser.class);
+        return systemUserResponse;
     }
 
     public Product edit(Product product) {
@@ -340,6 +373,14 @@ public class RestService {
         return productTypeResponse;
     }
 
+    public SystemUser create(SystemUser systemUser) {
+        RestTemplate restTemplate = new RestTemplate();
+        SystemUser systemUserResponse = restTemplate.postForObject(
+                "http://localhost:8181/user/create",
+                systemUser,
+                SystemUser.class);
+        return systemUserResponse;
+    }
 
     public Visit create(Visit visit) {
         RestTemplate restTemplate = new RestTemplate();
@@ -368,5 +409,13 @@ public class RestService {
         return product;
     }
 
+    public SystemUser detail(SystemUser systemUser) {
+        RestTemplate restTemplate = new RestTemplate();
+        SystemUser systemUserResponse = restTemplate.postForObject(
+                "http://localhost:8181/user/detail",
+                systemUser,
+                SystemUser.class);
+        return systemUserResponse;
+    }
 
 }

@@ -28,7 +28,7 @@
                 <li><a id="usuarios"><span class="glyphicon glyphicon-log-in"></span> Usuarios</a></li>
                 <li><a href="${baseUrl}/store/"><span class="glyphicon glyphicon-log-in"></span> Tiendas</a></li>
                 <li><a id="reportes"><span class="glyphicon glyphicon-log-in"></span> Reportes</a></li>
-                <li><a id="mCuenta"><span class="glyphicon glyphicon-log-in"></span> Mi Cuenta</a></li>
+                <li><a href="${baseUrl}/usuario/show"><span class="glyphicon glyphicon-log-in"></span> Mi Cuenta</a></li>
             </ul>
         </div>
     </div>
