@@ -29,6 +29,23 @@ public class RestService {
     }
 
 
+    public List<Note> notes(Product Product) {
+        RestTemplate restTemplate = new RestTemplate();
+        Note[] noteList = restTemplate.getForObject(
+                "http://localhost:8181/note/product/" + Product.getId(),
+                Note[].class);
+        return Arrays.asList(noteList);
+    }
+
+    public Valoration valoration(Product Product, SystemUser systemUser) {
+        RestTemplate restTemplate = new RestTemplate();
+        Valoration valoration = restTemplate.getForObject(
+                "http://localhost:8181/valoration/" + Product.getId() + "/" +systemUser.getId() ,
+                Valoration.class);
+        return valoration;
+    }
+
+
     public List<Product> products() {
         RestTemplate restTemplate = new RestTemplate();
         Product[] productList = restTemplate.getForObject(
@@ -47,9 +64,11 @@ public class RestService {
 
     public CustomProductList custom(SystemUser user) {
         RestTemplate restTemplate = new RestTemplate();
+        System.out.println("http://localhost:8181/product/list/custom/" + user.getId());
         CustomProductList customProductList = restTemplate.getForObject(
                 "http://localhost:8181/product/list/custom/" + user.getId(),
                 CustomProductList.class);
+        System.out.println(customProductList.getCustomProductListItems().size());
         return customProductList;
     }
 
@@ -83,6 +102,14 @@ public class RestService {
                 "http://localhost:8181/offer/" + id,
                 Offer.class);
         return offer;
+    }
+
+    public List<Offer> offerHistory(Product product) {
+        RestTemplate restTemplate = new RestTemplate();
+        Offer[] offerList = restTemplate.getForObject(
+                "http://localhost:8181/offer/history/" + product.getId(),
+                Offer[].class);
+        return Arrays.asList(offerList);
     }
 
     public Product product(Long id) {
@@ -210,6 +237,25 @@ public class RestService {
         return area;
     }
 
+    public List<Area> areas(String textSearch) {
+        RestTemplate restTemplate = new RestTemplate();
+        if (textSearch == null || textSearch.equals("")) {
+            textSearch = "null";
+        }
+        Area[] areas = restTemplate.getForObject(
+                "http://localhost:8181/area/list/" + textSearch,
+                Area[].class);
+        return Arrays.asList(areas);
+    }
+
+    public List<Area> areas(SystemUser user, Boolean owner, Boolean active) {
+        RestTemplate restTemplate = new RestTemplate();
+        Area[] areas = restTemplate.getForObject(
+                "http://localhost:8181/area/list",
+                Area[].class);
+        return Arrays.asList(areas);
+    }
+
     public Commune commune(Long id) {
         RestTemplate restTemplate = new RestTemplate();
         Commune commune = restTemplate.getForObject(
@@ -267,30 +313,6 @@ public class RestService {
         return status;
     }
 
-    public List<SystemUser> systemUser() {
-        RestTemplate restTemplate = new RestTemplate();
-        SystemUser[] systemUser = restTemplate.getForObject(
-                "http://localhost:8181/user/list",
-                SystemUser[].class);
-        return Arrays.asList(systemUser);
-    }
-
-    public SystemUser systemUser(Long id) {
-        RestTemplate restTemplate = new RestTemplate();
-        SystemUser systemUser = restTemplate.getForObject(
-                "http://localhost:8181/user/" + id,
-                SystemUser.class);
-        return systemUser;
-    }
-
-    public List<SystemUser> systemUser(SystemUser user, Boolean owner, Boolean active) {
-        RestTemplate restTemplate = new RestTemplate();
-        SystemUser[] systemUser = restTemplate.getForObject(
-                "http://localhost:8181/user/list",
-                SystemUser[].class);
-        return Arrays.asList(systemUser);
-    }
-
     public Product create(Product product) {
         RestTemplate restTemplate = new RestTemplate();
         Product productResponse = restTemplate.postForObject(
@@ -298,6 +320,25 @@ public class RestService {
                 product,
                 Product.class);
         return productResponse;
+    }
+
+
+    public Note create(Note note) {
+        RestTemplate restTemplate = new RestTemplate();
+        Note noteResponse = restTemplate.postForObject(
+                "http://localhost:8181/note/create",
+                note,
+                Note.class);
+        return noteResponse;
+    }
+
+    public Valoration create(Valoration valoration) {
+        RestTemplate restTemplate = new RestTemplate();
+        Valoration valorationResponse = restTemplate.postForObject(
+                "http://localhost:8181/valoration/create",
+                valoration,
+                Valoration.class);
+        return valorationResponse;
     }
 
     public Offer create(Offer offer) {
@@ -328,15 +369,14 @@ public class RestService {
         return productTypeResponse;
     }
 
-    public SystemUser edit(SystemUser systemUser) {
+    public Area create(Area area) {
         RestTemplate restTemplate = new RestTemplate();
-        SystemUser systemUserResponse = restTemplate.postForObject(
-                "http://localhost:8181/user/edit",
-                systemUser,
-                SystemUser.class);
-        return systemUserResponse;
+        Area areaResponse = restTemplate.postForObject(
+                "http://localhost:8181/area/create",
+                area,
+                Area.class);
+        return areaResponse;
     }
-
     public Product edit(Product product) {
         RestTemplate restTemplate = new RestTemplate();
         Product product1 = restTemplate.postForObject(
@@ -373,14 +413,15 @@ public class RestService {
         return productTypeResponse;
     }
 
-    public SystemUser create(SystemUser systemUser) {
+    public Area edit(Area area) {
         RestTemplate restTemplate = new RestTemplate();
-        SystemUser systemUserResponse = restTemplate.postForObject(
-                "http://localhost:8181/user/create",
-                systemUser,
-                SystemUser.class);
-        return systemUserResponse;
+        Area areaResponse = restTemplate.postForObject(
+                "http://localhost:8181/area/edit",
+                area,
+                Area.class);
+        return areaResponse;
     }
+
 
     public Visit create(Visit visit) {
         RestTemplate restTemplate = new RestTemplate();
@@ -409,13 +450,5 @@ public class RestService {
         return product;
     }
 
-    public SystemUser detail(SystemUser systemUser) {
-        RestTemplate restTemplate = new RestTemplate();
-        SystemUser systemUserResponse = restTemplate.postForObject(
-                "http://localhost:8181/user/detail",
-                systemUser,
-                SystemUser.class);
-        return systemUserResponse;
-    }
 
 }

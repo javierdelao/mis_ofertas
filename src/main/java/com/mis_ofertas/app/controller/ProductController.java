@@ -9,10 +9,7 @@ package com.mis_ofertas.app.controller;
 import com.mis_ofertas.app.model.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -126,7 +123,6 @@ public class ProductController extends MainController {
         if(product.getExpirationDate()!=null){
             String dateString = format.format(product.getExpirationDate());
             product.setExpirationDateString(dateString);
-
         }
         model.addAttribute("productTypes", restService.productTypes());
         model.addAttribute("areas", restService.areas());
@@ -249,12 +245,57 @@ public class ProductController extends MainController {
         visit.setSystemUser(usuario);
         visit.setVisitDate(new Date());
         visit = restService.create(visit);
+        List<Offer>offers=restService.offerHistory(product);
+        SimpleDateFormat format = new SimpleDateFormat("dd-MM-YYYY");
 
+        for(Offer offer:offers){
+            if(offer.getExpirationDate()!=null){
+                String dateString = format.format(offer.getExpirationDate());
+                offer.setExpirationDateString(dateString);
+            }
+            if(offer.getPublicationDate()!=null){
+                String dateString = format.format(offer.getPublicationDate());
+                offer.setPublicationDateString(dateString);
+            }
+        }
 
+        List<Note>notes=restService.notes(product);
+        Valoration valoration=restService.valoration(product,usuario);
+        model.addAttribute("valoration", valoration);
+        model.addAttribute("notes", notes);
         model.addAttribute("product", product);
+        model.addAttribute("offerHistory", offers);
         return "producto/detalle";
-
-
     }
+
+
+    @RequestMapping(path = "/comment", method = RequestMethod.POST)
+    public String comment(HttpServletRequest request,
+                         @RequestParam("text") String text,
+                         @RequestParam("productId") Long productId) throws ParseException {
+        SystemUser user=user(request);
+        Note note=new Note();
+        note.setCommentDate(new Date());
+        note.setProduct(restService.product(productId));
+        note.setText(text);
+        note.setSystemUser(user);
+        note=restService.create(note);
+        return "redirect:/product/detail/"+productId;
+    }
+
+    @RequestMapping(path = "/valoration", method = RequestMethod.POST)
+    public String valoration(HttpServletRequest request,
+                         @RequestParam("valorationNumber") Integer valorationNumber,
+                         @RequestParam("productId") Long productId) throws ParseException {
+        SystemUser user=user(request);
+        Valoration valoration=new Valoration();
+        valoration.setProduct(restService.product(productId));
+        valoration.setValoration_star(valorationNumber);
+        valoration.setSystemUser(user);
+        valoration=restService.create(valoration);
+        return "redirect:/product/detail/"+productId;
+    }
+
+
 
 }

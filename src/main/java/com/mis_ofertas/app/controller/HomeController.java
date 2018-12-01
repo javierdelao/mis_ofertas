@@ -6,10 +6,7 @@
 
 package com.mis_ofertas.app.controller;
 
-import com.mis_ofertas.app.model.Area;
-import com.mis_ofertas.app.model.Product;
-import com.mis_ofertas.app.model.Store;
-import com.mis_ofertas.app.model.SystemUser;
+import com.mis_ofertas.app.model.*;
 import com.mis_ofertas.app.response.LoginResponse;
 import com.mis_ofertas.app.service.RestService;
 import com.mis_ofertas.app.service.UserService;
@@ -101,6 +98,27 @@ public class HomeController extends MainController{
         user = userService.insert(user);
         return "login";
     }
+
+
+    @RequestMapping(path = "/testMail", method = RequestMethod.GET)
+    public String testMail(Model model, HttpServletRequest request) {
+        Email email=new Email();
+        email.setAsunto("Este es un asunto de prueba");
+        email.setDestino("portafolioduoc2018@yopmail.com");
+        email.setMensaje("<html>" +
+                "<head>" +
+                "</head>" +
+                "<body>" +
+                "<b>hola mundo</b>"+
+                "<a href='www.google.com'>esto es un link</a>"+
+                "</body>" +
+                "</html>");
+        mailService.enviarCorreo(email);
+        return "redirect:/home";
+    }
+
+
+
 
 
 

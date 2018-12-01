@@ -14,7 +14,7 @@ public class ModelAttributesController {
     }
 
     @ModelAttribute("urlBase")
-    public String segmentJavascriptKey() {
+    public String urlBase() {
         return configProperties.getProperty("url-base");
     }
 

@@ -33,7 +33,7 @@
         <form class="form-horizontal" action="${urlBase}/typeProd/create" method="POST" enctype="multipart/form-data">
 
             <div class="form-group">
-                <label class="col-sm-3 control-label">Nombre categoria</label>
+                <label class="col-sm-3 control-label">Nombre Tipo Producto</label>
                 <div class="col-sm-4">
                     <input type="text" name="name" class="form-control" placeholder="Nombre">
                 </div>
