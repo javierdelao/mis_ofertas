@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
@@ -205,9 +206,13 @@ public class HomeController extends MainController {
             Random rand = new Random();
             int n = rand.nextInt(50000000) + 1;
             Barcode barcode = BarcodeFactory.createCode128B(n+"");
+            JLabel priceLabel = new JLabel("Price: 100");
             BufferedImage image = new BufferedImage(1500, 1500,
                     BufferedImage.TYPE_BYTE_GRAY);
             Graphics2D g = (Graphics2D) image.getGraphics();
+            g.drawString("hola mundo",20,56);
+            barcode.add(priceLabel);
+            barcode.setDrawingText(true);
             barcode.draw(g, 20, 56);
             File f = new File(uploadsDir+n+".png");
             BarcodeImageHandler.savePNG(barcode, f);

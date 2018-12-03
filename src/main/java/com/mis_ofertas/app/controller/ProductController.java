@@ -6,6 +6,8 @@
 
 package com.mis_ofertas.app.controller;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.mis_ofertas.app.model.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -185,6 +187,11 @@ public class ProductController extends MainController {
 
         product.setStatus(restService.status(statusId));
         product = restService.create(product);
+      /*  Cloudinary cloudinary=new Cloudinary();
+        cloudinary.uploader().upload(new File("http://www.example.com/sample.jpg"),
+                ObjectUtils.asMap("duzvu8wmg", "samples"));
+*/
+
         return "redirect:/product/";
     }
 

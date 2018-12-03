@@ -207,6 +207,13 @@
             <version>2.0</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.cloudinary/cloudinary-core -->
+        <dependency>
+            <groupId>com.cloudinary</groupId>
+            <artifactId>cloudinary-core</artifactId>
+            <version>1.21.0</version>
+        </dependency>
+
 
     </dependencies>
 </project>
