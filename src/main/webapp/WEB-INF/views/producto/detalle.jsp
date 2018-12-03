@@ -169,6 +169,15 @@
         transform: rotate(45deg);
     }
 
+    .image-upload > input {
+        display: none;
+    }
+
+    .image-upload i {
+        width: 80px;
+        cursor: pointer;
+    }
+
 
 </style>
 <script>
@@ -198,6 +207,11 @@
             </c:if>
         }
 
+        var resetValoration = function () {
+            $("#valorationNumber").val(${valoration.valoration_star});
+            fillstar(${valoration.valoration_star});
+        }
+
 
         loadStar();
     });
@@ -214,6 +228,12 @@
     var sendValoration = function (valoration) {
         $("#valorationNumber").val(valoration);
         $("#valorationForm").submit();
+    }
+
+
+    var resetValoration = function () {
+        $("#valorationNumber").val(${valoration.valoration_star});
+        fillstar(${valoration.valoration_star});
     }
 
 </script>
@@ -235,11 +255,16 @@
                         <input type="hidden" id="valorationNumber" name="valorationNumber">
                         <input type="hidden" value="${product.id}" name="productId">
                     </form>
-                    <i id="star-1" class="far fa-star fa-2x" onclick="sendValoration(1)" onmouseover="fillstar(1)"></i>
-                    <i id="star-2" class="far fa-star fa-2x" onclick="sendValoration(2)" onmouseover="fillstar(2)"></i>
-                    <i id="star-3" class="far fa-star fa-2x" onclick="sendValoration(3)" onmouseover="fillstar(3)"></i>
-                    <i id="star-4" class="far fa-star fa-2x" onclick="sendValoration(4)" onmouseover="fillstar(4)"></i>
-                    <i id="star-5" class="far fa-star fa-2x" onclick="sendValoration(5)" onmouseover="fillstar(5)"></i>
+                    <i id="star-1" class="far fa-star fa-2x" onmouseout="resetValoration()" onclick="sendValoration(1)"
+                       onmouseover="fillstar(1)"></i>
+                    <i id="star-2" class="far fa-star fa-2x" onmouseout="resetValoration()" onclick="sendValoration(2)"
+                       onmouseover="fillstar(2)"></i>
+                    <i id="star-3" class="far fa-star fa-2x" onmouseout="resetValoration()" onclick="sendValoration(3)"
+                       onmouseover="fillstar(3)"></i>
+                    <i id="star-4" class="far fa-star fa-2x" onmouseout="resetValoration()" onclick="sendValoration(4)"
+                       onmouseover="fillstar(4)"></i>
+                    <i id="star-5" class="far fa-star fa-2x" onmouseout="resetValoration()" onclick="sendValoration(5)"
+                       onmouseover="fillstar(5)"></i>
 
                 </div>
 
@@ -249,12 +274,24 @@
         </div>
         <div class="col-md-8">
             <div class="container">
+                <div class="row">
+                    <div class="col-md-3">
+                        <img style="width: 90%" src="${urlBase}/images/${product.user.store.image.path}">
+                    </div>
+                    <div class="col-md-9">
+                        <h3>${product.user.store.name}</h3>
+                    </div>
+                </div>
                 <table class="table">
                     <thead>
 
                     </thead>
                     <tbody>
+                    <tr>
+                        <td>Vendedor</td>
+                        <td>${product.user.firstName} ${product.user.lastName} </td>
 
+                    </tr>
                     <tr>
                         <td>Codigo</td>
                         <td>${product.id} </td>
@@ -356,13 +393,18 @@
                         <c:forEach items="${notes}" var="note">
                             <li>
                                 <div class="commenterImage">
-                                    <img src="${urlBase}/default/h.jpg"/>
+                                    <img src="${urlBase}/default/${note.systemUser.avatar}"/>
                                 </div>
                                 <div class="commentText">
                                     <p class="">${note.text}</p>
-                                    <p><a data-toggle="modal" data-target="#myModal">
-                                        <i class="far fa-file"></i>
-                                    </a></p>
+                                    <p>
+                                        <c:forEach items="${note.documents}" var="document">
+                                            <a data-toggle="modal" data-target="#myModal${document.id}">
+                                                <i class="far fa-file"></i>
+                                            </a>
+                                        </c:forEach>
+                                    </p>
+
                                     <span class="date sub-text">${note.systemUser.firstName} ${note.systemUser.lastName}</span><br>
                                     <span class="date sub-text">${note.commentDate}</span>
                                 </div>
@@ -370,14 +412,30 @@
                         </c:forEach>
 
                     </ul>
-                    <form class="form-inline" role="form" action="/product/comment" method="post">
-                        <div class="form-group">
-                            <input type="hidden" value="${product.id}" name="productId">
-                            <input class="form-control" type="text" name="text" placeholder="Tu comentario"/>
+                    <form class="form-inline" role="form" action="/product/comment" method="post"
+                          enctype="multipart/form-data">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <input type="hidden" value="${product.id}" name="productId">
+                                <input class="form-control" type="text" name="text" placeholder="Tu comentario"/>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="image-upload">
+                                    <label for="file-input">
+                                        <i class="fas fa-file"></i> </label>
+
+                                    <input name="images" id="file-input" type="file" multiple="multiple"/>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-default" value="Comentar"></input>
+                                </div>
+                            </div>
+
                         </div>
-                        <div class="form-group">
-                            <input type="submit" class="btn btn-default" value="Comentar"></input>
-                        </div>
+
+
                     </form>
                 </div>
             </div>
@@ -405,32 +463,37 @@
 
 </div>
 <style>
-    .modal-backdrop{
-        z-index:-100 !important;
+    .modal-backdrop {
+        z-index: -100 !important;
     }
 </style>
 
-<!-- Modal -->
-<div id="myModal" class="modal" role="dialog">
-    <div class="modal-dialog">
+<c:forEach items="${notes}" var="note">
+    <c:forEach items="${note.documents}" var="document">
+        <!-- Modal -->
+        <div id="myModal${document.id}" class="modal" role="dialog">
+            <div class="modal-dialog">
 
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Documento adjunto</h4>
-            </div>
-            <div class="modal-body">
-                <embed src="${urlBase}/documents/bd.pdf?zoom=50" width="575" height="500">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Documento adjunto ${document.path}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <embed src="${urlBase}/documents/${document.path}?zoom=50" width="575" height="500">
 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
             </div>
         </div>
+    </c:forEach>
+</c:forEach>
 
-    </div>
-</div>
 
 </body>
 </html>

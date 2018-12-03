@@ -38,6 +38,8 @@
                 <entry key="url-base" value="${url-base}"/>
                 <entry key="jdbc.auto" value="${jdbc.auto}"/>
                 <entry key="imagesLocalPath" value="${images-local-path}"/>
+                <entry key="documentsLocalPath" value="${documents-local-path}"/>
+
             </map>
         </property>
     </bean>

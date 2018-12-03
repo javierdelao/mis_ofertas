@@ -95,6 +95,9 @@ public class HomeController extends MainController{
 
     @RequestMapping(path = "/register", method = RequestMethod.POST)
     public String register(Model model, HttpServletRequest request, SystemUser user) {
+        if(user!=null){
+            user.setPoints(0);
+        }
         user = userService.insert(user);
         return "login";
     }

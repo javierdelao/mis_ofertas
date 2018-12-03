@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -18,32 +19,27 @@ public class MyAccountController extends MainController{
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public String home(Model model, HttpServletRequest request) {
         SystemUser usuario = user(request);
-
-        List<SystemUser> usuarioList = restService.systemUser();
-        model.addAttribute("usuarioList", usuarioList);
+        SystemUser SystemUser = restService.systemUser(usuario.getId());
+        model.addAttribute("user", SystemUser);
         return "myAccount/account";
     }
-    /*
-    @RequestMapping(path = "/create", method = RequestMethod.POST)
+
+    @RequestMapping(path = "/avatar", method = RequestMethod.POST)
     public String create(
             Model model,
             HttpServletRequest request,
-            @RequestParam("email") String email,
-            @RequestParam("firstname") String firstname,
-            @RequestParam("lastname") String lastname,
-            @RequestParam("password") String password,
-            @RequestParam("rut") String rut){
-        SystemUser usuario = user(request);
-        SystemUser systemUser = new SystemUser();
-        systemUser.setEmail(email);
-        systemUser.setFirstName(firstname);
-        systemUser.setLastName(lastname);
-        systemUser.setPassword(password);
-        systemUser.setRut(rut);
-        systemUser = restService.create(systemUser);
+            @RequestParam("avatar") String avatar){
+        HttpSession session = request.getSession();
+
+        SystemUser user=user(request);
+        if(avatar!=null){
+            user.setAvatar(avatar);
+            user=restService.edit(user);
+            session.setAttribute("user",user);
+        }
         return "redirect:/usuario/";
     }
-    */
+
     @RequestMapping(path = "/show", method = RequestMethod.GET)
     public String show(
             Model model,

@@ -121,7 +121,20 @@
         }
     }
 </script>
+<style>
+    .radio-img  > input {
+        display:none;
+    }
 
+    .radio-img  > img{
+        cursor:pointer;
+        border:2px solid transparent;
+    }
+
+    .radio-img  > input:checked + img{
+        border:2px solid orange;
+    }
+</style>
 
 <div class="row" style="padding-top: 15%;">
     <div class="col-md-offset-4 col-md-4" style="margin-top:15px;border:3px solid grey">
@@ -198,6 +211,85 @@
                         <div class="col-md-8"><input class="form-control" id="email" name="email" type="text"
                                                      oninput="caracteresCorreoValido(this)" required></div>
 
+                    </div>
+                    <div class="row" style="padding-top: 5px">
+                        <div class="col-md-3">
+                            Avatar
+                        </div>
+                        <div class="col-md-9">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label class="radio-img">
+                                        <input type="radio" name="avatar" value="avatar0.jpg" />
+                                        <img style="width: 100%" src="${urlBase}/default/avatar0.jpg">
+                                    </label>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="radio-img">
+                                        <input type="radio" name="avatar" value="avatar1.png" />
+                                        <img style="width: 100%" src="${urlBase}/default/avatar1.png">
+                                    </label>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="radio-img">
+                                        <input type="radio" name="avatar" value="avatar2.jpg" />
+                                        <img style="width: 100%" src="${urlBase}/default/avatar2.jpg">
+                                    </label>
+                                </div>
+                                <div class="col-md-3">
+                                    <label class="radio-img">
+                                        <input type="radio" name="avatar" value="avatar3.jpg" />
+                                        <img style="width: 100%" src="${urlBase}/default/avatar3.jpg">
+                                    </label>
+                                </div>
+                            </div>
+                          <div class="row">
+                              <div class="col-md-3">
+                                  <label class="radio-img">
+                                      <input type="radio" name="avatar" value="avatar4.png" />
+                                      <img style="width: 100%" src="${urlBase}/default/avatar4.png">
+                                  </label>
+                              </div>
+                              <div class="col-md-3">
+                                  <label class="radio-img">
+                                      <input type="radio" name="avatar" value="avatar5.png" />
+                                      <img style="width: 100%" src="${urlBase}/default/avatar5.png">
+                                  </label>
+                              </div>
+                              <div class="col-md-3">
+                                  <label class="radio-img">
+                                      <input type="radio" name="avatar" value="avatar6.jpg" />
+                                      <img style="width: 100%" src="${urlBase}/default/avatar6.jpg">
+                                  </label>
+                              </div>
+                              <div class="col-md-3">
+                                  <label class="radio-img">
+                                      <input type="radio" name="avatar" value="avatar7.jpg" />
+                                      <img style="width: 100%" src="${urlBase}/default/avatar7.jpg">
+                                  </label>
+                              </div>
+                          </div>
+                           <div class="row">
+                               <div class="col-md-3">
+                                   <label class="radio-img">
+                                       <input type="radio" name="avatar" value="avatar8.jpg" />
+                                       <img style="width: 100%" src="${urlBase}/default/avatar8.jpg">
+                                   </label>
+                               </div>
+                               <div class="col-md-3">
+                                   <label class="radio-img">
+                                       <input type="radio" name="avatar" value="avatar9.png" />
+                                       <img style="width: 100%" src="${urlBase}/default/avatar9.png">
+                                   </label>
+                               </div>
+                               <div class="col-md-3">
+                                   <label class="radio-img">
+                                       <input type="radio" name="avatar" value="avatar10.png" />
+                                       <img style="width: 100%" src="${urlBase}/default/avatar10.png">
+                                   </label>
+                               </div>
+                           </div>
+                        </div>
                     </div>
 
                 </div>
