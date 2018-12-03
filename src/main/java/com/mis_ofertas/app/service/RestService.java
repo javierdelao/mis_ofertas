@@ -20,6 +20,14 @@ public class RestService {
         return loginResponse;
     }
 
+    public List<SystemUser> systemUsers() {
+        RestTemplate restTemplate = new RestTemplate();
+        SystemUser[] systemUsers = restTemplate.getForObject(
+                "http://localhost:8181/user/list" ,
+                SystemUser[].class);
+        return Arrays.asList(systemUsers);
+    }
+
     public List<Product> products(Store store) {
         RestTemplate restTemplate = new RestTemplate();
         Product[] productList = restTemplate.getForObject(
