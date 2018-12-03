@@ -18,6 +18,15 @@
 <t:menu></t:menu>
 <div class="row">
     <a href="${urlBase}/testMail" class="btn btn-primary">Enviar correo test</a>
+
+    <a href="${urlBase}/testCodeBar" class="btn btn-primary">Enviar pdf test</a>
+
+    <a href="${urlBase}/testCodeBar2" class="btn btn-primary">Enviar pdf test2</a>
+
+    <a href="${urlBase}/testCodeBar3" class="btn btn-primary">Enviar pdf test3</a>
+
+    <a href="${urlBase}/testCodeBar4" class="btn btn-primary">Enviar pdf test4</a>
+
 </div>
 <style>
     /* Generals resets and unimportant stuff */

@@ -39,6 +39,8 @@
                 <entry key="jdbc.auto" value="${jdbc.auto}"/>
                 <entry key="imagesLocalPath" value="${images-local-path}"/>
                 <entry key="documentsLocalPath" value="${documents-local-path}"/>
+                <entry key="barcodesLocalPath" value="${codebar-local-path}"/>
+
 
             </map>
         </property>
