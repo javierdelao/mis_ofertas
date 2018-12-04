@@ -9,21 +9,23 @@ package com.mis_ofertas.app.controller;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.mis_ofertas.app.model.*;
+import org.cloudinary.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created by Juan Francisco Rodríguez
@@ -34,6 +36,13 @@ import java.util.Random;
 @RequestMapping("/product")
 public class ProductController extends MainController {
 
+    private final static Map<Object, Object> CONFIG = new HashMap<>();
+
+    static {
+        CONFIG.put("cloud_name", "duzvu8wmg");
+        CONFIG.put("api_key", "595457353713571");
+        CONFIG.put("api_secret", "RxV3bs5fiChrbbl1UFRcBe3b9cc");
+    }
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public String home(Model model, HttpServletRequest request) {
@@ -157,7 +166,7 @@ public class ProductController extends MainController {
             new File(uploadsDir).mkdir();
         }
 
-        Image imagep = new Image();
+      /*  Image imagep = new Image();
         Random rand = new Random();
 
         int n = rand.nextInt(50000000) + 1;
@@ -186,11 +195,43 @@ public class ProductController extends MainController {
         product.setArea(restService.area(areaId));
 
         product.setStatus(restService.status(statusId));
-        product = restService.create(product);
-      /*  Cloudinary cloudinary=new Cloudinary();
-        cloudinary.uploader().upload(new File("http://www.example.com/sample.jpg"),
-                ObjectUtils.asMap("duzvu8wmg", "samples"));
 */
+        if (!image.isEmpty()) {
+            try {
+                File convFile = new File(image.getOriginalFilename());
+                convFile.createNewFile();
+                FileOutputStream fos = new FileOutputStream(convFile);
+                fos.write(image.getBytes());
+                fos.close();
+                File cloudinaryFile = convFile;
+
+                Cloudinary cloudinary = new Cloudinary("cloudinary://595457353713571:RxV3bs5fiChrbbl1UFRcBe3b9cc@duzvu8wmg");
+                //  Cloudinary cloudinary = new Cloudinary(CONFIG);
+                CONFIG.put("folder","images");
+                JSONObject result = new JSONObject(cloudinary.uploader().upload(cloudinaryFile, CONFIG));
+                //     cloudinary.uploader().upload("https://res.cloudinary.com/demo/image/upload/sample.jpg", ObjectUtils.emptyMap());
+                System.out.println("done");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        /*Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+                "cloud_name", "duzvu8wmg",
+                "api_key", "595457353713571",
+                "api_secret", "RxV3bs5fiChrbbl1UFRcBe3b9cc"));
+        //Cloudinary cloudinary=new Cloudinary();
+        cloudinary.uploader().upload(new File(uploadsDir + n + orgName),
+                ObjectUtils.asMap("duzvu8wmg", "samples"));*/
+
+
+        //    product = restService.create(product);
+        //duzvu8wmg
+        //595457353713571
+        //RxV3bs5fiChrbbl1UFRcBe3b9cc
+        //CLOUDINARY_URL=cloudinary://595457353713571:RxV3bs5fiChrbbl1UFRcBe3b9cc@duzvu8wmg
+
 
         return "redirect:/product/";
     }
@@ -315,9 +356,9 @@ public class ProductController extends MainController {
         note.setSystemUser(user);
         note.setDocuments(documents);
         note = restService.create(note);
-        user.setPoints(user.getPoints()+1);
-        SystemUser user1=restService.edit(user);
-        session.setAttribute("user",user1);
+        user.setPoints(user.getPoints() + 1);
+        SystemUser user1 = restService.edit(user);
+        session.setAttribute("user", user1);
 
         return "redirect:/product/detail/" + productId;
     }
@@ -334,9 +375,9 @@ public class ProductController extends MainController {
         valoration.setValoration_star(valorationNumber);
         valoration.setSystemUser(user);
         valoration = restService.create(valoration);
-        user.setPoints(user.getPoints()+1);
-        SystemUser user1=restService.edit(user);
-        session.setAttribute("user",user1);
+        user.setPoints(user.getPoints() + 1);
+        SystemUser user1 = restService.edit(user);
+        session.setAttribute("user", user1);
 
         return "redirect:/product/detail/" + productId;
     }
