@@ -62,6 +62,29 @@ public class MyAccountController extends MainController{
         return "myAccount/account";
 
     }
+
+    @RequestMapping(path = "/generarD/{userId}", method = RequestMethod.GET)
+    public String generarD(Model model, HttpServletRequest request, @PathVariable Long userId) {
+        SystemUser usuario = user(request);
+        SystemUser systemUser = restService.systemUser(userId);
+        /*
+        model.addAttribute("productTypes", restService.productTypes());
+        model.addAttribute("areas", restService.areas());
+        model.addAttribute("statuses", restService.statuses());
+        */
+        model.addAttribute("usuarioList",systemUser);
+        return "myAccount/generaDescuento";
+
+    }
+    /*
+    @RequestMapping(path = "/generarD/{userId}", method = RequestMethod.GET)
+    public String generarD(Model model, HttpServletRequest request, @PathVariable Long ){
+        SystemUser usuario = user(request);
+        int a = usuario.getPoints();
+
+        return "myAccount/generaDescuento";
+    }
+    */
     /*
     @RequestMapping(path = "/edit/{storeId}", method = RequestMethod.GET)
     public String edit(Model model, HttpServletRequest request, @PathVariable Long storeId) throws ParseException {
