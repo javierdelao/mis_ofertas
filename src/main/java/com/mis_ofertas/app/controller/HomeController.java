@@ -111,28 +111,54 @@ public class HomeController extends MainController {
         return "login";
     }
 
-
     @RequestMapping(path = "/testMail", method = RequestMethod.GET)
     public String testMail(Model model, HttpServletRequest request) {
         List<SystemUser> systemUsers = restService.systemUsers();
-        for (SystemUser systemUser : systemUsers) {
+
+         for (SystemUser systemUser : systemUsers ) {
             CustomProductList customProductList = restService.custom(systemUser);
             Email email = new Email();
             email.setAsunto("Este es un asunto de prueba");
             email.setDestino(systemUser.getEmail());
-            email.setMensaje("<html>" +
-                    "<head>" +
-                    "</head>" +
-                    "<body>" +
-                    "<b>hola " + systemUser.getFirstName() + " " + systemUser.getLastName() + "</b>" +
-                    "<img src='" + configProperties.getProperty("url-base") + "/default/" + systemUser.getAvatar() + "' />" +
-                    "</body>" +
-                    "</html>");
+            String html = "<html>";
+                    html += "<head>" ;
+                    html += "</head>" ;
+                    html +="<body>" ;
+
+                    html +="<img align='left' width='100' height='100' src= '" + configProperties.getProperty("url-base") + "/default/" + systemUser.getAvatar() + "<br>" +"' />";
+                    html +="<br>";
+             html += "<br>"+"</br>";
+             html += "<br>"+"</br>";
+                    html +="<p align='left'>"+" <b>" + " " + "Saludos" + " " +  systemUser.getFirstName() + " " + systemUser.getLastName() + "</b>" + "</p>";
+             html += "<br>"+"</br>";
+             html += "<br>"+"</br>";
+             html += "<br>"+"</br>";
+                    html += "<p align='center'> <h3>Por que sabemos lo que quieres, tenemos estos productos para ti :</h3>"+"  </p>" ;
+             html += "<br>"+"</br>";
+             html += "<br>"+"</br>";
+             html += "<a href='http://localhost:8181/store/detail' > Para mas detalles,has click aquí!</a>";
+             for (CustomProductListItem customProductListItem : customProductList.getCustomProductListItems()) {
+                        html += "<h3 Are de :" + customProductListItem.getArea() + "</h3>";
+
+                        html += "<br>"+"</br>";
+                        for (Product product : customProductListItem.getProducts()) {
+                            html +="<img src= '" + configProperties.getProperty("url-base") + "/images/" + product.getImage().getPath() +"' />";
+                            html += "<h3> Nombre :" + product.getName() +"<br>"+"</br>"+ "Detalle  :"+ product.getDescription() +"<br>"+"</br>" +"Precio  : $"+ product
+                        .getPrice()+ "</h3>";
+                        }
+                    }
+             html += "";
+             html += "</body>";
+             html += "</hmtl>";
+
+             email.setMensaje(html);
             mailService.enviarCorreo(email);
         }
 
         return "redirect:/home";
     }
+
+
 
 
     @RequestMapping(path = "/testCodeBar", method = RequestMethod.GET)
