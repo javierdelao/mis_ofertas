@@ -16,18 +16,6 @@
 <body>
 
 <t:menu></t:menu>
-<div class="row">
-    <a href="${urlBase}/testMail" class="btn btn-primary">Enviar correo test</a>
-
-    <a href="${urlBase}/testCodeBar" class="btn btn-primary">Enviar pdf test</a>
-
-    <a href="${urlBase}/testCodeBar2" class="btn btn-primary">Enviar pdf test2</a>
-
-    <a href="${urlBase}/testCodeBar3" class="btn btn-primary">Enviar pdf test3</a>
-
-    <a href="${urlBase}/testCodeBar4" class="btn btn-primary">Enviar pdf test4</a>
-
-</div>
 <style>
     /* Generals resets and unimportant stuff */
     * { margin: 0px; padding: 0px; }
@@ -603,7 +591,7 @@
                             <div id="product-card${product.id}">
                                 <div id="product-front${product.id}">
                                     <div class="shadow"></div>
-                                    <img src="${urlBase}/images/${product.image.path}" style="width:100%; ">
+                                    <img src="${product.image.path}" style="width:100%; ">
                                     <div class="image_overlay"></div>
                                     <a href="${urlBase}/product/detail/${product.id}" id="view_details" title="Ver detalle" class="btn btn-primary mb-1" style="width: 100% padding: 0px">Ver Detalle</a>
 

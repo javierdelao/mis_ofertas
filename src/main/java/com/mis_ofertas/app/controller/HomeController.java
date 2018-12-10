@@ -135,44 +135,6 @@ public class HomeController extends MainController {
     }
 
 
-    @RequestMapping(path = "/testCodeBar", method = RequestMethod.GET)
-    public void testCodeBar(Model model, HttpServletRequest request,HttpServletResponse response) throws FileNotFoundException {
-        try {
-            Code39Bean bean = new Code39Bean();
-            final int dpi = 150;
-            bean.setModuleWidth(UnitConv.in2mm(1.0f / dpi));
-            bean.setWideFactor(3);
-            bean.doQuietZone(false);
-            File outputFile = new File("out.jpg");
-            OutputStream out = new FileOutputStream(outputFile);
-            try {
-                // Set up the canvas provider for monochrome JPEG output
-                BitmapCanvasProvider canvas = new BitmapCanvasProvider(out,
-                        "image/jpeg", dpi, BufferedImage.TYPE_BYTE_BINARY,
-                        false, 0);
-
-                // Generate the barcode
-                bean.generateBarcode(canvas, "123456");
-
-                // Signal end of generation
-                canvas.finish();
-                response.setContentType("image/jpeg");
-                response.setHeader("Content-disposition", String.format("attachment; filename=%s.%s", "out", "jpg"));
-                out.flush();
-
-
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            } finally {
-            }
-        } catch (
-                Exception e)
-
-        {
-            e.printStackTrace();
-        }
-    }
-
     @RequestMapping(path = "/testCodeBar2", method = RequestMethod.GET)
     public void testCodeBar2(Model model, HttpServletRequest request,HttpServletResponse response) throws FileNotFoundException {
         String uploadsDir = configProperties.getProperty("barcodesLocalPath");
@@ -228,21 +190,7 @@ public class HomeController extends MainController {
 
     }
 
-    @RequestMapping(path = "/testCodeBar4", method = RequestMethod.GET)
-    public void testCodeBar4(Model model, HttpServletRequest request,HttpServletResponse response) throws FileNotFoundException {
-        String uploadsDir = configProperties.getProperty("barcodesLocalPath");
 
-        try {
-            Random rand = new Random();
-            int n = rand.nextInt(50000000) + 1;
-
-
-
-        }catch (Exception e){
-
-        }
-
-    }
 
 
 }

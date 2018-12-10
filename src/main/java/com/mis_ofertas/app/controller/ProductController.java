@@ -166,18 +166,10 @@ public class ProductController extends MainController {
             new File(uploadsDir).mkdir();
         }
 
-      /*  Image imagep = new Image();
-        Random rand = new Random();
 
-        int n = rand.nextInt(50000000) + 1;
 
-        String orgName = image.getOriginalFilename();
-        String filePath = uploadsDir + n + orgName;
-        File dest = new File(filePath);
-        image.transferTo(dest);
-        imagep.setPath(n + orgName);
+
         Product product = new Product();
-        product.setImage(imagep);
         product.setName(name);
         product.setDescription(description);
         product.setIs_perishable(is_perishable);
@@ -195,7 +187,7 @@ public class ProductController extends MainController {
         product.setArea(restService.area(areaId));
 
         product.setStatus(restService.status(statusId));
-*/
+
         if (!image.isEmpty()) {
             try {
                 File convFile = new File(image.getOriginalFilename());
@@ -206,10 +198,11 @@ public class ProductController extends MainController {
                 File cloudinaryFile = convFile;
 
                 Cloudinary cloudinary = new Cloudinary("cloudinary://595457353713571:RxV3bs5fiChrbbl1UFRcBe3b9cc@duzvu8wmg");
-                //  Cloudinary cloudinary = new Cloudinary(CONFIG);
                 CONFIG.put("folder","images");
                 JSONObject result = new JSONObject(cloudinary.uploader().upload(cloudinaryFile, CONFIG));
-                //     cloudinary.uploader().upload("https://res.cloudinary.com/demo/image/upload/sample.jpg", ObjectUtils.emptyMap());
+                Image imagep = new Image();
+                imagep.setPath(result.getString("url"));
+                product.setImage(imagep);
                 System.out.println("done");
             } catch (Exception e) {
                 e.printStackTrace();
@@ -226,7 +219,7 @@ public class ProductController extends MainController {
                 ObjectUtils.asMap("duzvu8wmg", "samples"));*/
 
 
-        //    product = restService.create(product);
+            product = restService.create(product);
         //duzvu8wmg
         //595457353713571
         //RxV3bs5fiChrbbl1UFRcBe3b9cc

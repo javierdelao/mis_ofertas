@@ -129,7 +129,7 @@
                                 ${product.publicationDate}
                         </td>
                         <td>
-                            <img src="${urlBase}/images/${product.image.path}" style="width:150px; height:auto;">
+                            <img src="${product.image.path}" style="width:150px; height:auto;">
                         </td>
                         <c:if test="${product.offer!=null}">
                             <td>

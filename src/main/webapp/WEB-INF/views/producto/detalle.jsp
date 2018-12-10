@@ -247,7 +247,7 @@
 
         <div class="col-md-4">
             <div class="row">
-                <img src="${urlBase}/images/${product.image.path}" style="width:100%; height:100%;">
+                <img src="${product.image.path}" style="width:100%; height:100%;">
             </div>
             <div class="row">
                 <div class="stars" style="text-align: center">
@@ -276,7 +276,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-3">
-                        <img style="width: 90%" src="${urlBase}/images/${product.user.store.image.path}">
+                        <img style="width: 90%" src="${product.user.store.image.path}">
                     </div>
                     <div class="col-md-9">
                         <h3>${product.user.store.name}</h3>

@@ -123,7 +123,7 @@
         </div>
     </div>
     <div>
-        <a href="" class="btn btn-sm btn-primary">Generar Cupon de Descuento</a>
+        <a href="${urlBase}/usuario/testCodeBar" class="btn btn-sm btn-primary">Generar Cupon de Descuento</a>
     </div>
 
     <div>
