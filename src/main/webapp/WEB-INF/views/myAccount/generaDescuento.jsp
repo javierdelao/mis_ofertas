@@ -55,7 +55,7 @@
                     <td>100000</td>
                     <td>Alimentos</td>
                     <td>
-                        <a href="Genera" title="Generar Descuento" class="btn btn-primary btn-sm"><span
+                        <a href="${urlBase}/usuario/edit" title="Generar Descuento" class="btn btn-primary btn-sm"><span
                                 class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                     </td>
                 </tr>
@@ -65,7 +65,7 @@
                     <td>150000</td>
                     <td>Alimentos, Electrónica y Línea Blanca</td>
                     <td>
-                        <a href="Genera" title="Generar Descuento" class="btn btn-primary btn-sm"><span
+                        <a href="${urlBase}/usuario/edit" title="Generar Descuento" class="btn btn-primary btn-sm"><span
                                 class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                     </td>
                 </tr>
@@ -75,7 +75,7 @@
                     <td>300000</td>
                     <td>Alimentos, Electrónica, Línea Blanca y Ropa</td>
                     <td>
-                        <a href="Genera"  title="Generar Descuento" class="btn btn-primary btn-sm"><span
+                        <a href="${urlBase}/usuario/edit" title="Generar Descuento" class="btn btn-primary btn-sm"><span
                                 class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                     </td>
                 </tr>

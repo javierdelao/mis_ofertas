@@ -76,6 +76,25 @@ public class MyAccountController extends MainController{
         return "myAccount/generaDescuento";
 
     }
+    @RequestMapping(path = "/edit", method = RequestMethod.GET)
+    public String edit(Model model, HttpServletRequest request) {
+        SystemUser usuario = user(request);
+
+        System.out.println("+++ACTUALES: "+usuario.getPoints());
+        System.out.println("+++DESCUENTO: "+(usuario.getPoints()-1));
+        usuario.setPoints((usuario.getPoints()-1));
+
+        usuario = restService.edit(usuario);
+        /*
+        model.addAttribute("productTypes", restService.productTypes());
+        model.addAttribute("areas", restService.areas());
+        model.addAttribute("statuses", restService.statuses());
+        */
+        model.addAttribute("usuarioList",usuario);
+        return "myAccount/account";
+
+    }
+
     /*
     @RequestMapping(path = "/generarD/{userId}", method = RequestMethod.GET)
     public String generarD(Model model, HttpServletRequest request, @PathVariable Long ){
