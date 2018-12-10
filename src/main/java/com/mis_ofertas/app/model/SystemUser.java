@@ -21,6 +21,10 @@ public class SystemUser{
 
         private Store store;
 
+        private Integer points;
+
+        private String avatar;
+
         public SystemUser() {
         }
 
@@ -88,9 +92,21 @@ public class SystemUser{
                 this.store = store;
         }
 
+        public Integer getPoints() {
+                return points;
+        }
 
+        public void setPoints(Integer points) {
+                this.points = points;
+        }
 
+        public String getAvatar() {
+                return avatar;
+        }
 
+        public void setAvatar(String avatar) {
+                this.avatar = avatar;
+        }
 }
 
 

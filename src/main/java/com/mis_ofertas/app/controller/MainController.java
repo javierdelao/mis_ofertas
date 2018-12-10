@@ -1,6 +1,7 @@
 package com.mis_ofertas.app.controller;
 
 import com.mis_ofertas.app.model.SystemUser;
+import com.mis_ofertas.app.service.MailService;
 import com.mis_ofertas.app.service.RestService;
 import com.mis_ofertas.app.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ public class MainController extends ModelAttributesController{
 
     protected UserService userService;
 
+    protected MailService mailService;
+
     @Autowired
     public void setRestService(RestService restService) {
         this.restService = restService;
@@ -23,6 +26,11 @@ public class MainController extends ModelAttributesController{
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
+    }
+
+    @Autowired
+    public void setMailService(MailService mailService) {
+        this.mailService = mailService;
     }
 
     protected SystemUser user(HttpServletRequest request){

@@ -6,20 +6,26 @@
 
 package com.mis_ofertas.app.controller;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.mis_ofertas.app.model.*;
+import org.cloudinary.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created by Juan Francisco Rodríguez
@@ -30,11 +36,18 @@ import java.util.Random;
 @RequestMapping("/product")
 public class ProductController extends MainController {
 
+    private final static Map<Object, Object> CONFIG = new HashMap<>();
+
+    static {
+        CONFIG.put("cloud_name", "duzvu8wmg");
+        CONFIG.put("api_key", "595457353713571");
+        CONFIG.put("api_secret", "RxV3bs5fiChrbbl1UFRcBe3b9cc");
+    }
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public String home(Model model, HttpServletRequest request) {
         SystemUser usuario = user(request);
-        List<Product> productList = restService.products(usuario, true, null, null,null,"");
+        List<Product> productList = restService.products(usuario, true, null, null, null, "");
         for (Product product : productList) {
             if (product.getOffer() != null) {
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -61,18 +74,18 @@ public class ProductController extends MainController {
                        @RequestParam("textSearch") String textSearch) {
         SystemUser usuario = user(request);
         Area area = restService.area(areaId);
-        if(area==null){
-            area=new Area(Long.parseLong("0"));
+        if (area == null) {
+            area = new Area(Long.parseLong("0"));
         }
         Status status = restService.status(statusId);
-        if(status==null){
-            status=new Status(Long.parseLong("0"));
+        if (status == null) {
+            status = new Status(Long.parseLong("0"));
         }
-        ProductType productType=restService.productType(productTypeId);
-        if(productType==null){
-            productType=new ProductType(Long.parseLong("0"));
+        ProductType productType = restService.productType(productTypeId);
+        if (productType == null) {
+            productType = new ProductType(Long.parseLong("0"));
         }
-        List<Product> productList = restService.products(usuario, true, status, area,productType,textSearch);
+        List<Product> productList = restService.products(usuario, true, status, area, productType, textSearch);
         for (Product product : productList) {
             if (product.getOffer() != null) {
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -120,7 +133,7 @@ public class ProductController extends MainController {
         Product product = restService.product(productoId);
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
-        if(product.getExpirationDate()!=null){
+        if (product.getExpirationDate() != null) {
             String dateString = format.format(product.getExpirationDate());
             product.setExpirationDateString(dateString);
         }
@@ -153,22 +166,14 @@ public class ProductController extends MainController {
             new File(uploadsDir).mkdir();
         }
 
-        Image imagep = new Image();
-        Random rand = new Random();
 
-        int n = rand.nextInt(50000000) + 1;
 
-        String orgName = image.getOriginalFilename();
-        String filePath = uploadsDir + n + orgName;
-        File dest = new File(filePath);
-        image.transferTo(dest);
-        imagep.setPath(n + orgName);
+
         Product product = new Product();
-        product.setImage(imagep);
         product.setName(name);
         product.setDescription(description);
         product.setIs_perishable(is_perishable);
-        if(expirationDate!=null && !expirationDate.equals("")){
+        if (expirationDate != null && !expirationDate.equals("")) {
             Date date = new SimpleDateFormat("yyyy-MM-dd").parse(expirationDate);
             product.setExpirationDate(date);
         }
@@ -182,7 +187,45 @@ public class ProductController extends MainController {
         product.setArea(restService.area(areaId));
 
         product.setStatus(restService.status(statusId));
-        product = restService.create(product);
+
+        if (!image.isEmpty()) {
+            try {
+                File convFile = new File(image.getOriginalFilename());
+                convFile.createNewFile();
+                FileOutputStream fos = new FileOutputStream(convFile);
+                fos.write(image.getBytes());
+                fos.close();
+                File cloudinaryFile = convFile;
+
+                Cloudinary cloudinary = new Cloudinary("cloudinary://595457353713571:RxV3bs5fiChrbbl1UFRcBe3b9cc@duzvu8wmg");
+                CONFIG.put("folder","images");
+                JSONObject result = new JSONObject(cloudinary.uploader().upload(cloudinaryFile, CONFIG));
+                Image imagep = new Image();
+                imagep.setPath(result.getString("url"));
+                product.setImage(imagep);
+                System.out.println("done");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        /*Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
+                "cloud_name", "duzvu8wmg",
+                "api_key", "595457353713571",
+                "api_secret", "RxV3bs5fiChrbbl1UFRcBe3b9cc"));
+        //Cloudinary cloudinary=new Cloudinary();
+        cloudinary.uploader().upload(new File(uploadsDir + n + orgName),
+                ObjectUtils.asMap("duzvu8wmg", "samples"));*/
+
+
+            product = restService.create(product);
+        //duzvu8wmg
+        //595457353713571
+        //RxV3bs5fiChrbbl1UFRcBe3b9cc
+        //CLOUDINARY_URL=cloudinary://595457353713571:RxV3bs5fiChrbbl1UFRcBe3b9cc@duzvu8wmg
+
+
         return "redirect:/product/";
     }
 
@@ -221,7 +264,7 @@ public class ProductController extends MainController {
         product.setName(name);
         product.setDescription(description);
         product.setIs_perishable(is_perishable);
-        if(expirationDate!=null && !expirationDate.equals("")){
+        if (expirationDate != null && !expirationDate.equals("")) {
             Date date = new SimpleDateFormat("yyyy-MM-dd").parse(expirationDate);
             product.setExpirationDate(date);
         }
@@ -245,22 +288,22 @@ public class ProductController extends MainController {
         visit.setSystemUser(usuario);
         visit.setVisitDate(new Date());
         visit = restService.create(visit);
-        List<Offer>offers=restService.offerHistory(product);
+        List<Offer> offers = restService.offerHistory(product);
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-YYYY");
 
-        for(Offer offer:offers){
-            if(offer.getExpirationDate()!=null){
+        for (Offer offer : offers) {
+            if (offer.getExpirationDate() != null) {
                 String dateString = format.format(offer.getExpirationDate());
                 offer.setExpirationDateString(dateString);
             }
-            if(offer.getPublicationDate()!=null){
+            if (offer.getPublicationDate() != null) {
                 String dateString = format.format(offer.getPublicationDate());
                 offer.setPublicationDateString(dateString);
             }
         }
 
-        List<Note>notes=restService.notes(product);
-        Valoration valoration=restService.valoration(product,usuario);
+        List<Note> notes = restService.notes(product);
+        Valoration valoration = restService.valoration(product, usuario);
         model.addAttribute("valoration", valoration);
         model.addAttribute("notes", notes);
         model.addAttribute("product", product);
@@ -271,42 +314,66 @@ public class ProductController extends MainController {
 
     @RequestMapping(path = "/comment", method = RequestMethod.POST)
     public String comment(HttpServletRequest request,
-                         @RequestParam("text") String text,
-                         @RequestParam("productId") Long productId) throws ParseException {
-        SystemUser user=user(request);
-        Note note=new Note();
+                          @RequestParam(value = "images", required = false) MultipartFile[] images,
+                          @RequestParam("text") String text,
+                          @RequestParam("productId") Long productId) throws ParseException, IOException {
+        HttpSession session = request.getSession();
+        SystemUser user = user(request);
+        List<Document> documents = new ArrayList<>();
+        if (images != null) {
+            for (int i = 0; i < images.length; i++) {
+                MultipartFile image = images[i];
+                if (image != null && image.getSize() > 0) {
+                    String uploadsDir = configProperties.getProperty("documentsLocalPath");
+                    if (!new File(uploadsDir).exists()) {
+                        new File(uploadsDir).mkdir();
+                    }
+                    Document document = new Document();
+                    Random rand = new Random();
+                    int n = rand.nextInt(50000000) + 1;
+                    String orgName = image.getOriginalFilename();
+                    String filePath = uploadsDir + n + orgName;
+                    File dest = new File(filePath);
+                    image.transferTo(dest);
+                    document.setPath(n + orgName);
+                    document.setUploadDate(new Date());
+                    document = restService.create(document);
+                    documents.add(document);
+                }
+            }
+        }
+        Note note = new Note();
         note.setCommentDate(new Date());
         note.setProduct(restService.product(productId));
         note.setText(text);
         note.setSystemUser(user);
-        note=restService.create(note);
-        return "redirect:/product/detail/"+productId;
+        note.setDocuments(documents);
+        note = restService.create(note);
+        user.setPoints(user.getPoints() + 1);
+        SystemUser user1 = restService.edit(user);
+        session.setAttribute("user", user1);
+
+        return "redirect:/product/detail/" + productId;
     }
 
     @RequestMapping(path = "/valoration", method = RequestMethod.POST)
     public String valoration(HttpServletRequest request,
-                         @RequestParam("valorationNumber") Integer valorationNumber,
-                         @RequestParam("productId") Long productId) throws ParseException {
-        SystemUser user=user(request);
-        Valoration valoration=new Valoration();
+                             @RequestParam("valorationNumber") Integer valorationNumber,
+                             @RequestParam("productId") Long productId) throws ParseException {
+        HttpSession session = request.getSession();
+
+        SystemUser user = user(request);
+        Valoration valoration = new Valoration();
         valoration.setProduct(restService.product(productId));
         valoration.setValoration_star(valorationNumber);
         valoration.setSystemUser(user);
-        valoration=restService.create(valoration);
-        return "redirect:/product/detail/"+productId;
+        valoration = restService.create(valoration);
+        user.setPoints(user.getPoints() + 1);
+        SystemUser user1 = restService.edit(user);
+        session.setAttribute("user", user1);
+
+        return "redirect:/product/detail/" + productId;
     }
 
-    @RequestMapping(path = "/delete", method = RequestMethod.POST)
-    public String delete(
-            Model model,
-            HttpServletRequest request,
-            @RequestParam("id") Long id,
-            @RequestParam("status") Long statusId) throws ParseException, IOException {
-        SystemUser usuario = user(request);
-        Product product = restService.product(id);
-        product.setStatus(restService.status(statusId));
-        product = restService.edit(product);
-        return "redirect:/product/";
-    }
 
 }

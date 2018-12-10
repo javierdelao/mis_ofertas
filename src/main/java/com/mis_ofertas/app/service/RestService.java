@@ -20,6 +20,14 @@ public class RestService {
         return loginResponse;
     }
 
+    public List<SystemUser> systemUsers() {
+        RestTemplate restTemplate = new RestTemplate();
+        SystemUser[] systemUsers = restTemplate.getForObject(
+                "http://localhost:8181/user/list" ,
+                SystemUser[].class);
+        return Arrays.asList(systemUsers);
+    }
+
     public List<Product> products(Store store) {
         RestTemplate restTemplate = new RestTemplate();
         Product[] productList = restTemplate.getForObject(
@@ -322,6 +330,15 @@ public class RestService {
         return productResponse;
     }
 
+    public Document create(Document document) {
+        RestTemplate restTemplate = new RestTemplate();
+        Document documentResponse = restTemplate.postForObject(
+                "http://localhost:8181/document/create",
+                document,
+                Document.class);
+        return documentResponse;
+    }
+
 
     public Note create(Note note) {
         RestTemplate restTemplate = new RestTemplate();
@@ -458,5 +475,58 @@ public class RestService {
                 Product.class);
         return productResponse;
     }
+
+    public List<SystemUser> systemUser() {
+        RestTemplate restTemplate = new RestTemplate();
+        SystemUser[] systemUser = restTemplate.getForObject(
+                "http://localhost:8181/user/list",
+                SystemUser[].class);
+        return Arrays.asList(systemUser);
+    }
+
+    public SystemUser systemUser(Long id) {
+        RestTemplate restTemplate = new RestTemplate();
+        SystemUser systemUser = restTemplate.getForObject(
+                "http://localhost:8181/user/" + id,
+                SystemUser.class);
+        return systemUser;
+    }
+
+    public List<SystemUser> systemUser(SystemUser user, Boolean owner, Boolean active) {
+        RestTemplate restTemplate = new RestTemplate();
+        SystemUser[] systemUser = restTemplate.getForObject(
+                "http://localhost:8181/user/list",
+                SystemUser[].class);
+        return Arrays.asList(systemUser);
+    }
+
+    public SystemUser edit(SystemUser systemUser) {
+        RestTemplate restTemplate = new RestTemplate();
+        SystemUser systemUserResponse = restTemplate.postForObject(
+                "http://localhost:8181/user/edit",
+                systemUser,
+                SystemUser.class);
+        return systemUserResponse;
+    }
+
+    public SystemUser create(SystemUser systemUser) {
+        RestTemplate restTemplate = new RestTemplate();
+        SystemUser systemUserResponse = restTemplate.postForObject(
+                "http://localhost:8181/user/create",
+                systemUser,
+                SystemUser.class);
+        return systemUserResponse;
+    }
+
+    public SystemUser detail(SystemUser systemUser) {
+        RestTemplate restTemplate = new RestTemplate();
+        SystemUser systemUserResponse = restTemplate.postForObject(
+                "http://localhost:8181/user/detail",
+                systemUser,
+                SystemUser.class);
+        return systemUserResponse;
+    }
+
+
 
 }

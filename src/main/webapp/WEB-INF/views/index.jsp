@@ -16,7 +16,6 @@
 <body>
 
 <t:menu></t:menu>
-
 <style>
     /* Generals resets and unimportant stuff */
     * { margin: 0px; padding: 0px; }
@@ -567,6 +566,7 @@
  <div class="col-md-3 mt-5">
         <t:subMenu></t:subMenu>
     </div>
+
     <div class="col-md-9 mt-5">
         <c:forEach items="${customProductList.customProductListItems}" var="customProductListItem">
             <div class="col-md-10 mr-2 mb-2" style="border:solid 5px; display: block">
@@ -590,7 +590,7 @@
                             <div id="product-card${product.id}">
                                 <div id="product-front${product.id}">
                                     <div class="shadow"></div>
-                                    <img src="${urlBase}/images/${product.image.path}" style="width:100%; ">
+                                    <img src="${product.image.path}" style="width:100%; ">
                                     <div class="image_overlay"></div>
                                     <a href="${urlBase}/product/detail/${product.id}" id="view_details" title="Ver detalle" class="btn btn-primary mb-1" style="width: 100% padding: 0px">Ver Detalle</a>
 
