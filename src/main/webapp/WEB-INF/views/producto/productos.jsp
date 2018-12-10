@@ -20,6 +20,21 @@
         margin-top: 80px;
     }
 </style>
+<script>
+    function confirmarCambio()
+    {
+        var agree=confirm("¿Esta seguro que desea eliminar producto?");
+        if (agree)
+            return true ;
+        else
+            return false ;
+    }
+    function cambiando() {
+
+        document.getElementById("cambio").value = 1;
+        action="${urlBase}/product/delete";
+    }
+</script>
 <div class="container" id="dvShow">
     <div class="content">
         <h2>Productos </h2>
@@ -161,6 +176,8 @@
                                     class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                         </td>
                         <td>
+                            <input type="button" name="cambiar" id="cambiar"onclick="confirmarCambio();cambiando();" value="Cambiar"/>
+
                             <a href="index.php?aksi=delete&nik='.$row['codigo'].'" title="Eliminar"
                                onclick="return confirm"
                                class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"

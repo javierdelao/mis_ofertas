@@ -562,10 +562,9 @@
 
 </Script>
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Allerta+Stencil">
 
-<div class="row">
-
-    <div class="col-md-3 mt-5">
+ <div class="col-md-3 mt-5">
         <t:subMenu></t:subMenu>
     </div>
     <div class="col-md-9 mt-5">
@@ -573,12 +572,12 @@
             <div class="col-md-10 mr-2 mb-2" style="border:solid 5px; display: block">
                 <br>
                 <c:if test="${customProductListItem.area!=null}">
-                    <span style=" text-align: -webkit-center ; font-family: 'Source Sans Pro', sans-serif;font-size: 30px"  > Por que sabemos de tu interés en:
+                    <span style=" text-align: -webkit-center ; font-family:Allerta Stencil, Sans-serif;font-size: 30px"  > Por que sabemos de tu interés en:
                     </br>
-                        <span style=" text-align: center; align-content: center ; font-family: 'Source Sans Pro', sans-serif;font-size: 50px; color: darkgreen"><strong>${customProductListItem.area.name}</strong>  </span></span>
+                        <span style=" text-align: center; align-content: center ; font-family:Allerta Stencil, Sans-serif;font-size: 50px; color: darkgreen"><strong>${customProductListItem.area.name}</strong>  </span></span>
                 </c:if>
                 <c:if test="${customProductListItem.area==null}">
-                    <span style=" text-align: -webkit-center ; font-family: 'Source Sans Pro', sans-serif;font-size: 45px"  >  Productos recientemente publicados  </span>
+                    <span style=" text-align: -webkit-center ; font-family:Allerta Stencil, Sans-serif;font-size: 45px"  >  Productos recientemente publicados  </span>
                 </c:if>
 
             </div>
@@ -644,7 +643,7 @@
 
 
 
-</div>
+
 
 
 </body>

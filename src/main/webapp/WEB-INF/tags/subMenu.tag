@@ -90,7 +90,7 @@
         margin-top: 3px;
         width: 20px;
     }
-    #menu ul a i[class*='fa-caret']{float: right;}
+    #menu ul a i[class='fa-caret']{float: right;}
     #menu ul a:hover,#menu ul a.active{
         background-color:#111;
         border-left-color: #FFCC33;
@@ -142,7 +142,25 @@
     });
 </script>
 
+<style>
+
+    input#abrir-cerrar:checked ~ #sidebar {
+        width:300px;
+    }
+    input#abrir-cerrar:checked + label[for="abrir-cerrar"], input#abrir-cerrar:checked ~ #contenido {
+        margin-left:300px;
+        transition: margin-left .4s;
+    }
+    input#abrir-cerrar:checked + label[for="abrir-cerrar"] .cerrar {
+        display:inline;
+    }
+    input#abrir-cerrar:checked + label[for="abrir-cerrar"] .abrir {
+        display:none;
+    }
+</style>
 <script>
+
+
     function mostrar() {
         document.getElementById("sidebar").style.width = "300px";
         document.getElementById("contenido").style.marginLeft = "300px";
@@ -172,16 +190,21 @@
     </ul>
 
 
-    <input id="abrir-cerrar" name="abrir-cerrar" type="checkbox" value="" />
-    <label for="abrir-cerrar">
-        &#9776; <span class="abrir">Abrir</span><span class="cerrar">Cerrar</span>
-
-
     </label>
+    <a id="abrir" class="abrir-cerrar" href="javascript:void(0)" onclick="mostrar()">
+        Abrir menu
+    </a>
+    <a id="cerrar" class="abrir-cerrar" href="${urlBase}/home" onclick="ocultar()">
+        Cerrar menu
     </a>
 </nav>
-<script>
+<style>
     input#abrir-cerrar { visibility:hidden; position: absolute; top: -9999px; }
-</script>
+</style>
+
+<input id="abrir-cerrar" name="abrir-cerrar" type="checkbox" value="" />
+<label for="abrir-cerrar">
+    &#9776; <span class="abrir">Abrir</span><span class="cerrar">Cerrar</span>
+</label>
 
 <!-- /menu vertical -->

@@ -57,7 +57,6 @@
                     <th>Pais</th>
                     <th>Detalle</th>
                     <th>Editar</th>
-                    <th>Eliminar</th>
                 </tr>
                 <c:forEach items="${storeList}" var="store">
                     <tr>
@@ -98,12 +97,6 @@
                             <a href="${urlBase}/store/edit/${store.id}" id="editarT" title="Editar datos"
                                class="btn btn-primary btn-sm"><span
                                     class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
-                        </td>
-                        <td>
-                            <a href="index.php?aksi=delete&nik='.$row['codigo'].'" title="Eliminar"
-                               onclick="return confirm"
-                               class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"
-                                                                   aria-hidden="true"></span></a>
                         </td>
                     </tr>
                 </c:forEach>

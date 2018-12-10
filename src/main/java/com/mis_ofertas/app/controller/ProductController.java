@@ -296,6 +296,17 @@ public class ProductController extends MainController {
         return "redirect:/product/detail/"+productId;
     }
 
-
+    @RequestMapping(path = "/delete", method = RequestMethod.POST)
+    public String delete(
+            Model model,
+            HttpServletRequest request,
+            @RequestParam("id") Long id,
+            @RequestParam("status") Long statusId) throws ParseException, IOException {
+        SystemUser usuario = user(request);
+        Product product = restService.product(id);
+        product.setStatus(restService.status(statusId));
+        product = restService.edit(product);
+        return "redirect:/product/";
+    }
 
 }
