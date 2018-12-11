@@ -467,6 +467,14 @@ public class RestService {
         return product;
     }
 
+    public Product delete(Product product) {
+        RestTemplate restTemplate = new RestTemplate();
+        Product productResponse = restTemplate.postForObject(
+                "http://localhost:8181/product/delete",
+                product,
+                Product.class);
+        return productResponse;
+    }
 
     public List<SystemUser> systemUser() {
         RestTemplate restTemplate = new RestTemplate();
