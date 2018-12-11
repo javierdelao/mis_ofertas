@@ -159,6 +159,18 @@ public class HomeController extends MainController {
     }
 
 
+    @RequestMapping(path = "/testMail2", method = RequestMethod.GET)
+    public String testMail2(Model model, HttpServletRequest request) {
+        SystemUser usuario = user(request);
+
+        List<SystemUser> systemUsers = restService.systemUsers();
+
+        mailService.sendNewsLetterEmail(usuario);
+
+        return "redirect:/home";
+    }
+
+
 
 
     @RequestMapping(path = "/testCodeBar", method = RequestMethod.GET)
