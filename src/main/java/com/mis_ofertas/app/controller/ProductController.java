@@ -160,14 +160,6 @@ public class ProductController extends MainController {
             @RequestParam("area") Long areaId,
             @RequestParam("status") Long statusId) throws ParseException, IOException {
         SystemUser usuario = user(request);
-        String uploadsDir = configProperties.getProperty("imagesLocalPath");
-
-        if (!new File(uploadsDir).exists()) {
-            new File(uploadsDir).mkdir();
-        }
-
-
-
 
         Product product = new Product();
         product.setName(name);
@@ -209,21 +201,8 @@ public class ProductController extends MainController {
             }
         }
 
+        product = restService.create(product);
 
-        /*Cloudinary cloudinary = new Cloudinary(ObjectUtils.asMap(
-                "cloud_name", "duzvu8wmg",
-                "api_key", "595457353713571",
-                "api_secret", "RxV3bs5fiChrbbl1UFRcBe3b9cc"));
-        //Cloudinary cloudinary=new Cloudinary();
-        cloudinary.uploader().upload(new File(uploadsDir + n + orgName),
-                ObjectUtils.asMap("duzvu8wmg", "samples"));*/
-
-
-            product = restService.create(product);
-        //duzvu8wmg
-        //595457353713571
-        //RxV3bs5fiChrbbl1UFRcBe3b9cc
-        //CLOUDINARY_URL=cloudinary://595457353713571:RxV3bs5fiChrbbl1UFRcBe3b9cc@duzvu8wmg
 
 
         return "redirect:/product/";
@@ -246,21 +225,28 @@ public class ProductController extends MainController {
             @RequestParam("status") Long statusId) throws ParseException, IOException {
         SystemUser usuario = user(request);
         Product product = restService.product(id);
-        if (image != null && image.getSize() > 0) {
-            String uploadsDir = configProperties.getProperty("imagesLocalPath");
-            if (!new File(uploadsDir).exists()) {
-                new File(uploadsDir).mkdir();
+
+        if (!image.isEmpty()) {
+            try {
+                File convFile = new File(image.getOriginalFilename());
+                convFile.createNewFile();
+                FileOutputStream fos = new FileOutputStream(convFile);
+                fos.write(image.getBytes());
+                fos.close();
+                File cloudinaryFile = convFile;
+
+                Cloudinary cloudinary = new Cloudinary("cloudinary://595457353713571:RxV3bs5fiChrbbl1UFRcBe3b9cc@duzvu8wmg");
+                CONFIG.put("folder","images");
+                JSONObject result = new JSONObject(cloudinary.uploader().upload(cloudinaryFile, CONFIG));
+                Image imagep = new Image();
+                imagep.setPath(result.getString("url"));
+                product.setImage(imagep);
+                System.out.println("done");
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            Image imagep = new Image();
-            Random rand = new Random();
-            int n = rand.nextInt(50000000) + 1;
-            String orgName = image.getOriginalFilename();
-            String filePath = uploadsDir + n + orgName;
-            File dest = new File(filePath);
-            image.transferTo(dest);
-            imagep.setPath(n + orgName);
-            product.setImage(imagep);
         }
+
         product.setName(name);
         product.setDescription(description);
         product.setIs_perishable(is_perishable);
@@ -323,22 +309,29 @@ public class ProductController extends MainController {
         if (images != null) {
             for (int i = 0; i < images.length; i++) {
                 MultipartFile image = images[i];
-                if (image != null && image.getSize() > 0) {
-                    String uploadsDir = configProperties.getProperty("documentsLocalPath");
-                    if (!new File(uploadsDir).exists()) {
-                        new File(uploadsDir).mkdir();
+
+                if (!image.isEmpty()) {
+                    try {
+                        Document document = new Document();
+
+                        File convFile = new File(image.getOriginalFilename());
+                        convFile.createNewFile();
+                        FileOutputStream fos = new FileOutputStream(convFile);
+                        fos.write(image.getBytes());
+                        fos.close();
+                        File cloudinaryFile = convFile;
+
+                        Cloudinary cloudinary = new Cloudinary("cloudinary://595457353713571:RxV3bs5fiChrbbl1UFRcBe3b9cc@duzvu8wmg");
+                        CONFIG.put("folder","images");
+                        JSONObject result = new JSONObject(cloudinary.uploader().upload(cloudinaryFile, CONFIG));
+                        document.setPath(result.getString("url"));
+                        document.setUploadDate(new Date());
+                        document = restService.create(document);
+                        documents.add(document);
+                        System.out.println("done");
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                    Document document = new Document();
-                    Random rand = new Random();
-                    int n = rand.nextInt(50000000) + 1;
-                    String orgName = image.getOriginalFilename();
-                    String filePath = uploadsDir + n + orgName;
-                    File dest = new File(filePath);
-                    image.transferTo(dest);
-                    document.setPath(n + orgName);
-                    document.setUploadDate(new Date());
-                    document = restService.create(document);
-                    documents.add(document);
                 }
             }
         }

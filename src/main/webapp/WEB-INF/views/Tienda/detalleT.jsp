@@ -18,7 +18,7 @@
 
 <div class="container">
     <div class="content">
-        <h2>Store &raquo; ${store.name} </h2>            <img src="${urlBase}/images/${store.image.path}" style="width:150px; height:auto;">
+        <h2>Store &raquo; ${store.name} </h2>            <img src="${store.image.path}" style="width:150px; height:auto;">
 
         <th></th>
         <th></th>

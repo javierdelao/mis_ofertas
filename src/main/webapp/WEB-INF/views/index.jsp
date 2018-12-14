@@ -612,7 +612,7 @@
                                 <div class="shadow"></div>
                                 <div id="carousel">
                                     <ul>
-                                        <li><img src="${urlBase}/images/${product.image.path}" style="width:100%; "></li>
+                                        <li><img src="${product.image.path}" style="width:100%; "></li>
                                     </ul>
                                     <div class="arrows-perspective">
                                         <div class="carouselPrev">

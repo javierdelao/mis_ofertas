@@ -481,7 +481,7 @@
                         <h4 class="modal-title">Documento adjunto ${document.path}</h4>
                     </div>
                     <div class="modal-body">
-                        <embed src="${urlBase}/documents/${document.path}?zoom=50" width="575" height="500">
+                        <embed src="${document.path}?zoom=50" width="575" height="500">
 
                     </div>
                     <div class="modal-footer">

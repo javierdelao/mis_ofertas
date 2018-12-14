@@ -82,7 +82,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Imagen Actual</label>
                     <div class="col-sm-4">
-                        <img src="${urlBase}/images/${store.image.path}" style="width:150px; height:auto;">
+                        <img src="${store.image.path}" style="width:150px; height:auto;">
 
                     </div>
                 </div>

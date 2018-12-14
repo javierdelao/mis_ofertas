@@ -48,7 +48,7 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label">Imagen</label>
                 <div class="col-sm-4">
-                    <img src="${urlBase}/images/${producto.image.path}" style="width:150px; height:auto;"></div>
+                    <img src="${producto.image.path}" style="width:150px; height:auto;"></div>
             </div>
             <div class="form-group">
                 <label class="col-sm-3 control-label">Descuento</label>
