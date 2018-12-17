@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -23,10 +24,28 @@ public class RestService {
     public List<SystemUser> systemUsers() {
         RestTemplate restTemplate = new RestTemplate();
         SystemUser[] systemUsers = restTemplate.getForObject(
-                "http://localhost:8181/user/list" ,
+                "http://localhost:8181/user/list",
                 SystemUser[].class);
         return Arrays.asList(systemUsers);
     }
+
+    public Integer qta(Product product) {
+        RestTemplate restTemplate = new RestTemplate();
+        Visit[] visits = restTemplate.getForObject(
+                "http://localhost:8181/visit/qta/"+product.getId(),
+                Visit[].class);
+        return visits.length;
+    }
+
+    public Integer visitPerDay(Product product, Date date) {
+        RestTemplate restTemplate = new RestTemplate();
+        Visit[] visits = restTemplate.postForObject(
+                "http://localhost:8181/visit/visitperday/"+product.getId(),
+                date,
+                Visit[].class);
+        return visits.length;
+    }
+
 
     public List<Product> products(Store store) {
         RestTemplate restTemplate = new RestTemplate();
@@ -48,9 +67,24 @@ public class RestService {
     public Valoration valoration(Product Product, SystemUser systemUser) {
         RestTemplate restTemplate = new RestTemplate();
         Valoration valoration = restTemplate.getForObject(
-                "http://localhost:8181/valoration/" + Product.getId() + "/" +systemUser.getId() ,
+                "http://localhost:8181/valoration/" + Product.getId() + "/" + systemUser.getId(),
                 Valoration.class);
         return valoration;
+    }
+
+    public Double productAverage(Product Product) {
+        RestTemplate restTemplate = new RestTemplate();
+        Valoration[] valorations = restTemplate.getForObject(
+                "http://localhost:8181/valoration/average/" + Product.getId(),
+                Valoration[].class);
+        Double cont=0.0;
+        Double total=0.0;
+        for(Valoration valoration:Arrays.asList(valorations)){
+            cont++;
+            total=total+valoration.getValoration_star();
+        }
+        Double result= total/cont;
+        return result;
     }
 
 
@@ -127,6 +161,16 @@ public class RestService {
                 Product.class);
         return product;
     }
+
+    public Product delete(Product product) {
+        RestTemplate restTemplate = new RestTemplate();
+        Product productResponse = restTemplate.postForObject(
+                "http://localhost:8181/product/delete",
+                product,
+                Product.class);
+        return productResponse;
+    }
+
 
 
     public List<Product> products(SystemUser user, Boolean owner, Boolean active) {
@@ -394,6 +438,7 @@ public class RestService {
                 Area.class);
         return areaResponse;
     }
+
     public Product edit(Product product) {
         RestTemplate restTemplate = new RestTemplate();
         Product product1 = restTemplate.postForObject(
@@ -467,14 +512,6 @@ public class RestService {
         return product;
     }
 
-    public Product delete(Product product) {
-        RestTemplate restTemplate = new RestTemplate();
-        Product productResponse = restTemplate.postForObject(
-                "http://localhost:8181/product/delete",
-                product,
-                Product.class);
-        return productResponse;
-    }
 
     public List<SystemUser> systemUser() {
         RestTemplate restTemplate = new RestTemplate();
@@ -527,6 +564,31 @@ public class RestService {
         return systemUserResponse;
     }
 
+
+    public List<Discount> discounts(SystemUser systemUser) {
+        RestTemplate restTemplate = new RestTemplate();
+        Discount[] discounts = restTemplate.getForObject(
+                "http://localhost:8181/discount/list/" + systemUser.getId(),
+                Discount[].class);
+        return Arrays.asList(discounts);
+    }
+
+    public Boolean existCode(String code) {
+        RestTemplate restTemplate = new RestTemplate();
+        Boolean exist = restTemplate.getForObject(
+                "http://localhost:8181/discount/exist/" + code,
+                Boolean.class);
+        return exist;
+    }
+
+    public Discount create(Discount discount) {
+        RestTemplate restTemplate = new RestTemplate();
+        Discount discountResponse = restTemplate.postForObject(
+                "http://localhost:8181/discount/create",
+                discount,
+                Discount.class);
+        return discountResponse;
+    }
 
 
 }

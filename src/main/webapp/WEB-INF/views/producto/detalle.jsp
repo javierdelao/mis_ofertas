@@ -8,178 +8,6 @@
 <body>
 
 <t:menu></t:menu>
-<style>
-    .content {
-        margin-top: 80px;
-    }
-
-    .detailBox {
-        width: 320px;
-        border: 1px solid #bbb;
-        margin: 50px;
-    }
-
-    .titleBox {
-        background-color: #fdfdfd;
-        padding: 10px;
-    }
-
-    .titleBox label {
-        color: #444;
-        margin: 0;
-        display: inline-block;
-    }
-
-    .commentBox {
-        padding: 10px;
-        border-top: 1px dotted #bbb;
-    }
-
-    .commentBox .form-group:first-child, .actionBox .form-group:first-child {
-        width: 80%;
-    }
-
-    .commentBox .form-group:nth-child(2), .actionBox .form-group:nth-child(2) {
-        width: 18%;
-    }
-
-    .actionBox .form-group * {
-        width: 100%;
-    }
-
-    .taskDescription {
-        margin-top: 10px 0;
-    }
-
-    .commentList {
-        padding: 0;
-        list-style: none;
-        max-height: 200px;
-        overflow: auto;
-    }
-
-    .commentList li {
-        margin: 0;
-        margin-top: 10px;
-    }
-
-    .commentList li > div {
-        display: table-cell;
-    }
-
-    .commenterImage {
-        width: 30px;
-        margin-right: 5px;
-        height: 100%;
-        float: left;
-    }
-
-    .commenterImage img {
-        width: 100%;
-        border-radius: 50%;
-    }
-
-    .commentText p {
-        margin: 0;
-    }
-
-    .sub-text {
-        color: #aaa;
-        font-family: verdana;
-        font-size: 11px;
-    }
-
-    .actionBox {
-        border-top: 1px dotted #bbb;
-        padding: 10px;
-    }
-
-    html, body {
-        background-color: #F0F0F0;
-        font-family: Arial, sans-serif;
-        min-width: 500px;
-    }
-
-    .timeline {
-        position: relative;
-        display: block;
-        background-color: #f00;
-        height: 4px;
-        margin: 200px 50px;
-    }
-
-    .timeline::before, .timeline::after {
-        content: "";
-        position: absolute;
-        top: -8px;
-        display: block;
-        width: 0;
-        height: 0;
-        border-radius: 10px;
-        border: 10px solid #f00;
-    }
-
-    .timeline::before {
-        left: -20px;
-    }
-
-    .timeline::after {
-        right: -10px;
-        border: 10px solid transparent;
-        border-radius: 30px;
-        border-right: 0;
-        border-left: 20px solid #f00;
-    }
-
-    .timeline li {
-        position: relative;
-        display: block;
-        float: left;
-        width: 120px;
-        transform: rotate(-45deg);
-        top: -65px;
-    }
-
-    .timeline li::before {
-        content: "";
-        position: absolute;
-        top: 3px;
-        left: -30px;
-        border: 3px solid #f00;
-        border-radius: 15px;
-        width: 10px;
-        height: 10px;
-        background: #F0F0F0;
-    }
-
-    .timeline li span {
-        display: none;
-        position: absolute;
-        top: 40px;
-        left: -100px;
-        width: 150px;
-    }
-
-    .timeline li:hover::before {
-        border: 4px solid #0f0;
-    }
-
-    .timeline li:hover span {
-        display: block;
-        transform: rotate(45deg);
-    }
-
-    .image-upload > input {
-        display: none;
-    }
-
-    .image-upload i {
-        width: 80px;
-        cursor: pointer;
-    }
-
-
-</style>
 <script>
     $(document).ready(function () {
 
@@ -214,27 +42,85 @@
 
 
         loadStar();
+
+
+         Highcharts.chart('container', {
+             chart: {
+                 type: 'column'
+             },
+             title: {
+                 text: 'Visitas últimos 15 días'
+             },
+             subtitle: {
+                 text: 'Source: misofertas.com'
+             },
+             xAxis: {
+                 categories: [
+
+        <c:forEach items="${visitPerDayReports}" var="visitPerDayReport" varStatus="loop">
+        '${visitPerDayReport.dateString}'
+        <c:if test="${loop.index!=(visitPerDayReports.size()-1)}">
+        ,
+        </c:if>
+        </c:forEach>
+
+
+                ],
+                crosshair: true
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Visitas (Cantidad)'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                '<td style="padding:0"><b>{point.y} Visita(s)</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: [{
+                name: 'Visitas',
+                data: [<c:forEach items="${visitPerDayReports}" var="visitPerDayReport" varStatus="loop">
+                    ${visitPerDayReport.visitQta}
+                    <c:if test="${loop.index!=(visitPerDayReports.size()-1)}">
+                    ,
+                    </c:if>
+                    </c:forEach>]
+
+            }]
+        });
     });
 
-    var fillstar = function (number) {
-        for (var i = 1; i < 6; i++) {
-            $("#star-" + i).css("background-color", "white");
+
+        var fillstar = function (number) {
+            for (var i = 1; i < 6; i++) {
+                $("#star-" + i).css("background-color", "white");
+            }
+            for (var i = 1; i <= number; i++) {
+                $("#star-" + i).css("background-color", "yellow");
+            }
         }
-        for (var i = 1; i <= number; i++) {
-            $("#star-" + i).css("background-color", "yellow");
+
+        var sendValoration = function (valoration) {
+            $("#valorationNumber").val(valoration);
+            $("#valorationForm").submit();
         }
-    }
-
-    var sendValoration = function (valoration) {
-        $("#valorationNumber").val(valoration);
-        $("#valorationForm").submit();
-    }
 
 
-    var resetValoration = function () {
-        $("#valorationNumber").val(${valoration.valoration_star});
-        fillstar(${valoration.valoration_star});
-    }
+        var resetValoration = function () {
+            $("#valorationNumber").val(${valoration.valoration_star});
+            fillstar(${valoration.valoration_star});
+        }
 
 </script>
 
@@ -250,6 +136,7 @@
                 <img src="${product.image.path}" style="width:100%; height:100%;">
             </div>
             <div class="row">
+                <span>veces visto : ${qtaVisit}</span>
                 <div class="stars" style="text-align: center">
                     <form id="valorationForm" action="/product/valoration" method="post">
                         <input type="hidden" id="valorationNumber" name="valorationNumber">
@@ -493,6 +380,8 @@
         </div>
     </c:forEach>
 </c:forEach>
+
+<div id="container"></div>
 
 
 </body>

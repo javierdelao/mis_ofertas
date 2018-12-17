@@ -1,5 +1,7 @@
 package com.mis_ofertas.app.model;
 
+import java.util.Date;
+
 public class Discount {
 
 
@@ -10,8 +12,21 @@ public class Discount {
 
     private Boolean used;
 
+    private String usedString;
+
+    private Date creationDate;
+
+    private Date expirationDate;
+
+    private String formatCreationDate;
+
+    private String formatExpirationDate;
+
+    private String path;
 
     private SystemUser user;
+
+    private Integer percentage;
 
     public Discount() {
     }
@@ -49,7 +64,59 @@ public class Discount {
         this.user = user;
     }
 
-    public void fetchCollections() {
+    public Date getCreationDate() {
+        return creationDate;
+    }
 
+    public void setCreationDate(Date creationDate) {
+        this.creationDate = creationDate;
+    }
+
+    public Date getExpirationDate() {
+        return expirationDate;
+    }
+
+    public void setExpirationDate(Date expirationDate) {
+        this.expirationDate = expirationDate;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public String getFormatCreationDate() {
+        return formatCreationDate;
+    }
+
+    public void setFormatCreationDate(String formatCreationDate) {
+        this.formatCreationDate = formatCreationDate;
+    }
+
+    public String getFormatExpirationDate() {
+        return formatExpirationDate;
+    }
+
+    public void setFormatExpirationDate(String formatExpirationDate) {
+        this.formatExpirationDate = formatExpirationDate;
+    }
+
+    public Integer getPercentage() {
+        return percentage;
+    }
+
+    public void setPercentage(Integer percentage) {
+        this.percentage = percentage;
+    }
+
+    public String getUsedString() {
+        return usedString;
+    }
+
+    public void setUsedString(String usedString) {
+        this.usedString = usedString;
     }
 }

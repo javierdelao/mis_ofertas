@@ -39,47 +39,101 @@
         <div class="table-responsive">
             <table class="table table-striped table-hover">
                 <tr><font></font>
-                    <th colspan="2">Mis Puntos: </th>
-                    <th colspan="3" >${usuarioList.points}</th>
+                    <th colspan="2">Mis Puntos:</th>
+                    <th colspan="3">${usuario.points}</th>
                 </tr>
                 <tr>
                     <th>Puntos</th>
                     <th>Descuento</th>
                     <th>Tope</th>
-                    <th>Rubro</th>
                     <th>Generar</th>
                 </tr>
                 <tr>
-                    <td>0 - 100</td>
+                    <td>100</td>
                     <td>5%</td>
                     <td>100000</td>
-                    <td>Alimentos</td>
                     <td>
-                        <a href="${urlBase}/usuario/edit" title="Generar Descuento" class="btn btn-primary btn-sm"><span
-                                class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                        <c:if test="${usuario.points>=100}">
+                            <a href="${urlBase}/usuario/discount/generate/1" title="Generar Descuento"
+                               class="btn btn-primary btn-sm"><i class="fas fa-barcode"></i></a>
+                        </c:if>
+                        <c:if test="${usuario.points<100}">
+                            <a data-toggle="tooltip" title="No tienes los puntos suficientes">
+                                <button disabled
+                                        class="btn btn-primary btn-sm">
+                                    <i class="fas fa-barcode"></i>
+                                </button>
+                            </a>
+                        </c:if>
                     </td>
                 </tr>
                 <tr>
-                    <td>101 - 500</td>
+                    <td>500</td>
                     <td>10%</td>
                     <td>150000</td>
-                    <td>Alimentos, Electrónica y Línea Blanca</td>
                     <td>
-                        <a href="${urlBase}/usuario/edit" title="Generar Descuento" class="btn btn-primary btn-sm"><span
-                                class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                        <c:if test="${usuario.points>=500}">
+                            <a href="${urlBase}/usuario/discount/generate/2" title="Generar Descuento"
+                               class="btn btn-primary btn-sm"><i class="fas fa-barcode"></i></a>
+                        </c:if>
+                        <c:if test="${usuario.points<500}">
+                            <a data-toggle="tooltip" title="No tienes los puntos suficientes">
+                                <button disabled
+                                        class="btn btn-primary btn-sm">
+                                    <i class="fas fa-barcode"></i>
+                                </button>
+                            </a>
+                        </c:if>
                     </td>
                 </tr>
                 <tr>
-                    <td>500 - 1000</td>
+                    <td>1000</td>
                     <td>15%</td>
                     <td>300000</td>
-                    <td>Alimentos, Electrónica, Línea Blanca y Ropa</td>
                     <td>
-                        <a href="${urlBase}/usuario/edit" title="Generar Descuento" class="btn btn-primary btn-sm"><span
-                                class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
+                        <c:if test="${usuario.points>=1000}">
+                            <a href="${urlBase}/usuario/discount/generate/3" title="Generar Descuento" class="btn btn-primary btn-sm">
+                                <i class="fas fa-barcode"></i>
+                            </a>
+                        </c:if>
+                        <c:if test="${usuario.points<1000}">
+                            <a data-toggle="tooltip" title="No tienes los puntos suficientes">
+                                <button disabled
+                                        class="btn btn-primary btn-sm">
+                                    <i class="fas fa-barcode"></i>
+                                </button>
+                            </a>
+                        </c:if>
                     </td>
                 </tr>
 
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="table-responsive">
+            <table  class="table table-striped table-hover">
+                <thead>
+                <th>Porcentaje descuento</th>
+                <th>Fecha Creación</th>
+                <th>Fecha Expiración</th>
+                <th>Estado</th>
+                <th>Codigo de barra</th>
+
+
+                </thead>
+                <tbody>
+                <c:forEach items="${discounts}" var="discount">
+                    <tr>
+                        <td>${discount.percentage}%</td>
+                        <td>${discount.formatCreationDate}</td>
+                        <td>${discount.formatExpirationDate}</td>
+                        <td>${discount.usedString}</td>
+                        <td><img src="${discount.path}" /></td>
+                    </tr>
+                </c:forEach>
+
+                </tbody>
             </table>
         </div>
     </div>

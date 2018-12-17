@@ -147,8 +147,8 @@
                             <img src="${product.image.path}" style="width:150px; height:auto;">
                         </td>
                         <c:if test="${product.offer!=null}">
-                            <td>
-                                <div id="getting-started-${product.offer.id}"></div>
+                            <td style="width: 50px">
+                                <div id="getting-started-${product.offer.id}" style="overflow: hidden"></div>
                                 <a href="${urlBase}/offer/${product.offer.id}" title="Editar datos"
                                    class="btn btn-primary btn-sm"><span
                                         class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
@@ -156,7 +156,7 @@
                                     $("#getting-started-${product.offer.id}")
                                         .countdown("${product.offer.expirationDateString}", function (event) {
                                             $(this).text(
-                                                event.strftime('%D days %H:%M:%S')
+                                                event.strftime('%D Días %H:%M:%S')
                                             );
                                         });
                                 </script>
@@ -176,9 +176,7 @@
                                     class="glyphicon glyphicon-edit" aria-hidden="true"></span></a>
                         </td>
                         <td>
-                            <input type="button" name="cambiar" id="cambiar"onclick="confirmarCambio();cambiando();" value="Cambiar"/>
-
-                            <a href="index.php?aksi=delete&nik='.$row['codigo'].'" title="Eliminar"
+                            <a href="${urlBase}/product/delete/${product.id}" title="Eliminar"
                                onclick="return confirm"
                                class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-trash"
                                                                    aria-hidden="true"></span></a>

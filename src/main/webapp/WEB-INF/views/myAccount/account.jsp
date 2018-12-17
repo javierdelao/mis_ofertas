@@ -47,7 +47,7 @@
 </style>
 <div class="container" id="dvShow">
     <div class="content">
-        <h2>Mi Cuenta &raquo; Detalle cuenta</h2>
+        <h2>Mi Cuenta &raquo; Detalle cuenta <a href="${urlBase}/logout" class="btn btn-success" style="float: right">Cerrar sesión</a></h2>
         <th></th>
         <th></th>
         <th></th>
@@ -122,13 +122,17 @@
 
         </div>
     </div>
-    <div>
-        <a href="${baseUrl}/usuario/generarD/${usuarioList.id}" class="btn btn-sm btn-primary" >Generar Cupon de Descuento</a>
+    <div style="text-align: center">
+        <div>
+            <a href="${baseUrl}/usuario/generarD/${user.id}" class="btn btn-sm btn-primary">Generar Cupon de
+                Descuento</a>
+        </div>
+
+        <div>
+            AGREGARE UN BLOQUE DONDE SE VEAN IMAGENES DE PRODUCTOS QUE LE PUEDEN INTERESAR, COMO EN EL INDEX
+        </div>
     </div>
 
-    <div>
-        AGREGARE UN BLOQUE DONDE SE VEAN IMAGENES DE PRODUCTOS QUE LE PUEDEN INTERESAR, COMO EN EL INDEX
-    </div>
 </div>
 <div id="myModal" class="modal" role="dialog">
     <div class="modal-dialog">

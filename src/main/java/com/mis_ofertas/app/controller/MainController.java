@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-public class MainController extends ModelAttributesController{
+public class MainController extends ModelAttributesController {
 
 
     protected RestService restService;
@@ -33,9 +33,49 @@ public class MainController extends ModelAttributesController{
         this.mailService = mailService;
     }
 
-    protected SystemUser user(HttpServletRequest request){
+    protected SystemUser user(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        return (SystemUser)session.getAttribute("user");
+        return (SystemUser) session.getAttribute("user");
+    }
+
+    protected Boolean hasAccess(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        return (SystemUser) session.getAttribute("user") != null;
+    }
+
+    protected Boolean hasAccess(HttpServletRequest request, String rol) {
+        HttpSession session = request.getSession();
+        if ((SystemUser) session.getAttribute("user") == null) {
+            return false;
+        }
+        SystemUser systemUser = (SystemUser) session.getAttribute("user");
+        switch (rol) {
+            case "CLIENT": {
+                if (systemUser.getRol().getName().equals("CLIENT") ||
+                        systemUser.getRol().getName().equals("REPRESENTATIVE") ||
+                        systemUser.getRol().getName().equals("ADMIN")) {
+                    return true;
+                }
+                break;
+            }
+            case "REPRESENTATIVE": {
+                if (systemUser.getRol().getName().equals("REPRESENTATIVE") ||
+                        systemUser.getRol().getName().equals("ADMIN")) {
+                    return true;
+                }
+                break;
+            }
+            case "ADMIN": {
+                if (systemUser.getRol().getName().equals("ADMIN")) {
+                    return true;
+                }
+                break;
+            }
+            default: {
+                return false;
+            }
+        }
+        return false;
     }
 
 }

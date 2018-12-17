@@ -9,6 +9,7 @@ package com.mis_ofertas.app.controller;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.mis_ofertas.app.model.*;
+import com.mis_ofertas.app.util.VisitPerDayReport;
 import org.cloudinary.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -46,8 +47,15 @@ public class ProductController extends MainController {
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public String home(Model model, HttpServletRequest request) {
+        if(!hasAccess(request)){
+            return "login";
+        }
+        if (!hasAccess(request,"REPRESENTATIVE")) {
+            return "redirect:/home";
+        }
         SystemUser usuario = user(request);
-        List<Product> productList = restService.products(usuario, true, null, null, null, "");
+        model.addAttribute("user", usuario);
+        List<Product> productList = restService.products(usuario, true, restService.statuses().get(1), null, null, "");
         for (Product product : productList) {
             if (product.getOffer() != null) {
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -57,7 +65,7 @@ public class ProductController extends MainController {
         }
         model.addAttribute("textSearch", "");
         model.addAttribute("area", new Area(Long.parseLong("0")));
-        model.addAttribute("status", new Status(Long.parseLong("0")));
+        model.addAttribute("status", restService.statuses().get(1));
         model.addAttribute("productType", new ProductType(Long.parseLong("0")));
         model.addAttribute("statuses", restService.statuses());
         model.addAttribute("areas", restService.areas());
@@ -72,7 +80,14 @@ public class ProductController extends MainController {
                        @RequestParam("areaId") Long areaId,
                        @RequestParam("productTypeId") Long productTypeId,
                        @RequestParam("textSearch") String textSearch) {
+        if(!hasAccess(request)){
+            return "login";
+        }
+        if (!hasAccess(request,"REPRESENTATIVE")) {
+            return "redirect:/home";
+        }
         SystemUser usuario = user(request);
+        model.addAttribute("user", usuario);
         Area area = restService.area(areaId);
         if (area == null) {
             area = new Area(Long.parseLong("0"));
@@ -107,7 +122,14 @@ public class ProductController extends MainController {
 
     @RequestMapping(path = "/{productId}", method = RequestMethod.GET)
     public String product(Model model, HttpServletRequest request, @PathVariable Long productId) {
+        if(!hasAccess(request)){
+            return "login";
+        }
+        if (!hasAccess(request,"CLIENT")) {
+            return "redirect:/home";
+        }
         SystemUser usuario = user(request);
+        model.addAttribute("user", usuario);
         Product product = restService.product(productId);
         Visit visit = new Visit();
         visit.setProduct(product);
@@ -119,7 +141,14 @@ public class ProductController extends MainController {
 
     @RequestMapping(path = "/create", method = RequestMethod.GET)
     public String create(Model model, HttpServletRequest request) {
+        if(!hasAccess(request)){
+            return "login";
+        }
+        if (!hasAccess(request,"REPRESENTATIVE")) {
+            return "redirect:/home";
+        }
         SystemUser usuario = user(request);
+        model.addAttribute("user", usuario);
         model.addAttribute("productTypes", restService.productTypes());
         model.addAttribute("areas", restService.areas());
         model.addAttribute("statuses", restService.statuses());
@@ -129,7 +158,14 @@ public class ProductController extends MainController {
 
     @RequestMapping(path = "/edit/{productoId}", method = RequestMethod.GET)
     public String edit(Model model, HttpServletRequest request, @PathVariable Long productoId) throws ParseException {
+        if(!hasAccess(request)){
+            return "login";
+        }
+        if (!hasAccess(request,"REPRESENTATIVE")) {
+            return "redirect:/home";
+        }
         SystemUser usuario = user(request);
+        model.addAttribute("user", usuario);
         Product product = restService.product(productoId);
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -142,6 +178,22 @@ public class ProductController extends MainController {
         model.addAttribute("statuses", restService.statuses());
         model.addAttribute("producto", product);
         return "producto/editar";
+
+    }
+
+    @RequestMapping(path = "/delete/{productoId}", method = RequestMethod.GET)
+    public String delete(Model model, HttpServletRequest request, @PathVariable Long productoId) throws ParseException {
+        if(!hasAccess(request)){
+            return "login";
+        }
+        if (!hasAccess(request,"REPRESENTATIVE")) {
+            return "redirect:/home";
+        }
+        SystemUser usuario = user(request);
+        model.addAttribute("user", usuario);
+        Product product = restService.product(productoId);
+        product=restService.delete(product);
+        return "redirect:/product/";
 
     }
 
@@ -159,7 +211,14 @@ public class ProductController extends MainController {
             @RequestParam("productType") Long productTypeId,
             @RequestParam("area") Long areaId,
             @RequestParam("status") Long statusId) throws ParseException, IOException {
+        if(!hasAccess(request)){
+            return "login";
+        }
+        if (!hasAccess(request,"REPRESENTATIVE")) {
+            return "redirect:/home";
+        }
         SystemUser usuario = user(request);
+        model.addAttribute("user", usuario);
 
         Product product = new Product();
         product.setName(name);
@@ -223,7 +282,14 @@ public class ProductController extends MainController {
             @RequestParam("productType") Long productTypeId,
             @RequestParam("area") Long areaId,
             @RequestParam("status") Long statusId) throws ParseException, IOException {
+        if(!hasAccess(request)){
+            return "login";
+        }
+        if (!hasAccess(request,"REPRESENTATIVE")) {
+            return "redirect:/home";
+        }
         SystemUser usuario = user(request);
+        model.addAttribute("user", usuario);
         Product product = restService.product(id);
 
         if (!image.isEmpty()) {
@@ -267,8 +333,16 @@ public class ProductController extends MainController {
 
     @RequestMapping(path = "/detail/{productId}", method = RequestMethod.GET)
     public String detail(Model model, HttpServletRequest request, @PathVariable Long productId) throws ParseException {
+        if(!hasAccess(request)){
+            return "login";
+        }
+        if (!hasAccess(request,"CLIENT")) {
+            return "redirect:/home";
+        }
         SystemUser usuario = user(request);
+        model.addAttribute("user", usuario);
         Product product = restService.product(productId);
+        Integer qtaVisit=restService.qta(product);
         Visit visit = new Visit();
         visit.setProduct(product);
         visit.setSystemUser(usuario);
@@ -290,10 +364,30 @@ public class ProductController extends MainController {
 
         List<Note> notes = restService.notes(product);
         Valoration valoration = restService.valoration(product, usuario);
+        model.addAttribute("qtaVisit", qtaVisit);
         model.addAttribute("valoration", valoration);
         model.addAttribute("notes", notes);
         model.addAttribute("product", product);
         model.addAttribute("offerHistory", offers);
+        List<VisitPerDayReport>visitPerDayReports=new ArrayList<>();
+        for(int i=15;i>=0;i--){
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(new Date());
+            calendar.add(Calendar.DAY_OF_YEAR, -1*i);
+            Date date=calendar.getTime();
+            Integer visits=restService.visitPerDay(product,date);
+            VisitPerDayReport visitPerDayReport=new VisitPerDayReport();
+            visitPerDayReport.setDate(date);
+            visitPerDayReport.setVisitQta(visits);
+            String dateString = format.format(date);
+            visitPerDayReport.setDateString(dateString);
+            visitPerDayReports.add(visitPerDayReport);
+            System.out.println(visits);
+        }
+        model.addAttribute("visitPerDayReports", visitPerDayReports);
+
+
+
         return "producto/detalle";
     }
 
@@ -303,6 +397,12 @@ public class ProductController extends MainController {
                           @RequestParam(value = "images", required = false) MultipartFile[] images,
                           @RequestParam("text") String text,
                           @RequestParam("productId") Long productId) throws ParseException, IOException {
+        if(!hasAccess(request)){
+            return "login";
+        }
+        if (!hasAccess(request,"CLIENT")) {
+            return "redirect:/home";
+        }
         HttpSession session = request.getSession();
         SystemUser user = user(request);
         List<Document> documents = new ArrayList<>();
@@ -353,6 +453,12 @@ public class ProductController extends MainController {
     public String valoration(HttpServletRequest request,
                              @RequestParam("valorationNumber") Integer valorationNumber,
                              @RequestParam("productId") Long productId) throws ParseException {
+        if(!hasAccess(request)){
+            return "login";
+        }
+        if (!hasAccess(request,"CLIENT")) {
+            return "redirect:/home";
+        }
         HttpSession session = request.getSession();
 
         SystemUser user = user(request);

@@ -1,4 +1,5 @@
 package com.mis_ofertas.app.controller;
+
 import com.mis_ofertas.app.model.Area;
 import com.mis_ofertas.app.model.SystemUser;
 import org.springframework.stereotype.Controller;
@@ -17,11 +18,20 @@ public class CategoryController extends MainController {
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public String home(Model model, HttpServletRequest request) {
+        if (!hasAccess(request)) {
+            return "login";
+        }
+        if (!hasAccess(request, "ADMIN")) {
+            return "redirect:/";
+        }
         SystemUser usuario = user(request);
+        model.addAttribute("user", usuario);
 
         List<Area> areas = restService.areas();
         model.addAttribute("textSearch", "");
-        model.addAttribute("areas",areas );
+        model.addAttribute("areas", areas);
+
+
         return "tipoCategoria/categoria";
     }
 
@@ -29,7 +39,14 @@ public class CategoryController extends MainController {
     public String filter(Model model,
                          HttpServletRequest request,
                          @RequestParam("textSearch") String textSearch) {
+        if (!hasAccess(request)) {
+            return "login";
+        }
+        if (!hasAccess(request, "ADMIN")) {
+            return "redirect:/";
+        }
         SystemUser usuario = user(request);
+        model.addAttribute("user", usuario);
 
         List<Area> areas = restService.areas(textSearch);
         model.addAttribute("textSearch", textSearch);
@@ -40,22 +57,37 @@ public class CategoryController extends MainController {
 
     @RequestMapping(path = "/create", method = RequestMethod.GET)
     public String create(Model model, HttpServletRequest request) {
+        if (!hasAccess(request)) {
+            return "login";
+        }
+        if (!hasAccess(request, "ADMIN")) {
+            return "redirect:/";
+        }
         SystemUser usuario = user(request);
+        model.addAttribute("user", usuario);
 
         return "tipoCategoria/agregarCat";
     }
+
     @RequestMapping(path = "/create", method = RequestMethod.POST)
     public String create(
             Model model,
             HttpServletRequest request,
             @RequestParam("description") String description,
-            @RequestParam("name") String name){
-                SystemUser usuario = user(request);
-                Area typeCat = new Area();
-                typeCat.setDescription(description);
-                typeCat.setName(name);
-                typeCat = restService.create(typeCat);
-                return "redirect:/typeCat/";
+            @RequestParam("name") String name) {
+        if (!hasAccess(request)) {
+            return "login";
+        }
+        if (!hasAccess(request, "ADMIN")) {
+            return "redirect:/";
+        }
+        SystemUser usuario = user(request);
+        model.addAttribute("user", usuario);
+        Area typeCat = new Area();
+        typeCat.setDescription(description);
+        typeCat.setName(name);
+        typeCat = restService.create(typeCat);
+        return "redirect:/typeCat/";
     }
 
     @RequestMapping(path = "/edit", method = RequestMethod.POST)
@@ -64,8 +96,18 @@ public class CategoryController extends MainController {
             HttpServletRequest request,
             @RequestParam("id") Long id,
             @RequestParam("description") String description,
-            @RequestParam("name") String name){
+            @RequestParam("name") String name) {
+        if (!hasAccess(request)) {
+            return "login";
+        }
+        if (!hasAccess(request, "ADMIN")) {
+            return "redirect:/";
+        }
+        if (!hasAccess(request)) {
+            return "redirect:/";
+        }
         SystemUser usuario = user(request);
+        model.addAttribute("user", usuario);
         Area typeCat = restService.area(id);
         typeCat.setDescription(description);
         typeCat.setName(name);
@@ -75,14 +117,17 @@ public class CategoryController extends MainController {
 
     @RequestMapping(path = "/edit/{areaId}", method = RequestMethod.GET)
     public String edit(Model model, HttpServletRequest request, @PathVariable Long areaId) {
+        if (!hasAccess(request)) {
+            return "login";
+        }
+        if (!hasAccess(request, "ADMIN")) {
+            return "redirect:/";
+        }
         SystemUser usuario = user(request);
+        model.addAttribute("user", usuario);
         Area area = restService.area(areaId);
-        /*
-        model.addAttribute("productTypes", restService.productTypes());
-        model.addAttribute("areas", restService.areas());
-        model.addAttribute("statuses", restService.statuses());
-        */
-        model.addAttribute("area",area);
+
+        model.addAttribute("area", area);
         return "tipoCategoria/editarCat";
 
     }

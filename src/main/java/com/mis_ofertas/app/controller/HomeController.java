@@ -32,6 +32,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -48,8 +49,24 @@ public class HomeController extends MainController {
 
     @RequestMapping(path = "/home", method = RequestMethod.GET)
     public String home(Model model, HttpServletRequest request) {
+        if(!hasAccess(request)){
+            return "login";
+        }
+        if (!hasAccess(request,"CLIENT")) {
+            return "redirect:/home";
+        }
         SystemUser usuario = user(request);
+        model.addAttribute("user", usuario);
         CustomProductList customProductList = restService.custom(usuario);
+        for(CustomProductListItem customProductListItem:customProductList.getCustomProductListItems()){
+            for (Product product : customProductListItem.getProducts()) {
+                if (product.getOffer() != null) {
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                    product.getOffer().setPublicationDateString(format.format(product.getOffer().getPublicationDate()));
+                    product.getOffer().setExpirationDateString(format.format(product.getOffer().getExpirationDate()));
+                }
+            }
+        }
         List<Area> areas = restService.areas();
         model.addAttribute("ok", "ok");
         model.addAttribute("customProductList", customProductList);
@@ -63,7 +80,14 @@ public class HomeController extends MainController {
 
     @RequestMapping(path = "/home/{areaId}", method = RequestMethod.GET)
     public String home(Model model, HttpServletRequest request, @PathVariable Long areaId) {
+        if(!hasAccess(request)){
+            return "login";
+        }
+        if (!hasAccess(request,"CLIENT")) {
+            return "redirect:/home";
+        }
         SystemUser usuario = user(request);
+        model.addAttribute("user", usuario);
         Area area = restService.area(areaId);
         List<Product> products = restService.products(area);
         CustomProductList customProductList = new CustomProductList();
@@ -113,6 +137,14 @@ public class HomeController extends MainController {
 
     @RequestMapping(path = "/testMail", method = RequestMethod.GET)
     public String testMail(Model model, HttpServletRequest request) {
+        if(!hasAccess(request)){
+            return "login";
+        }
+        if (!hasAccess(request,"ADMIN")) {
+            return "redirect:/home";
+        }
+        SystemUser usuario = user(request);
+        model.addAttribute("user", usuario);
         List<SystemUser> systemUsers = restService.systemUsers();
 
          for (SystemUser systemUser : systemUsers ) {
@@ -124,8 +156,6 @@ public class HomeController extends MainController {
                     html += "<head>" ;
                     html += "</head>" ;
                     html +="<body>" ;
-
-                    html +="<img align='left' width='100' height='100' src= '" + configProperties.getProperty("url-base") + "/default/" + systemUser.getAvatar() + "<br>" +"' />";
                     html +="<br>";
              html += "<br>"+"</br>";
              html += "<br>"+"</br>";
@@ -142,7 +172,7 @@ public class HomeController extends MainController {
 
                         html += "<br>"+"</br>";
                         for (Product product : customProductListItem.getProducts()) {
-                            html +="<img src= '" + configProperties.getProperty("url-base") + "/images/" + product.getImage().getPath() +"' />";
+                            html +="<img style='width:30%' src= '"+ product.getImage().getPath() +"' />";
                             html += "<h3> Nombre :" + product.getName() +"<br>"+"</br>"+ "Detalle  :"+ product.getDescription() +"<br>"+"</br>" +"Precio  : $"+ product
                         .getPrice()+ "</h3>";
                         }
@@ -161,7 +191,14 @@ public class HomeController extends MainController {
 
     @RequestMapping(path = "/testMail2", method = RequestMethod.GET)
     public String testMail2(Model model, HttpServletRequest request) {
+        if(!hasAccess(request)){
+            return "login";
+        }
+        if (!hasAccess(request,"ADMIN")) {
+            return "redirect:/home";
+        }
         SystemUser usuario = user(request);
+        model.addAttribute("user", usuario);
 
         List<SystemUser> systemUsers = restService.systemUsers();
 
@@ -170,11 +207,33 @@ public class HomeController extends MainController {
         return "redirect:/home";
     }
 
+    @RequestMapping(path = "/logout", method = RequestMethod.GET)
+    public String logout(Model model, HttpServletRequest request) {
+        if(!hasAccess(request)){
+            return "login";
+        }
+        if (!hasAccess(request,"CLIENT")) {
+            return "redirect:/home";
+        }
+        SystemUser usuario = user(request);
+        model.addAttribute("user", usuario);
+        HttpSession session = request.getSession();
+        session.setAttribute("user",null);
+
+        return "redirect:/login";
+    }
+
 
 
 
     @RequestMapping(path = "/testCodeBar", method = RequestMethod.GET)
     public void testCodeBar(Model model, HttpServletRequest request,HttpServletResponse response) throws FileNotFoundException {
+        if(!hasAccess(request)){
+            return ;
+        }
+        if (!hasAccess(request,"ADMIN")) {
+            return ;
+        }
         try {
             Code39Bean bean = new Code39Bean();
             final int dpi = 150;
@@ -214,7 +273,12 @@ public class HomeController extends MainController {
     @RequestMapping(path = "/testCodeBar2", method = RequestMethod.GET)
     public void testCodeBar2(Model model, HttpServletRequest request,HttpServletResponse response) throws FileNotFoundException {
         String uploadsDir = configProperties.getProperty("barcodesLocalPath");
-
+        if(!hasAccess(request)){
+            return ;
+        }
+        if (!hasAccess(request,"ADMIN")) {
+            return ;
+        }
         try {
             Random rand = new Random();
             int n = rand.nextInt(50000000) + 1;
@@ -239,7 +303,12 @@ public class HomeController extends MainController {
     @RequestMapping(path = "/testCodeBar3", method = RequestMethod.GET)
     public void testCodeBar3(Model model, HttpServletRequest request,HttpServletResponse response) throws FileNotFoundException {
         String uploadsDir = configProperties.getProperty("barcodesLocalPath");
-
+        if(!hasAccess(request)){
+            return ;
+        }
+        if (!hasAccess(request,"ADMIN")) {
+            return ;
+        }
         try {
             Random rand = new Random();
             int n = rand.nextInt(50000000) + 1;
@@ -265,6 +334,8 @@ public class HomeController extends MainController {
         }
 
     }
+
+
 
 
 

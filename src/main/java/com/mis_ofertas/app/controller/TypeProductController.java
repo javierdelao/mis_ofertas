@@ -1,4 +1,5 @@
 package com.mis_ofertas.app.controller;
+
 import com.mis_ofertas.app.model.ProductType;
 import com.mis_ofertas.app.model.SystemUser;
 import org.springframework.stereotype.Controller;
@@ -17,7 +18,14 @@ public class TypeProductController extends MainController {
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public String home(Model model, HttpServletRequest request) {
+        if (!hasAccess(request)) {
+            return "login";
+        }
+        if(!hasAccess(request,"ADMIN")){
+            return "login";
+        }
         SystemUser usuario = user(request);
+        model.addAttribute("user", usuario);
 
         List<ProductType> productTypes = restService.productTypes();
         model.addAttribute("textSearch", "");
@@ -29,7 +37,14 @@ public class TypeProductController extends MainController {
     public String filter(Model model,
                          HttpServletRequest request,
                          @RequestParam("textSearch") String textSearch) {
+        if (!hasAccess(request)) {
+            return "login";
+        }
+        if(!hasAccess(request,"ADMIN")){
+            return "login";
+        }
         SystemUser usuario = user(request);
+        model.addAttribute("user", usuario);
 
         List<ProductType> productTypes = restService.productTypes(textSearch);
         model.addAttribute("textSearch", textSearch);
@@ -40,22 +55,37 @@ public class TypeProductController extends MainController {
 
     @RequestMapping(path = "/create", method = RequestMethod.GET)
     public String create(Model model, HttpServletRequest request) {
+        if (!hasAccess(request)) {
+            return "login";
+        }
+        if(!hasAccess(request,"ADMIN")){
+            return "login";
+        }
         SystemUser usuario = user(request);
+        model.addAttribute("user", usuario);
 
         return "tipoProducto/agregarT";
     }
+
     @RequestMapping(path = "/create", method = RequestMethod.POST)
     public String create(
             Model model,
             HttpServletRequest request,
             @RequestParam("description") String description,
-            @RequestParam("name") String name){
-                SystemUser usuario = user(request);
-                ProductType typeProd = new ProductType();
-                typeProd.setDescription(description);
-                typeProd.setName(name);
-                typeProd = restService.create(typeProd);
-                return "redirect:/typeProd/";
+            @RequestParam("name") String name) {
+        if (!hasAccess(request)) {
+            return "login";
+        }
+        if(!hasAccess(request,"ADMIN")){
+            return "login";
+        }
+        SystemUser usuario = user(request);
+        model.addAttribute("user", usuario);
+        ProductType typeProd = new ProductType();
+        typeProd.setDescription(description);
+        typeProd.setName(name);
+        typeProd = restService.create(typeProd);
+        return "redirect:/typeProd/";
     }
 
     @RequestMapping(path = "/edit", method = RequestMethod.POST)
@@ -64,8 +94,15 @@ public class TypeProductController extends MainController {
             HttpServletRequest request,
             @RequestParam("id") Long id,
             @RequestParam("description") String description,
-            @RequestParam("name") String name){
+            @RequestParam("name") String name) {
+        if (!hasAccess(request)) {
+            return "login";
+        }
+        if(!hasAccess(request,"ADMIN")){
+            return "login";
+        }
         SystemUser usuario = user(request);
+        model.addAttribute("user", usuario);
         ProductType typeProd = restService.productType(id);
         typeProd.setDescription(description);
         typeProd.setName(name);
@@ -75,14 +112,17 @@ public class TypeProductController extends MainController {
 
     @RequestMapping(path = "/edit/{productoTipoId}", method = RequestMethod.GET)
     public String edit(Model model, HttpServletRequest request, @PathVariable Long productoTipoId) {
+        if (!hasAccess(request)) {
+            return "login";
+        }
+        if(!hasAccess(request,"ADMIN")){
+            return "login";
+        }
         SystemUser usuario = user(request);
+        model.addAttribute("user", usuario);
         ProductType typeProd = restService.productType(productoTipoId);
-        /*
-        model.addAttribute("productTypes", restService.productTypes());
-        model.addAttribute("areas", restService.areas());
-        model.addAttribute("statuses", restService.statuses());
-        */
-        model.addAttribute("productoTipo",typeProd);
+
+        model.addAttribute("productoTipo", typeProd);
         return "tipoProducto/editarT";
 
     }

@@ -583,7 +583,7 @@
             </div>
             <c:forEach items="${customProductListItem.products}" var="product">
 
-                <div class="col-md-5" style="border:solid 0px; height: 100vh; display: block">
+                <div class="col-md-4" style="border:solid 0px; height: 100vh; display: block">
                     <div class="row">
 
                         <div id="make-3D-space">
@@ -592,17 +592,40 @@
                                     <div class="shadow"></div>
                                     <img src="${product.image.path}" style="width:100%; ">
                                     <div class="image_overlay"></div>
-                                    <a href="${urlBase}/product/detail/${product.id}" id="view_details" title="Ver detalle" class="btn btn-primary mb-1" style="width: 100% padding: 0px">Ver Detalle</a>
+                                    <c:if test="${product.offer!=null}">
+                                        <a  href="${urlBase}/product/detail/${product.id}" id="view_details" title="Ver detalle" class="btn btn-danger mb-1" style="width: 100% padding: 0px">
+                                            <span id="getting-started-${product.offer.id}">
+
+                                            </span>
+                                        </a>
+                                    </c:if>
+                                    <c:if test="${product.offer==null}">
+                                        <a href="${urlBase}/product/detail/${product.id}" id="view_details" title="Ver detalle" class="btn btn-primary mb-1" style="width: 100% padding: 0px">Ver Detalle</a>
+                                    </c:if>
 
                                     <div class="stats">
                                         <div class="stats-container">
                                             <span class="product_name">${product.name}</span>
 
                                             <div class="product-options">
-                                                <strong>Precio</strong>
-                                                <span>$${product.price}</span>
-                                                <strong>Descripción</strong>
-                                                <span>${product.description}</span>
+                                                <strong>Precio</strong><br>
+                                                <c:if test="${product.offer!=null}">
+                                                    <b style="text-decoration: line-through">$${product.price}</b>
+                                                    <b>${product.offer.discount}% Desc. $${product.price-(product.price*(product.offer.discount/100))}</b>
+                                                        <script type="text/javascript">
+                                                            $("#getting-started-${product.offer.id}")
+                                                                .countdown("${product.offer.expirationDateString}", function (event) {
+                                                                    $(this).text(
+                                                                        event.strftime('%D days %H:%M:%S')
+                                                                    );
+                                                                });
+                                                        </script>
+
+                                                </c:if>
+                                                <c:if test="${product.offer==null}">
+                                                    <span>$${product.price}</span>
+                                                </c:if>
+                                                <img style="width: 100%" src="${product.user.store.image.path}">
                                             </div>
                                         </div>
                                     </div>
@@ -632,7 +655,6 @@
                             </div>
                         </div>
 
-                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 
                     </div>
                 </div>

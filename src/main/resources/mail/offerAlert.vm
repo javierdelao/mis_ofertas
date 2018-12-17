@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>BNamericas</title>
+    <style>
+
+        body {
+            font-family: proxima, "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1;
+        }
+
+        table, tr, td {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        .ml-20{
+            margin-left: 20%;
+        }
+
+        .mr-20{
+            margin-right: 20%;
+        }
+
+        .ml-30{
+            margin-left: 30%;
+        }
+
+        .ml-40{
+            margin-left: 40%;
+        }
+
+        .mr-30{
+            margin-right: 30%;
+        }
+
+        .md-30{
+           width: 30%;
+        }
+        .md-50{
+            width: 50%;
+        }
+
+        .md-60{
+            width: 60%;
+        }
+
+    </style>
+</head>
+<body>
+<div class="row" style="text-align: center">
+<div>
+    <img src="https://res.cloudinary.com/duzvu8wmg/image/upload/v1544975204/images/iuewfyzmabh9ogittsni.png">
+</div>
+    <div class="ml-20 mr-20">
+        <h3>hola $user.firstName $user.lastName tenemos una buena noticia para ti </h3>
+
+        <h4>El producto $product.name se encuentra en oferta hasta el $expirationDate </h4>
+    </div>
+    <div class="ml-30">
+        <div class="md-50" style="text-align: center">
+            <img src="$product.image.path" style="width: 100%">
+            <span> precio original <b style="text-decoration: line-through"> $product.price </b> </span>
+            <span> Nuevo precio con $product.offer.discount % aplicado es de </span>
+            <h1> $ $newPrice pesos</h1>
+        </div>
+
+
+
+    </div>
+</div>
+
+
+</body>
+</html>

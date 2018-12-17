@@ -1,6 +1,7 @@
 package com.mis_ofertas.app.service;
 
 import com.mis_ofertas.app.model.Email;
+import com.mis_ofertas.app.model.Product;
 import com.mis_ofertas.app.model.SystemUser;
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -97,6 +99,31 @@ public class MailService {
             emailModel.put("user", user);
 
             String bodyString = makeEmailContent("newsletter", emailModel);
+            System.out.println(bodyString);
+            Email email=new Email();
+            email.setDestino(user.getEmail());
+            email.setAsunto(subjectString);
+            email.setMensaje(bodyString);
+            enviarCorreo(email);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void sendOfferAlertEmail(SystemUser user, Product product) {
+        try {
+            String subjectString = "Este es el asunto";
+
+            Map<String, Object> emailModel = new HashMap<>();
+            emailModel.put("user", user);
+            emailModel.put("product", product);
+            Integer newPrice=product.getPrice()-product.getPrice()*product.getOffer().getDiscount()/100;
+            SimpleDateFormat format = new SimpleDateFormat("dd-MM-YYYY");
+
+            emailModel.put("expirationDate",format.format(product.getOffer().getExpirationDate()));
+            emailModel.put("newPrice",newPrice);
+            String bodyString = makeEmailContent("offerAlert", emailModel);
             System.out.println(bodyString);
             Email email=new Email();
             email.setDestino(user.getEmail());

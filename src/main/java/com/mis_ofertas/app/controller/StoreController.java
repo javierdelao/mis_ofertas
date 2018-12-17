@@ -43,7 +43,14 @@ public class StoreController extends MainController {
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public String home(Model model, HttpServletRequest request) {
+        if(!hasAccess(request)){
+            return "login";
+        }
+        if(!hasAccess(request,"ADMIN")){
+            return "login";
+        }
         SystemUser usuario = user(request);
+        model.addAttribute("user", usuario);
 
         List<Store> storeList = restService.stores();
         model.addAttribute("textSearch", "");
@@ -58,7 +65,14 @@ public class StoreController extends MainController {
                          HttpServletRequest request,
                          @RequestParam("communeId") Long communeId,
                          @RequestParam("textSearch") String textSearch) {
+        if(!hasAccess(request)){
+            return "login";
+        }
+        if(!hasAccess(request,"ADMIN")){
+            return "login";
+        }
         SystemUser usuario = user(request);
+        model.addAttribute("user", usuario);
         Commune commune=restService.commune(communeId);
         if(commune==null){
             commune=new Commune(Long.parseLong("0"));
@@ -73,7 +87,14 @@ public class StoreController extends MainController {
 
     @RequestMapping(path = "/create", method = RequestMethod.GET)
     public String create(Model model, HttpServletRequest request) {
+        if(!hasAccess(request)){
+            return "login";
+        }
+        if(!hasAccess(request,"ADMIN")){
+            return "login";
+        }
         SystemUser usuario = user(request);
+        model.addAttribute("user", usuario);
         model.addAttribute("communes", restService.communes());
         model.addAttribute("citys", restService.citys());
         model.addAttribute("countrys", restService.countrys());
@@ -90,7 +111,14 @@ public class StoreController extends MainController {
             @RequestParam("city") Long cityId,
             @RequestParam("country") Long countryId,
             @RequestParam("image") MultipartFile image) throws IOException {
+        if(!hasAccess(request)){
+            return "login";
+        }
+        if(!hasAccess(request,"ADMIN")){
+            return "login";
+        }
         SystemUser usuario = user(request);
+        model.addAttribute("user", usuario);
 
         String uploadsDir = configProperties.getProperty("imagesLocalPath");
 
@@ -128,8 +156,14 @@ public class StoreController extends MainController {
             @RequestParam("commune") Long communeId,
             @RequestParam("city") Long cityId,
             @RequestParam("country") Long countryId) throws IOException {
+        if(!hasAccess(request)){
+            return "login";
+        }
+        if(!hasAccess(request,"ADMIN")){
+            return "login";
+        }
         SystemUser usuario = user(request);
-
+        model.addAttribute("user", usuario);
         Store store = restService.store(id);
 
         if (!image.isEmpty()) {
@@ -164,7 +198,14 @@ public class StoreController extends MainController {
 
     @RequestMapping(path = "/edit/{storeId}", method = RequestMethod.GET)
     public String edit(Model model, HttpServletRequest request, @PathVariable Long storeId) throws ParseException {
+        if(!hasAccess(request)){
+            return "login";
+        }
+        if(!hasAccess(request,"ADMIN")){
+            return "login";
+        }
         SystemUser usuario = user(request);
+        model.addAttribute("user", usuario);
         Store store = restService.store(storeId);
 
         model.addAttribute("communes", restService.communes());
@@ -179,7 +220,14 @@ public class StoreController extends MainController {
 
     @RequestMapping(path = "/detail/{storeId}", method = RequestMethod.GET)
     public String detail(Model model, HttpServletRequest request, @PathVariable Long storeId) throws ParseException {
+        if(!hasAccess(request)){
+            return "login";
+        }
+        if(!hasAccess(request,"ADMIN")){
+            return "login";
+        }
         SystemUser usuario = user(request);
+        model.addAttribute("user", usuario);
         Store store = restService.store(storeId);
         List<Product>productList=restService.products(store);
         model.addAttribute("store", store);
