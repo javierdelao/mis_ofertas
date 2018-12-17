@@ -118,38 +118,39 @@ public class MyAccountController extends MainController {
     }
 
     @RequestMapping(path = "/discount/generate/{typediscount}", method = RequestMethod.GET)
-    public void testCodeBar3(@PathVariable Integer typediscount, Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void testCodeBar3(@PathVariable String typediscount, Model model, HttpServletRequest request, HttpServletResponse response) throws Exception {
         if(!hasAccess(request)){
             return ;
         }
         if (!hasAccess(request,"CLIENT")) {
             return ;
         }
-        SystemUser systemUser = user(request);
+        SystemUser systemUser = restService.systemUser(user(request).getId());
+
         String uploadsDir = configProperties.getProperty("barcodesLocalPath");
         Discount discount=new Discount();
         discount.setUser(systemUser);
         discount.setUsed(false);
         switch (typediscount) {
-            case 1: {
+            case "1": {
                 if (systemUser.getPoints() < 100) {
-                    throw new Exception();
+                    return ;
                 }
                 systemUser.setPoints(systemUser.getPoints()-100);
                 discount.setPercentage(5);
                 break;
             }
-            case 2: {
+            case "2": {
                 if (systemUser.getPoints() < 500) {
-                    throw new Exception();
+                    return ;
                 }
                 systemUser.setPoints(systemUser.getPoints()-500);
                 discount.setPercentage(10);
                 break;
             }
-            case 3: {
+            case "3": {
                 if (systemUser.getPoints() < 1000) {
-                    throw new Exception();
+                    return ;
                 }
                 systemUser.setPoints(systemUser.getPoints()-1000);
                 discount.setPercentage(15);
