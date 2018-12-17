@@ -3,6 +3,8 @@ package com.mis_ofertas.app.service;
 import com.mis_ofertas.app.model.*;
 import com.mis_ofertas.app.response.LoginResponse;
 import com.mis_ofertas.app.util.CustomProductList;
+import com.mis_ofertas.app.util.ProductValorationAverage;
+import com.mis_ofertas.app.util.VisitReport;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -35,6 +37,14 @@ public class RestService {
                 "http://localhost:8181/visit/qta/"+product.getId(),
                 Visit[].class);
         return visits.length;
+    }
+
+    public List<VisitReport> qta2(SystemUser systemUser) {
+        RestTemplate restTemplate = new RestTemplate();
+        VisitReport[] visits = restTemplate.getForObject(
+                "http://localhost:8181/visit/qta2/"+systemUser.getId(),
+                VisitReport[].class);
+        return  Arrays.asList(visits);
     }
 
     public Integer visitPerDay(Product product, Date date) {
@@ -85,6 +95,16 @@ public class RestService {
         }
         Double result= total/cont;
         return result;
+    }
+
+
+    public List<ProductValorationAverage> productAverage2(SystemUser systemUser) {
+        RestTemplate restTemplate = new RestTemplate();
+        ProductValorationAverage[] productValorationAverages = restTemplate.getForObject(
+                "http://localhost:8181/valoration/average2/" + systemUser.getId(),
+                ProductValorationAverage[].class);
+
+        return Arrays.asList(productValorationAverages);
     }
 
 

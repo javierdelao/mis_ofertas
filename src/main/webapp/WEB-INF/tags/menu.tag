@@ -202,7 +202,7 @@
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="${baseUrl}/home" id="inicio"><i class="fas fa-home"></i> Inicio</a></li>
-                <c:if test="${user.rol.name=='REPRESENTATIVE'}">
+                <c:if test="${user.rol.name=='REPRESENTATIVE' || user.rol.name=='ADMIN'}">
                     <li><a href="${baseUrl}/product/"><i class="fab fa-product-hunt"></i>Productos</a></li>
                 </c:if>
                 <c:if test="${user.rol.name=='ADMIN'}">
@@ -216,6 +216,9 @@
                 </c:if>
                 <c:if test="${user.rol.name=='ADMIN'}">
                     <li><a a href="${baseUrl}/report/" id="reportes"><i class="fas fa-chart-bar"></i> Reportes</a></li>
+                </c:if>
+                <c:if test="${user.rol.name=='ADMIN'}">
+                    <li><a href="${baseUrl}/testMail"><i class="fas fa-mail-bulk"></i> Enviar newsletter</a></li>
                 </c:if>
                 <li><a href="${baseUrl}/usuario/show"><i class="fas fa-user"></i> Mi Cuenta</a></li>
             </ul>

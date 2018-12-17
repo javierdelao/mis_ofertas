@@ -73,8 +73,8 @@
                 <label class="col-sm-3 control-label">¿Perecible?</label>
                 <div class="col-sm-4">
                     <select class="form-control" name="is_perishable" value="value="${producto.is_perishable}"">
-                    <option selected="${producto.is_perishable==true?'selected':''}" value="true">Si</option>
-                    <option selected="${producto.is_perishable==false?'selected':''}" value="false">No</option>
+                    <option ${producto.is_perishable==true?'selected':''} value="true">Si</option>
+                    <option ${producto.is_perishable==false?'selected':''} value="false">No</option>
                     </select>
                 </div>
             </div>
@@ -90,7 +90,7 @@
                 <div class="col-sm-3">
                     <select name="productType" class="form-control" value="${producto.productType.id}">
                         <c:forEach items="${productTypes}" var="productType">
-                            <option selected="${producto.productType.id==productType.id?'selected':''}"
+                            <option ${producto.productType.id==productType.id?'selected':''}
                                     value="${productType.id}">${productType.name}</option>
                         </c:forEach>
                     </select>
@@ -118,7 +118,7 @@
                 <div class="col-sm-3">
                     <select name="area" class="form-control" value="${producto.area.id}">
                         <c:forEach items="${areas}" var="area">
-                            <option selected="${producto.area.id==area.id?'selected':''}"
+                            <option ${producto.area.id==area.id?'selected':''}
                                     value="${area.id}">${area.name}</option>
                         </c:forEach>
                     </select>

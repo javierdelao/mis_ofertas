@@ -93,6 +93,11 @@
 
         </form>
         <br/>
+        <div class="row">
+            <a href="${urlBase}/product/create" class="btn btn-sm btn-primary">Agregar producto</a>
+            <a href="${urlBase}/report/testtxt" class="btn btn-sm btn-primary">Exportar datos</a>
+        </div>
+        <br>
         <div class="table-responsive">
             <table class="table table-striped table-hover">
                 <tr>
@@ -187,9 +192,7 @@
             </table>
         </div>
     </div>
-    <div>
-        <a href="${urlBase}/product/create" class="btn btn-sm btn-primary">Agregar producto</a>
-    </div>
+
 </div>
 <center>
     <p>&copy; Sistemas Web Mis Ofertas</p>

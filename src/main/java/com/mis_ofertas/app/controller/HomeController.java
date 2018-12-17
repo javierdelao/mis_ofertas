@@ -150,7 +150,7 @@ public class HomeController extends MainController {
          for (SystemUser systemUser : systemUsers ) {
             CustomProductList customProductList = restService.custom(systemUser);
             Email email = new Email();
-            email.setAsunto("Este es un asunto de prueba");
+            email.setAsunto("Tu newsletter personalizado");
             email.setDestino(systemUser.getEmail());
             String html = "<html>";
                     html += "<head>" ;

@@ -43,25 +43,18 @@ public class ReportController extends MainController {
             return "redirect:/home";
         }
         SystemUser usuario = user(request);
-        model.addAttribute("user", usuario);        List<Product> products = restService.products(usuario, true, null, null, null, null);
-        List<VisitReport> visitReports = new ArrayList<>();
+        model.addAttribute("user", usuario);
+        List<Product> products = restService.products(usuario, true, null, null, null, null);
+        List<VisitReport> visitReports = restService.qta2(usuario);
         Integer contadorProductosMasVisitados = 0;
-        for (Product product : products) {
-            VisitReport visitReport = new VisitReport();
-            visitReport.setProduct(product);
-            visitReport.setVisitQta(restService.qta(product));
+        for (VisitReport visitReport : visitReports) {
             contadorProductosMasVisitados = contadorProductosMasVisitados + visitReport.getVisitQta();
-            visitReports.add(visitReport);
+
         }
-        List<ProductValorationAverage> productValorationAveragesAsc = new ArrayList<>();
-        List<ProductValorationAverage> productValorationAveragesDesc = new ArrayList<>();
-        for (Product product : products) {
-            ProductValorationAverage productValorationAverage = new ProductValorationAverage();
-            productValorationAverage.setProduct(product);
-            productValorationAverage.setAverageValorationProduct(restService.productAverage(product));
-            productValorationAveragesDesc.add(productValorationAverage);
-            productValorationAveragesAsc.add(productValorationAverage);
-        }
+        List<ProductValorationAverage> productValorationAveragesAsc = restService.productAverage2(usuario);
+
+        List<ProductValorationAverage> productValorationAveragesDesc = restService.productAverage2(usuario);
+
         Collections.sort(productValorationAveragesDesc, new Comparator<ProductValorationAverage>() {
             @Override
             public int compare(ProductValorationAverage z1, ProductValorationAverage z2) {
@@ -83,9 +76,9 @@ public class ReportController extends MainController {
             }
         });
         Collections.reverse(productValorationAveragesAsc);
-        model.addAttribute("productValorationAveragesDesc", productValorationAveragesDesc);
+        model.addAttribute("productValorationAveragesDesc", productValorationAveragesDesc.subList(0,5));
 
-        model.addAttribute("productValorationAveragesAsc", productValorationAveragesAsc);
+        model.addAttribute("productValorationAveragesAsc", productValorationAveragesAsc.subList(0,5));
 
         model.addAttribute("visitProductResport", visitReports);
         model.addAttribute("contadorProductosMasVisitados", contadorProductosMasVisitados);
